@@ -1,5 +1,5 @@
 Command line:
-"travis encrypt"
+"travis encrypt f3ecafb44f260a694a8b6dc1b4b7b5be231fd2ca"
 
 
    ________                                 __
@@ -25,19 +25,19 @@ Command line:
 
      There is absolutely no warranty on any results obtained from TRAVIS.
 
-  #  Running on eli-VirtualBox at Wed Mar 11 12:40:35 2020 (PID 8015)
+  #  Running on eli-VirtualBox at Wed Mar 11 12:23:01 2020 (PID 30577)
   #  Running in /home/eli/Desktop/pinfo3
   #  Code version: Jan 01 2019,  Compiled at Feb 12 2019, 01:11:32,  Compiler "8.2.0", GCC 8.2.0
   #  Target platform: Linux,  Compile flags: DEBUG_ARRAYS 
   #  Machine: int=4b, long=8b, addr=8b, 0xA0B0C0D0=D0,C0,B0,A0.
-  #  Home: /home/eli,  Executable: /usr/local/bin/travis
+  #  Home: /home/eli,  Executable: /usr/bin/travis
   #  Input from terminal,  Output to terminal
 
  >>> Please use a color scheme with dark background or specify "-nocolor"! <<<
 
     Loading configuration from /home/eli/.travis.conf ...
 
-[Renaming existing File input.txt to #13#input.txt ...OK.]
+[Renaming existing File input.txt to #4#input.txt ...OK.]
 Unknown parameter: "encrypt".
 
     List of supported command line options:

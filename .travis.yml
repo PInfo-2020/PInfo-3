@@ -1,15 +1,12 @@
 language: java
-
 service: docker
-
 addons:
   sonarcloud:
-    organization: "pinfo-2020"
-    token: 
-        secure: "539d10aa781a95ccce0ebf137e917079d503fc05" # encrypted value of your token
-
+    organization: pinfo-2020
+    token:
+      secure: f3ecafb44f260a694a8b6dc1b4b7b5be231fd2ca
 script:
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - mvn -X clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3
-
-
+- mvn -X clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3
+env:
+  global:
+    secure: mEwKhF7I6zW9TD5QK0ifdqxsxsaGLtiBl32TFIH+7ZPy+en3tyKCraJeOUYDYtTK9lB5/91kg9Innl+ukDRyuj0g2YazqLaD8pvv4nFrRUzJQRMJUfnuye8SmG8nevmulntkrg+WzvaxJ/tF35woEI5y/B9QFnBDihsyYwFMDAil8ib2/hPlZf6eHzl7Juxqhp16lsY6fqxmJ4J4C+1XnXknk/CUdLgzYgAi+AtXoObpvPi0c3XBgeOLeDh/utDbY0pzPBGFPCSJmRH2NC0BeZ+3bylpb4Emp4F+PZy0FOCVaV7FjsbCN2b9BAPFbbJbY+VRxQQA7HX4XLRnD2CULNmm7rOTuKGIAWX59wrCO/EGUCodIh/in+QSbvsb0L2i+i5SERC99EkgcsB9aZ8VYHVocQRsjMjbcJreoEhXrjjm4c7ISeZqTewRBxmV6h6HjX8gzN1OVIHObwLI3xCpnutuGtxx3hz3bJbLOB1kE7mzFOAbOoNyqTxSd7LqEenLy6jQd9aiHXPddDFyYxzhRw1ETp0JLqDjeqmxVhoEw1eaSHdzcgMZ4ssMNeXbaVnMkrsRq6r341xGywuVFSnPLXAYocfUb7WMGwZMzieDrBpfD6RxddzfMW3aXAQkC2THHpsiiYbDujSKahDU0WWuiuxwV5veD480aDgPE2koneE=
