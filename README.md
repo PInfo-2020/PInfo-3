@@ -1,4 +1,4 @@
-# Your Project's Name
+# Kernel
 
 Repository for PInfo-2020's team 3
 
