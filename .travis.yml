@@ -5,8 +5,7 @@ service: docker
 addons:
   sonarcloud:
     organization: "pinfo-2020"
-    token:
-      secure: 539d10aa781a95ccce0ebf137e917079d503fc05 # encrypted value of your token
+    token: 539d10aa781a95ccce0ebf137e917079d503fc05 # encrypted value of your token
 
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
