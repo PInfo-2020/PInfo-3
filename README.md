@@ -4,9 +4,12 @@ Repository for PInfo-2020's team 3
 
 ## Team members:
 
-- Team member 1: role
-- Team member 2: role
-- ...
+* **Roxane Burri** - *Project Manager*
+* **Luka Lukic** - *Developer*
+* **Salma Ennaji** - *Developer*
+* **Nathan Cohen** - *Developer*
+* **Benjamin Fischer** - *Developer*
+* **Elham Amin Mansour** - *System Administrator*
 
 ## How to set up your project:
 
