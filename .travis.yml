@@ -1,0 +1,14 @@
+language: java
+
+service: docker
+
+
+addons:
+
+cache: 
+
+
+script:
+
+
+
