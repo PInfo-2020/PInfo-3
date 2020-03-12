@@ -3,7 +3,7 @@ language: java
 env:
         - NODE_VERSION="12.13.1"
 
-services: 
+service: 
         - docker
 addons:
         sonarcloud:
