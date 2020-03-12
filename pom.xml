@@ -7,14 +7,14 @@
 	<groupId>ch.unige</groupId>
 	<artifactId>pinfo-micro-services</artifactId>
 	<version>0.4.0-SNAPSHOT</version>
-	<name>Parent Pom of the Pinfo Micro Services</name>
+	<name>Kernel</name>
 
 	<packaging>pom</packaging>
 
 	<scm>
-		<url>https://github.com/hostettler/microservices</url>
-		<connection>scm:git:git@github.com/hostettler/microservices.git</connection>
-		<developerConnection>scm:git:git@github.com/hostettler/microservices</developerConnection>
+		<url>https://github.com/PInfo-2020/PInfo-3</url>
+		<connection>git@github.com:PInfo-2020/PInfo-3.git</connection>
+					<!--<developerConnection>scm:git:git@github.com/hostettler/microservices</developerConnection>-->
 	</scm>
 
 	<properties>
