@@ -3,8 +3,7 @@ language: java
 env:
         - NODE_VERSION="12.13.1"
 
-service: 
-        - docker
+service: docker
 addons:
         sonarcloud:
         organization: pinfo-2020
