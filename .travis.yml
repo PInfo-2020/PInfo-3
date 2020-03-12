@@ -16,32 +16,32 @@ cache:
                 - $HOME/.m2
                 - node_modules
 jobs:
-        include:
-                - stage: Prepare
-                script:
-                        - nvm install $NODE_VERSION
-                        - mvn test
-                        - mvn install -N -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+include:
+- stage: Prepare
+script:
+- nvm install $NODE_VERSION
+- mvn test
+- mvn install -N -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
-                - stage : Build
-                script:
-                        - mvn install -Ppackage-docker-image
-                        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-                        - docker tag unige/api-gateway kernel3/api-gateway:latest
-                        - docker push kernel3/api-gateway:latest
-                        - mvn sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3 -Dsonar.organization=pinfo-2020 -Dsonar.host.url=https://sonarcloud.io  -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
-                - stage : Build
-                script:
-                        - cd web-ui
-                        - pwd
-                        - npm -v
-                        - npm install
-                        - npm update
-                        - npm run-script build --prod
-                        - docker build -t unige/web-ui .
-                        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin      
-                        - docker tag unige/web-ui kernel3/web-ui:latest      
-                        - docker push kernel3/web-ui:latest
+- stage : Build
+script:
+- mvn install -Ppackage-docker-image
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- docker tag unige/api-gateway kernel3/api-gateway:latest
+- docker push kernel3/api-gateway:latest
+- mvn sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3 -Dsonar.organization=pinfo-2020 -Dsonar.host.url=https://sonarcloud.io  -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
+- stage : Build
+script:
+- cd web-ui
+- pwd
+- npm -v
+- npm install
+- npm update
+- npm run-script build --prod
+- docker build -t unige/web-ui .
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin      
+- docker tag unige/web-ui kernel3/web-ui:latest      
+- docker push kernel3/web-ui:latest
 
 
 
