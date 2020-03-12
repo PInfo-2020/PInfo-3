@@ -1,47 +1,34 @@
 language: java
 
 env:
- - NODE_VERSION="12.13.1"
+  - NODE_VERSION="12.15.0"
+  
+services:
+  - docker
 
-service: docker
 addons:
- sonarcloud:
-  organization: pinfo-2020
-   token:
-    secure: "MVpHYotI+Kn9c492kURlipq8lqeuQ8dRxsAIaUUtouTr6IdAZAAXHSFn9zQ2pEk5J/PZZaRa9lmCBexpL47XYjzEnkealoyLtuIyK2vP6e7BFFvRp3wsdaeVTpQl3VRYsYyTiGXXCPVmmwxn8h3uUutHzrn89QvIkMHPzMc0VjOSv2+B9i/6EFg1BiKE0iTkllPYC06+4LIQ14HJkzhgl9DN3dSACQChA7SAisD/T2eRNpinfJP/k+hRo4I2eB+6G6JjktHre4/OcXX+OEIA6xExQjULCiijzhrUVYHhcTmoMo5EmrBPuKool8If6tTR+Gh7Gt2A7xGS9BslSmEIhpZmil4QKjbLrgOHqHV7zCVgeXCVla42S3Ge9EMdpskHtGMeGpEZ4wb5FwdrZKGJ0SX0RhbrrW+E9k3tQxNu4ErSXlN8urXBEWqf91bpnR5dXWbrw1ZTbVgOf0W7rduoGV/L6NJrmWyauegSLYFQbfZ5klbDOmI3IHI4jIo/uN9jsHpPags/6GGlhDWbI8f1yRqAGwtIZlP0X+DG41N7h13xlvJH8IFi307cUzCINNxv+xzu0Owi3yWMurpFYqZvP6pDYP/RrOJEYE7/yhd/vfiZ868CB1AFbXiQrraMqB1OZs7rbJ5qxvWHTt+f7nlCT4kKnRyDZJ+FxZRz0GzImcs="
-
+  sonarcloud:
+    organization: pinfo-2020
+    token:
+      secure: "MVpHYotI+Kn9c492kURlipq8lqeuQ8dRxsAIaUUtouTr6IdAZAAXHSFn9zQ2pEk5J/PZZaRa9lmCBexpL47XYjzEnkealoyLtuIyK2vP6e7BFFvRp3wsdaeVTpQl3VRYsYyTiGXXCPVmmwxn8h3uUutHzrn89QvIkMHPzMc0VjOSv2+B9i/6EFg1BiKE0iTkllPYC06+4LIQ14HJkzhgl9DN3dSACQChA7SAisD/T2eRNpinfJP/k+hRo4I2eB+6G6JjktHre4/OcXX+OEIA6xExQjULCiijzhrUVYHhcTmoMo5EmrBPuKool8If6tTR+Gh7Gt2A7xGS9BslSmEIhpZmil4QKjbLrgOHqHV7zCVgeXCVla42S3Ge9EMdpskHtGMeGpEZ4wb5FwdrZKGJ0SX0RhbrrW+E9k3tQxNu4ErSXlN8urXBEWqf91bpnR5dXWbrw1ZTbVgOf0W7rduoGV/L6NJrmWyauegSLYFQbfZ5klbDOmI3IHI4jIo/uN9jsHpPags/6GGlhDWbI8f1yRqAGwtIZlP0X+DG41N7h13xlvJH8IFi307cUzCINNxv+xzu0Owi3yWMurpFYqZvP6pDYP/RrOJEYE7/yhd/vfiZ868CB1AFbXiQrraMqB1OZs7rbJ5qxvWHTt+f7nlCT4kKnRyDZJ+FxZRz0GzImcs="
 cache:
- directories:
-  - .autoconf
-  - $HOME/.m2
-  - node_modules
-jobs:
-include:
- - stage: Prepare
-   script:
-   - nvm install $NODE_VERSION
-   - mvn test
-   - mvn install -N -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-
- - stage : Build
-   script:
-   - mvn install -Ppackage-docker-image
-   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-   - docker tag unige/api-gateway kernel3/api-gateway:latest
-   - docker push kernel3/api-gateway:latest
-   - mvn sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3 -Dsonar.organization=pinfo-2020 -Dsonar.host.url=https://sonarcloud.io  -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
-  - stage : Build
-    script:
-    - cd web-ui
-    - pwd
-    - npm -v
-    - npm install
-    - npm update
-    - npm run-script build --prod
-    - docker build -t unige/web-ui .
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin      
-    - docker tag unige/web-ui kernel3/web-ui:latest      
-    - docker push kernel3/web-ui:latest
+    directories:
+      - .autoconf
+      - $HOME/.m2
 
 
+script:
+  - mvn test
+  - mvn sonar:sonar -Dsonar.projectKey=hostettler_microservices -Dsonar.organization=hostettler-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dmaven.test.skip=true -Ppackage-docker-image  
+  - nvm install $NODE_VERSION
+  - cd web-ui
+  - npm install
+  - npm update
+  - npm run-script build --prod
+  - docker build -t unige/web-ui .
+  - cd ..
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker tag unige/api-gateway kernel5/api-gateway:latest
+  - docker push kernel5/api-gateway:latest
 
