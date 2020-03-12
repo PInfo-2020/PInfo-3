@@ -21,7 +21,6 @@ script:
   - mvn test
   - mvn sonar:sonar -Dsonar.projectKey=hostettler_microservices -Dsonar.organization=hostettler-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dmaven.test.skip=true -Ppackage-docker-image  
-  - docker login --username "$DOCKER_USERNAME"  --password "$DOCKER_PASSWORD"
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker tag unige/api-gateway kernel3/api-gateway:latest
   - docker push kernel3/api-gateway:latest
