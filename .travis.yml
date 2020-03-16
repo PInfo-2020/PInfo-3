@@ -1,7 +1,8 @@
 language: java
 env:
-- NODE_VERSION="12.15.0"
-- SERVER_IP_ADDRESS=129.194.69.134
+  global: 
+  - NODE_VERSION="12.15.0"
+  - SERVER_IP_ADDRESS=129.194.69.134
 services:
 - docker
 addons:
