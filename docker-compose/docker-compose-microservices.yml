@@ -21,7 +21,7 @@ services:
 
 #   kafka is the messaging backbone of the micro-service architecture. The objective is avoid point 2 point connections.
   kafka:
-    image: confluentinc/cp-kafka:5.1.0
+    image: confluentinc/cp-kafka:5.3.3
     container_name: kafka 
     hostname: kafka
     networks:
