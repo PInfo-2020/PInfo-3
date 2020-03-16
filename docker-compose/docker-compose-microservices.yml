@@ -124,7 +124,7 @@ services:
 
   valuation-service:
     container_name: valuation-service    
-    image: unige/valuation-service:latest
+    image: kernel3/valuation-service:latest
     hostname: valuation-service
     networks:
       - backend-network
