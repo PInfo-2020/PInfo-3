@@ -24,18 +24,28 @@ install:
   -in deploy_key.enc -out ./deploy_key -d
 script:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-- docker tag randPen/api-gateway kernel3/api-gateway:latest
+- docker tag unige/api-gateway kernel3/api-gateway:latest
 - docker push kernel3/api-gateway:latest
-- docker tag randPen/regulatory-service kernel3/regulatory-service:latest
+- docker tag unige/regulatory-service kernel3/regulatory-service:latest
 - docker push kernel3/regulatory-service:latest
-- docker tag randPen/valuation-service kernel3/valuation-service:latest
+- docker tag unige/valuation-service kernel3/valuation-service:latest
 - docker push kernel3/valuation-service:latest
-- docker tag randPen/instrument-service kernel3/instrument-service:latest
+- docker tag unige/instrument-service kernel3/instrument-service:latest
 - docker push kernel3/instrument-service:latest
-- docker tag randPen/counterparty-service kernel3/counterparty-service:latest
+- docker tag unige/counterparty-service kernel3/counterparty-service:latest
 - docker push kernel3/counterparty-service:latest
 - eval "$(ssh-agent -s)"
 - chmod 600 ./deploy_key
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - ssh-add ./deploy_key
+- scp -r docker-compose aminman7@129.194.69.134:./
 - ssh -i ./deploy_key aminman7@129.194.69.134 pwd
+- docker pull kernel3/api-gateway:latest
+- docker pull kernel3/regulatory-service:latest
+- docker pull kernel3/valuation-service:latest
+- docker pull kernel3/instrument-service:latest
+- docker pull kernel3/counterparty-service:latest
+- docker image ls
+- cd docker-compose
+- docker-compose -f docker-compose-microservices.yml up
+
