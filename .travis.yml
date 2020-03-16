@@ -15,6 +15,7 @@ cache:
 before_install:
 - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv
   -in deploy_key.enc -out ./deploy_key -d
+- ssh-add ./deploy_key
 - mvn test
 - mvn sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3 -Dsonar.organization=pinfo-2020
   -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
@@ -32,3 +33,8 @@ script:
 - docker push kernel3/instrument-service:latest
 - docker tag unige/counterparty-service kernel3/counterparty-service:latest
 - docker push kernel3/counterparty-service:latest
+- eval "$(ssh-agent -s)"
+- chmod 600 ./deploy_key
+- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- ssh-add ./deploy_key
+- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
