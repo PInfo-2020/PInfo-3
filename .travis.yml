@@ -1,6 +1,7 @@
 language: java
 env:
 - NODE_VERSION="12.15.0"
+- SERVER_IP_ADDRESS=129.194.69.134
 services:
 - docker
 addons:
@@ -13,9 +14,9 @@ cache:
   - ".autoconf"
   - "$HOME/.m2"
 before_install:
-- openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv
+- openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv 0 $encrypted_dfdcfd5172af_iv
   -in deploy_key.enc -out ./deploy_key -d
-- ssh-add ./deploy_key
+  #ssh-add ./deploy_key
 - mvn test
 - mvn sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3 -Dsonar.organization=pinfo-2020
   -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
