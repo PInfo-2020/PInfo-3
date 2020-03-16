@@ -46,6 +46,6 @@ script:
 - ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/instrument-service:latest
 - ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/counterparty-service:latest
 - ssh -i ./deploy_key aminman7@129.194.69.134 docker image ls
-- ssh -i ./deploy_key aminman7@129.194.69.134 cd docker-compose
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose-microservices.yml up
+  #- ssh -i ./deploy_key aminman7@129.194.69.134 cd docker-compose
+- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-microservices.yml up
 
