@@ -9,8 +9,8 @@
 		<version>0.4.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>counterparty-service</artifactId>
-	<name>Counterparty Service</name>
+	<artifactId>profile-service</artifactId>
+	<name>Profile Service</name>
 	<packaging>war</packaging>
 
 	<properties>

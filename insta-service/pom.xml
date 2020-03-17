@@ -9,8 +9,8 @@
 		<version>0.4.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>valuation-service</artifactId>
-	<name>Valuation Service</name>
+	<artifactId>insta-service</artifactId>
+	<name>Insta Service</name>
 	<packaging>war</packaging>
 
 	<properties>
