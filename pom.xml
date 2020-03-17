@@ -38,10 +38,15 @@
 
 	<modules>
 		<module>api-gateway</module>
-		<module>counterparty-service</module>
-		<module>instrument-service</module>
-		<module>valuation-service</module>
-		<module>regulatory-service</module>
+		<module>chat-service</module>
+		<module>facebook-service</module>
+		<module>insta-service</module>
+		<module>twitter-service</module>
+		<module>publication-service</module>
+		<module>filtering-service</module>
+		<module>profile-service</module>
+
+
 	</modules>
 
 
