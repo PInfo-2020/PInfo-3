@@ -49,6 +49,6 @@ script:
 - ssh -i ./deploy_key aminman7@129.194.69.134 docker image ls
   #- ssh -i ./deploy_key aminman7@129.194.69.134 cd docker-compose
 - scp -r remove_docker_containers.sh aminman7@129.194.69.134:./
-- ssh -i aminman7@129.194.69.134 chmod u+x remove_docker_containers.sh
+- ssh -i ./deploy_key aminman7@129.194.69.134 chmod u+x remove_docker_containers.sh
 - ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-microservices.yml up
 - 
