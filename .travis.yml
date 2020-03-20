@@ -24,7 +24,15 @@ install:
   -in deploy_key.enc -out ./deploy_key -d
 script:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
--  
+- cd web-ui
+- pwd
+- npm -v
+- npm install
+- npm update
+- npm run-script build --prod
+- docker build -t unige/web-ui .
+- docker tag unige/web-ui kernel3/web-ui:latest      
+- docker push kernel3/web-ui:latest
 - docker tag unige/api-gateway kernel3/api-gateway:latest
 - docker push kernel3/api-gateway:latest
 - docker tag unige/regulatory-service kernel3/regulatory-service:latest
@@ -46,10 +54,11 @@ script:
 - ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/valuation-service:latest
 - ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/instrument-service:latest
 - ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/counterparty-service:latest
+- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/web-ui:latest
 - ssh -i ./deploy_key aminman7@129.194.69.134 docker image ls
-  #- ssh -i ./deploy_key aminman7@129.194.69.134 cd docker-compose
 - scp -r remove_docker_containers.sh aminman7@129.194.69.134:./
 - ssh -i ./deploy_key aminman7@129.194.69.134 chmod u+x remove_docker_containers.sh
 - ssh -i ./deploy_key aminman7@129.194.69.134 ./remove_docker_containers.sh
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-microservices.yml up
-- 
+- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-microservices.yml up &
+- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-log.yml up &
+- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-api-gw.yml up &
