@@ -77,7 +77,7 @@ services:
     networks:
       - backend-network    
     ports:
-      - "10080:28080"
+      - "10081:28080"
     depends_on:
        - counterparty-database
 
