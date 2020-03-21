@@ -25,7 +25,7 @@ services:
     tty: true
             
    api-gateway:
-    image: unige/api-gateway
+    image: kernel3/api-gateway
     container_name:  api-gateway
     hostname:  api-gateway
     networks:
