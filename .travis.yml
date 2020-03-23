@@ -24,15 +24,15 @@ install:
   -in deploy_key.enc -out ./deploy_key -d
 script:
 #- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-#- docker tag unige/api-gateway kernel3/api-gateway:latest
+#- docker tag kernel3/api-gateway kernel3/api-gateway:latest
 #- docker push kernel3/api-gateway:latest
-#- docker tag unige/regulatory-service kernel3/regulatory-service:latest
+#- docker tag kernel3/regulatory-service kernel3/regulatory-service:latest
 #- docker push kernel3/regulatory-service:latest
-#- docker tag unige/valuation-service kernel3/valuation-service:latest
+#- docker tag kernel3/valuation-service kernel3/valuation-service:latest
 #- docker push kernel3/valuation-service:latest
-#- docker tag unige/instrument-service kernel3/instrument-service:latest
+#- docker tag kernel3/instrument-service kernel3/instrument-service:latest
 #- docker push kernel3/instrument-service:latest
-#- docker tag unige/counterparty-service kernel3/counterparty-service:latest
+#- docker tag kernel3/counterparty-service kernel3/counterparty-service:latest
 #- docker push kernel3/counterparty-service:latest
 #- eval "$(ssh-agent -s)"
 #- chmod 600 ./deploy_key
