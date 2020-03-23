@@ -42,18 +42,18 @@ services:
     depends_on:
       - zookeeper
 
-  counterparty-database:
+  profile-database:
     image: postgres:10
-    container_name: counterparty-database
-    hostname: counterparty-database
+    container_name: kernel3/profile-database
+    hostname: kernel3/profile-database
     networks:
      - backend-network
     environment:
-      POSTGRES_USER: cpty
-      POSTGRES_PASSWORD: cpty
-      POSTGRES_DB: counterparty
+      POSTGRES_USER: pro
+      POSTGRES_PASSWORD: pro
+      POSTGRES_DB: pro
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "cpty", "-d", "counterparty"]
+      test: ["CMD", "pg_isready", "-U", "cpty", "-d", "profile"]
       interval: 30s
       timeout: 30s
       retries: 3
@@ -65,67 +65,96 @@ services:
     tty: true
 
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
-  counterparty-service:
-    container_name: counterparty-service    
-    image: unige/counterparty-service:latest
-    hostname: counterparty-service
+  profile-service:
+    container_name: profile-service  
+    image: kernel3/profile-service:latest
+    hostname: profile-service
     environment:
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL: "jdbc:postgresql://counterparty-database:5432/counterparty"
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL: "jdbc:postgresql://profile-service:5432/profile"
       THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_DRIVER_DASH_NAME: 'postgresql'   
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_USER_DASH_NAME: 'cpty'
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_PASSWORD: 'cpty'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_USER_DASH_NAME: 'pro'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_PASSWORD: 'pro'
     networks:
       - backend-network    
     ports:
-      - "10080:28080"
+      - "12086:28080"
     depends_on:
        - counterparty-database
 
-  instrument-database:
-    image: postgres:10
-    container_name: instrument-database
-    hostname: instrument-database
-    networks:
-     - backend-network
-    environment:
-      POSTGRES_USER: inst
-      POSTGRES_PASSWORD: inst
-      POSTGRES_DB: instrument
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "inst", "-d", "instrument"]
-      interval: 30s
-      timeout: 30s
-      retries: 3
-    volumes:
-      - pgdata-inst:/var/lib/postgresql/data
-      - ./test-data/instruments.sql:/docker-entrypoint-initdb.d/init.sql
-    restart: on-failure
-    stdin_open: true
-    tty: true
-    
-  instrument-service:
-    container_name: instrument-service    
-    image: unige/instrument-service:latest
-    hostname: instrument-service
+  chat-service:
+    container_name: chat-service    
+    image: kernel3/chat-service:latest
+    hostname: chat-service
     networks:
       - backend-network
     ports:
-      - "11080:28080"
+      - "12085:28080"
     environment:
       THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
       THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_INSTRUMENTDS_CONNECTION_DASH_URL: "jdbc:postgresql://instrument-database:5432/instrument"
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_INSTRUMENTDS_DRIVER_DASH_NAME: 'postgresql'   
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_INSTRUMENTDS_USER_DASH_NAME: 'inst'
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_INSTRUMENTDS_PASSWORD: 'inst'      
     depends_on:
        - kafka
-       - instrument-database
 
-  valuation-service:
-    container_name: valuation-service    
-    image: unige/valuation-service:latest
-    hostname: valuation-service
+  facebook-service:
+    container_name: facebook-service    
+    image: kernel3/facebook-service:latest
+    hostname: facebook-service
+    networks:
+      - backend-network
+    ports:
+      - "12084:28080"
+    environment:
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"      
+    depends_on:
+       - kafka
+
+  filtering-service:
+    container_name: filtering-service    
+    image: kernel3/filtering-service:latest
+    hostname: filtering-service
+    networks:
+      - backend-network
+    ports:
+      - "12083:28080"
+    environment:
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"      
+    depends_on:
+       - kafka
+
+  insta-service:
+    container_name: insta-service    
+    image: kernel3/insta-service:latest
+    hostname: insta-service
+    networks:
+      - backend-network
+    ports:
+      - "12082:28080"
+    environment:
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"      
+    depends_on:
+       - kafka
+
+  publication-service:
+    container_name: publication-service    
+    image: kernel3/publication-service:latest
+    hostname: publication-service
+    networks:
+      - backend-network
+    ports:
+      - "12081:28080"
+    environment:
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"      
+    depends_on:
+       - kafka
+ 
+  twitter-service:
+    container_name: twitter-service    
+    image: kernel3/twitter-service:latest
+    hostname: twitter-service
     networks:
       - backend-network
     ports:
@@ -135,8 +164,6 @@ services:
       THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"      
     depends_on:
        - kafka
-       - instrument-service   
-
 volumes:
    pgdata-cpty:
    pgdata-inst:

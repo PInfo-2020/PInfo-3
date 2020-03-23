@@ -322,7 +322,7 @@
 							<dockerHost>${dockerHost}</dockerHost>
 							<images>
 								<image>
-									<name>%g/%a:%l</name>
+									<name>kernel3/%a:%l</name>
 									<run>
 										<ports>
 											<port>8080:8080</port>
