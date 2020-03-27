@@ -32,30 +32,30 @@ script:
 - docker tag unige/web-ui kernel3/web-ui:latest      
 - docker push kernel3/web-ui:latest
 - cd ..
-- docker tag unige/api-gateway kernel3/api-gateway:latest
-- docker push kernel3/api-gateway:latest
-- docker tag unige/regulatory-service kernel3/regulatory-service:latest
-- docker push kernel3/regulatory-service:latest
-- docker tag unige/valuation-service kernel3/valuation-service:latest
-- docker push kernel3/valuation-service:latest
-- docker tag unige/instrument-service kernel3/instrument-service:latest
-- docker push kernel3/instrument-service:latest
-- docker tag unige/counterparty-service kernel3/counterparty-service:latest
-- docker push kernel3/counterparty-service:latest
+#- docker tag unige/api-gateway kernel3/api-gateway:latest
+#- docker push kernel3/api-gateway:latest
+#- docker tag unige/regulatory-service kernel3/regulatory-service:latest
+#- docker push kernel3/regulatory-service:latest
+#- docker tag unige/valuation-service kernel3/valuation-service:latest
+#- docker push kernel3/valuation-service:latest
+#- docker tag unige/instrument-service kernel3/instrument-service:latest
+#- docker push kernel3/instrument-service:latest
+#- docker tag unige/counterparty-service kernel3/counterparty-service:latest
+#- docker push kernel3/counterparty-service:latest
 - eval "$(ssh-agent -s)"
 - chmod 600 ./deploy_key
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - ssh-add ./deploy_key
 - ssh -i ./deploy_key aminman7@129.194.69.134 rm -r docker-compose web-ui
 - scp -r docker-compose aminman7@129.194.69.134:./
-- scp -r web-ui/dist aminman7@129.194.69.134:./web-ui
-- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/api-gateway:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/regulatory-service:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/valuation-service:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/instrument-service:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/counterparty-service:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/web-ui:latest
+- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
+#- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/api-gateway:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/regulatory-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/valuation-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/instrument-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/counterparty-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/web-ui:latest
 - ssh -i ./deploy_key aminman7@129.194.69.134 docker image ls
 - scp -r remove_docker_containers.sh aminman7@129.194.69.134:./
 - ssh -i ./deploy_key aminman7@129.194.69.134 chmod u+x remove_docker_containers.sh
