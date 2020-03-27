@@ -21,3 +21,19 @@ docker rm zookeeper
 
 docker stop kafka
 docker rm kafka
+
+docker stop iam-db
+docker rm iam-db
+
+docker stop kong-database
+docker rm kong-database
+
+
+docker stop api-gateway
+docker rm api-gateway
+
+docker stop iam
+docker rm iam
+
+docker stop kibana
+docker rm kibana
