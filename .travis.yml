@@ -46,7 +46,6 @@ script:
 - chmod 600 ./deploy_key
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - ssh-add ./deploy_key
-- ssh -i ./deploy_key aminman7@129.194.69.134 rm -r docker-compose web-ui
 - scp -r docker-compose aminman7@129.194.69.134:./
 - scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
 #- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
