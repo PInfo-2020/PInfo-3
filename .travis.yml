@@ -48,7 +48,7 @@ script:
 - ssh-add ./deploy_key
 - ssh -i ./deploy_key aminman7@129.194.69.134 rm -r docker-compose web-ui
 - scp -r docker-compose aminman7@129.194.69.134:./
-- scp -r web-ui/dist aminman7@129.194.69.134:./
+- scp -r web-ui aminman7@129.194.69.134:./
 - ssh -i ./deploy_key aminman7@129.194.69.134 pwd
 - ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/api-gateway:latest
 - ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/regulatory-service:latest
