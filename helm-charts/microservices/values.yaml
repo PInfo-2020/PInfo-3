@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: stevehostettler/
+  repository: digetmp/ #stevehostettler/
   tag: latest
   pullPolicy: IfNotPresent
 

@@ -28,7 +28,7 @@ script:
 - npm install
 - npm update
 - npm run-script build --prod
-- docker build -t unige/web-ui .
+- docker build -t digetmp/web-ui .
 - docker tag digetmp/web-ui digetmp/web-ui:latest      
 - docker push digetmp/web-ui:latest
 - cd ..
