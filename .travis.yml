@@ -29,19 +29,19 @@ script:
 - npm update
 - npm run-script build --prod
 - docker build -t unige/web-ui .
-- docker tag digeTmp/web-ui digeTmp/web-ui:latest      
-- docker push digeTmp/web-ui:latest
+- docker tag digetmp/web-ui digetmp/web-ui:latest      
+- docker push digetmp/web-ui:latest
 - cd ..
-- docker tag digeTmp/api-gateway digeTmp/api-gateway:latest
-- docker push digeTmp/api-gateway:latest
-- docker tag digeTmp/regulatory-service digeTmp/regulatory-service:latest
-- docker push digeTmp/regulatory-service:latest
-- docker tag digeTmp/valuation-service digeTmp/valuation-service:latest
-- docker push digeTmp/valuation-service:latest
-- docker tag digeTmp/instrument-service digeTmp/instrument-service:latest
-- docker push digeTmp/instrument-service:latest
-- docker tag digeTmp/counterparty-service digeTmp/counterparty-service:latest
-- docker push digeTmp/counterparty-service:latest
+- docker tag digetmp/api-gateway digetmp/api-gateway:latest
+- docker push digetmp/api-gateway:latest
+- docker tag digetmp/regulatory-service digetmp/regulatory-service:latest
+- docker push digetmp/regulatory-service:latest
+- docker tag digetmp/valuation-service digetmp/valuation-service:latest
+- docker push digetmp/valuation-service:latest
+- docker tag digetmp/instrument-service digetmp/instrument-service:latest
+- docker push digetmp/instrument-service:latest
+- docker tag digetmp/counterparty-service digetmp/counterparty-service:latest
+- docker push digetmp/counterparty-service:latest
 - eval "$(ssh-agent -s)"
 - chmod 600 ./deploy_key
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
@@ -49,12 +49,12 @@ script:
 - scp -r docker-compose aminman7@129.194.69.134:./
 - scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
 - ssh -i ./deploy_key aminman7@129.194.69.134 pwd
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digeTmp/api-gateway:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digeTmp/regulatory-service:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digeTmp/valuation-service:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digeTmp/instrument-service:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digeTmp/counterparty-service:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digeTmp/web-ui:latest
+- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/api-gateway:latest
+- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/regulatory-service:latest
+- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/valuation-service:latest
+- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/instrument-service:latest
+- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/counterparty-service:latest
+- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/web-ui:latest
 - ssh -i ./deploy_key aminman7@129.194.69.134 docker image ls
 - scp -r remove_docker_containers.sh aminman7@129.194.69.134:./
 - ssh -i ./deploy_key aminman7@129.194.69.134 chmod u+x remove_docker_containers.sh
