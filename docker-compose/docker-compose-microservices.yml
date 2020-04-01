@@ -67,7 +67,7 @@ services:
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
   counterparty-service:
     container_name: counterparty-service    
-    image: digeTmp/counterparty-service:latest
+    image: digetmp/counterparty-service:latest
     hostname: counterparty-service
     environment:
       THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL: "jdbc:postgresql://counterparty-database:5432/counterparty"
@@ -105,7 +105,7 @@ services:
     
   instrument-service:
     container_name: instrument-service    
-    image: digeTmp/instrument-service:latest
+    image: digetmp/instrument-service:latest
     hostname: instrument-service
     networks:
       - backend-network
@@ -124,7 +124,7 @@ services:
 
   valuation-service:
     container_name: valuation-service    
-    image: digeTmp/valuation-service:latest
+    image: digetmp/valuation-service:latest
     hostname: valuation-service
     networks:
       - backend-network

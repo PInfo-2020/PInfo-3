@@ -317,7 +317,7 @@
 							<dockerHost>${dockerHost}</dockerHost>
 							<images>
 								<image>
-									<name>digeTmp/%a:%l</name>
+									<name>digetmp/%a:%l</name>
 									<run>
 										<ports>
 											<port>8080:8080</port>
