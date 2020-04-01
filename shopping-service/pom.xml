@@ -9,8 +9,8 @@
 		<version>0.4.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>profile-service</artifactId>
-	<name>Profile Service</name>
+	<artifactId>shopping-service</artifactId>
+	<name>Shopping Service</name>
 	<packaging>war</packaging>
 
 	<properties>

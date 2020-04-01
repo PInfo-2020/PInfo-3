@@ -7,7 +7,7 @@
 	<groupId>ch.unige</groupId>
 	<artifactId>pinfo-micro-services</artifactId>
 		<version>0.4.0-SNAPSHOT</version>
-	<name>Kernel</name>
+	<name>Digestive</name>
 
 	<packaging>pom</packaging>
 
@@ -38,13 +38,10 @@
 
 	<modules>
 		<module>api-gateway</module>
-		<module>chat-service</module>
-		<module>facebook-service</module>
-		<module>insta-service</module>
-		<module>twitter-service</module>
-		<module>publication-service</module>
-		<module>filtering-service</module>
 		<module>profile-service</module>
+		<module>recipes-service</module>
+		<module>ingredients-service</module>
+		<module>shopping-service</module>
 
 
 	</modules>
@@ -322,7 +319,7 @@
 							<dockerHost>${dockerHost}</dockerHost>
 							<images>
 								<image>
-									<name>kernel3/%a:%l</name>
+									<name>dige/%a:%l</name>
 									<run>
 										<ports>
 											<port>8080:8080</port>

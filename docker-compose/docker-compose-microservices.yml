@@ -42,10 +42,101 @@ services:
     depends_on:
       - zookeeper
 
+  shopping-database:
+    image: postgres:10
+    container_name: dige/shopping-database
+    hostname: dige/shopping-database
+    networks:
+     - backend-network
+    environment:
+      POSTGRES_USER: sho
+      POSTGRES_PASSWORD: sho
+      POSTGRES_DB: sho
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "sho", "-d", "sho"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - pgdata-cpty:/var/lib/postgresql/data
+      - ./test-data/shopping.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: on-failure
+    stdin_open: true
+    tty: true
+
+  #The counterparty service provides counterparty data, it is also the single version of truth for these data
+  shopping-service:
+    container_name: shopping-service  
+    image: dige/shopping-service:latest
+    hostname: shopping-service
+    environment:
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL: "jdbc:postgresql://shopping-database:5432/shopping"
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_DRIVER_DASH_NAME: 'postgresql'   
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_USER_DASH_NAME: 'pro'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_PASSWORD: 'pro'
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
+    networks:
+      - backend-network 
+    ports:
+      - "12085:28080"
+    depends_on:
+       - kafka
+#################################################################################################
+#												#
+#################################################################################################
+
+
+  ingredients-database:
+    image: postgres:10
+    container_name: dige/ingredients-database
+    hostname: dige/ingredients-database
+    networks:
+     - backend-network
+    environment:
+      POSTGRES_USER: ing
+      POSTGRES_PASSWORD: ing
+      POSTGRES_DB: ing
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "ing", "-d", "ing"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - pgdata-cpty:/var/lib/postgresql/data
+      - ./test-data/ingredients.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: on-failure
+    stdin_open: true
+    tty: true
+
+  #The counterparty service provides counterparty data, it is also the single version of truth for these data
+  ingredients-service:
+    container_name: ingredients-service  
+    image: dige/ingredients-service:latest
+    hostname: ingredients-service
+    environment:
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL: "jdbc:postgresql://ingredients-database:5432/ingredients"
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_DRIVER_DASH_NAME: 'postgresql'   
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_USER_DASH_NAME: 'ing'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_PASSWORD: 'ing'
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
+    networks:
+      - backend-network 
+    ports:
+      - "12084:28080"
+    depends_on:
+       - kafka
+
+#################################################################################################
+#												#
+#################################################################################################
+
+
   profile-database:
     image: postgres:10
-    container_name: kernel3/profile-database
-    hostname: kernel3/profile-database
+    container_name: dige/profile-database
+    hostname: dige/profile-database
     networks:
      - backend-network
     environment:
@@ -53,117 +144,82 @@ services:
       POSTGRES_PASSWORD: pro
       POSTGRES_DB: pro
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "cpty", "-d", "profile"]
+      test: ["CMD", "pg_isready", "-U", "pro", "-d", "pro"]
       interval: 30s
       timeout: 30s
       retries: 3
     volumes:
       - pgdata-cpty:/var/lib/postgresql/data
-      - ./test-data/counterparties.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./test-data/profile.sql:/docker-entrypoint-initdb.d/init.sql
     restart: on-failure
     stdin_open: true
     tty: true
 
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
-  profile-service:
+  ingredients-service:
     container_name: profile-service  
-    image: kernel3/profile-service:latest
+    image: dige/profile-service:latest
     hostname: profile-service
     environment:
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL: "jdbc:postgresql://profile-service:5432/profile"
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL: "jdbc:postgresql://profile-database:5432/profile"
       THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_DRIVER_DASH_NAME: 'postgresql'   
       THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_USER_DASH_NAME: 'pro'
       THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_PASSWORD: 'pro'
-    networks:
-      - backend-network    
-    ports:
-      - "12086:28080"
-    depends_on:
-       - counterparty-database
-
-  chat-service:
-    container_name: chat-service    
-    image: kernel3/chat-service:latest
-    hostname: chat-service
-    networks:
-      - backend-network
-    ports:
-      - "12085:28080"
-    environment:
       THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
       THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
-    depends_on:
-       - kafka
-
-  facebook-service:
-    container_name: facebook-service    
-    image: kernel3/facebook-service:latest
-    hostname: facebook-service
     networks:
-      - backend-network
-    ports:
-      - "12084:28080"
-    environment:
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"      
-    depends_on:
-       - kafka
-
-  filtering-service:
-    container_name: filtering-service    
-    image: kernel3/filtering-service:latest
-    hostname: filtering-service
-    networks:
-      - backend-network
+      - backend-network 
     ports:
       - "12083:28080"
-    environment:
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"      
     depends_on:
        - kafka
 
-  insta-service:
-    container_name: insta-service    
-    image: kernel3/insta-service:latest
-    hostname: insta-service
+#################################################################################################
+#												#
+#################################################################################################
+
+
+  recipes-database:
+    image: postgres:10
+    container_name: dige/recipes-database
+    hostname: dige/recipes-database
     networks:
-      - backend-network
+     - backend-network
+    environment:
+      POSTGRES_USER: rec
+      POSTGRES_PASSWORD: rec
+      POSTGRES_DB: rec
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "rec", "-d", "rec"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - pgdata-cpty:/var/lib/postgresql/data
+      - ./test-data/recipes.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: on-failure
+    stdin_open: true
+    tty: true
+
+  #The counterparty service provides counterparty data, it is also the single version of truth for these data
+  recipes-service:
+    container_name: recipes-service  
+    image: dige/recipes-service:latest
+    hostname: recipes-service
+    environment:
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL: "jdbc:postgresql://recipes-database:5432/recipes"
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_DRIVER_DASH_NAME: 'postgresql'   
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_USER_DASH_NAME: 'rec'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_PASSWORD: 'rec'
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
+    networks:
+      - backend-network 
     ports:
       - "12082:28080"
-    environment:
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"      
     depends_on:
        - kafka
 
-  publication-service:
-    container_name: publication-service    
-    image: kernel3/publication-service:latest
-    hostname: publication-service
-    networks:
-      - backend-network
-    ports:
-      - "12081:28080"
-    environment:
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"      
-    depends_on:
-       - kafka
- 
-  twitter-service:
-    container_name: twitter-service    
-    image: kernel3/twitter-service:latest
-    hostname: twitter-service
-    networks:
-      - backend-network
-    ports:
-      - "12080:28080"
-    environment:
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"      
-    depends_on:
-       - kafka
 volumes:
    pgdata-cpty:
    pgdata-inst:

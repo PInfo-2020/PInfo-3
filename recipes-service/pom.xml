@@ -9,13 +9,16 @@
 		<version>0.4.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>profile-service</artifactId>
-	<name>Profile Service</name>
+	<artifactId>recipes-service</artifactId>
+	<name>Recipes Service</name>
 	<packaging>war</packaging>
 
 	<properties>
+		<container.folder>${project.build.directory}/wildfly-${wildfly.version}</container.folder>
 		<skip-docker-build>false</skip-docker-build>
+		<version.postgresql>42.2.2</version.postgresql>
 	</properties>
+
 
 	<dependencies>
 		<dependency>
@@ -28,15 +31,15 @@
 		</dependency>
 		<dependency>
 			<groupId>io.thorntail</groupId>
-			<artifactId>swagger</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.thorntail</groupId>
 			<artifactId>cdi</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.thorntail</groupId>
 			<artifactId>transactions</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.thorntail</groupId>
+			<artifactId>swagger</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.enterprise</groupId>
@@ -63,9 +66,8 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>${postgresql.jdbc.driver.version}</version>
+			<groupId>org.aerogear.kafka</groupId>
+			<artifactId>kafka-cdi-extension</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax</groupId>
@@ -95,12 +97,10 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
@@ -112,15 +112,15 @@
 			<artifactId>hamcrest-all</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgresql.jdbc.driver.version}</version>
+		</dependency>
 	</dependencies>
-
-
-
 	<build>
+
 		<plugins>
-
-
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -195,7 +195,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>io.thorntail</groupId>
 				<artifactId>thorntail-maven-plugin</artifactId>
@@ -235,10 +234,8 @@
 					</execution>
 				</executions>
 			</plugin>
-
-
-
-			<plugin>
+			
+						<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>sql-maven-plugin</artifactId>
 				<version>1.5</version>
@@ -251,7 +248,7 @@
 				</dependencies>
 				<configuration>
 					<driver>org.h2.Driver</driver>
-					<url>jdbc:h2:${java.io.tmpdir}/target/CounterpartyDB;AUTO_SERVER=TRUE</url>
+					<url>jdbc:h2:${java.io.tmpdir}/target/InstrumentDB;AUTO_SERVER=TRUE;AUTO_SERVER=TRUE</url>
 					<username>sa</username>
 					<password>sa</password>
 					<autocommit>true</autocommit>
@@ -266,7 +263,7 @@
 						</goals>
 						<configuration>
 							<srcFiles>
-								<srcFile>${project.basedir}/src/main/resources/META-INF/counterparties_test_data.sql</srcFile>
+								<srcFile>${project.basedir}/src/main/resources/META-INF/instruments_test_data.sql</srcFile>
 							</srcFiles>
 						</configuration>
 					</execution>
