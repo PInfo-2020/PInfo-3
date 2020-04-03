@@ -42,23 +42,23 @@ script:
 - docker push digetmp/instrument-service:latest
 - docker tag digetmp/counterparty-service digetmp/counterparty-service:latest
 - docker push digetmp/counterparty-service:latest
-- eval "$(ssh-agent -s)"
-- chmod 600 ./deploy_key
-- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-- ssh-add ./deploy_key
-- scp -r docker-compose aminman7@129.194.69.134:./
-- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
-- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/api-gateway:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/regulatory-service:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/valuation-service:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/instrument-service:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/counterparty-service:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/web-ui:latest
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker image ls
-- scp -r remove_docker_containers.sh aminman7@129.194.69.134:./
-- ssh -i ./deploy_key aminman7@129.194.69.134 chmod u+x remove_docker_containers.sh
-- ssh -i ./deploy_key aminman7@129.194.69.134 ./remove_docker_containers.sh
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-microservices.yml up &
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-log.yml up &
-- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-api-gw.yml up &
+#- eval "$(ssh-agent -s)"
+#- chmod 600 ./deploy_key
+#- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+#- ssh-add ./deploy_key
+#- scp -r docker-compose aminman7@129.194.69.134:./
+#- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
+#- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/api-gateway:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/regulatory-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/valuation-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/instrument-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/counterparty-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull digetmp/web-ui:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker image ls
+#- scp -r remove_docker_containers.sh aminman7@129.194.69.134:./
+#- ssh -i ./deploy_key aminman7@129.194.69.134 chmod u+x remove_docker_containers.sh
+#- ssh -i ./deploy_key aminman7@129.194.69.134 ./remove_docker_containers.sh
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-microservices.yml up &
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-log.yml up &
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-api-gw.yml up &
