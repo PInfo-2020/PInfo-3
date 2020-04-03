@@ -1,0 +1,2062 @@
+---
+# Source: microservices/charts/nginx-ingress/templates/controller-serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app: nginx-ingress
+    chart: nginx-ingress-1.27.0
+    heritage: Helm
+    release: pinfo-v1
+  name: pinfo-v1-nginx-ingress
+---
+# Source: microservices/charts/nginx-ingress/templates/default-backend-serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app: nginx-ingress
+    chart: nginx-ingress-1.27.0
+    heritage: Helm
+    release: pinfo-v1
+  name: pinfo-v1-nginx-ingress-backend
+---
+# Source: microservices/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pinfo-v1-microservices
+  labels:
+
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: microservices/charts/counterparty-db/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pinfo-v1-counterparty-db
+  labels:
+    app: counterparty-db
+    chart: counterparty-db-7.7.2
+    release: "pinfo-v1"
+    heritage: "Helm"
+type: Opaque
+data:
+  postgresql-password: "Nlp3MjYxZWFiUA=="
+---
+# Source: microservices/charts/instrument-db/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pinfo-v1-instrument-db
+  labels:
+    app: instrument-db
+    chart: instrument-db-7.7.2
+    release: "pinfo-v1"
+    heritage: "Helm"
+type: Opaque
+data:
+  postgresql-password: "UUh4SER5bVZWNA=="
+---
+# Source: microservices/charts/keycloak/templates/secret-db.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pinfo-v1-keycloak-db
+  labels:
+    app.kubernetes.io/name: keycloak
+    helm.sh/chart: keycloak-7.4.0
+    app.kubernetes.io/instance: "pinfo-v1"
+    app.kubernetes.io/managed-by: Helm
+type: Opaque
+data:
+  password: ""
+  username: "a2V5Y2xvYWs="
+---
+# Source: microservices/charts/keycloak/templates/secret-keycloak.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pinfo-v1-keycloak-http
+  labels:
+    app.kubernetes.io/name: keycloak
+    helm.sh/chart: keycloak-7.4.0
+    app.kubernetes.io/instance: "pinfo-v1"
+    app.kubernetes.io/managed-by: Helm
+type: Opaque
+data:
+  password: "YXNkZmdoamts"
+---
+# Source: microservices/charts/keycloak/templates/configmap-sh.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pinfo-v1-keycloak-sh
+  labels:
+    app.kubernetes.io/name: keycloak
+    helm.sh/chart: keycloak-7.4.0
+    app.kubernetes.io/instance: "pinfo-v1"
+    app.kubernetes.io/managed-by: Helm
+data:
+  keycloak.sh: |
+    #!/usr/bin/env bash
+
+    set -o errexit
+    set -o nounset
+
+    exec /opt/jboss/tools/docker-entrypoint.sh -b 0.0.0.0 -Dkeycloak.import=/realm/realms.json -c standalone.xml
+---
+# Source: microservices/charts/keycloak/templates/configmap-startup.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pinfo-v1-keycloak-startup
+  labels:
+    app.kubernetes.io/name: keycloak
+    helm.sh/chart: keycloak-7.4.0
+    app.kubernetes.io/instance: "pinfo-v1"
+    app.kubernetes.io/managed-by: Helm
+data:
+  keycloak.cli: |
+    embed-server --std-out=echo
+    batch
+    ## Sets the node identifier to the node name (= pod name). Node identifiers have to be unique. They can have a
+    ## maximum length of 23 characters. Thus, the chart's fullname template truncates its length accordingly.
+    /subsystem=transactions:write-attribute(name=node-identifier, value=${jboss.node.name})
+    
+    
+    # Allow log level to be configured via environment variable
+    /subsystem=logging/console-handler=CONSOLE:write-attribute(name=level, value=${env.WILDFLY_LOGLEVEL:INFO})
+    /subsystem=logging/root-logger=ROOT:write-attribute(name=level, value=${env.WILDFLY_LOGLEVEL:INFO})
+    
+    # Add dedicated eventsListener config element to allow configuring elements.
+    /subsystem=keycloak-server/spi=eventsListener:add()
+    /subsystem=keycloak-server/spi=eventsListener/provider=jboss-logging:add(enabled=true)
+    
+    # Propagate success events to INFO instead of DEBUG, to expose successful logins for log analysis
+    /subsystem=keycloak-server/spi=eventsListener/provider=jboss-logging:write-attribute(name=properties.success-level,value=info)
+    /subsystem=keycloak-server/spi=eventsListener/provider=jboss-logging:write-attribute(name=properties.error-level,value=warn)
+    
+    
+    # Configure datasource to use explicit query timeout in seconds
+    /subsystem=datasources/data-source=KeycloakDS/:write-attribute(name=query-timeout,value=${env.DB_QUERY_TIMEOUT:300})
+    
+    # Configure datasource to connection before use
+    /subsystem=datasources/data-source=KeycloakDS/:write-attribute(name=validate-on-match,value=${env.DB_VALIDATE_ON_MATCH:true})
+    
+    # Configure datasource to try all other connections before failing
+    /subsystem=datasources/data-source=KeycloakDS/:write-attribute(name=use-fast-fail,value=${env.DB_USE_CAST_FAIL:false})
+    
+    
+
+    run-batch
+    stop-embedded-server
+---
+# Source: microservices/charts/keycloak/templates/test/configmap-test.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pinfo-v1-keycloak-test
+  labels:
+    app.kubernetes.io/name: keycloak
+    helm.sh/chart: keycloak-7.4.0
+    app.kubernetes.io/instance: "pinfo-v1"
+    app.kubernetes.io/managed-by: Helm
+data:
+  test.py: |
+    import os
+    from selenium import webdriver
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions
+    from urllib.parse import urlparse
+
+    print('Creating PhantomJS driver...')
+    driver = webdriver.PhantomJS(service_log_path='/tmp/ghostdriver.log')
+
+    base_url = 'http://pinfo-v1-keycloak-http'
+
+    print('Opening Keycloak...')
+    driver.get('{0}/auth/admin/'.format(base_url))
+
+    username = os.environ['KEYCLOAK_USER']
+    password = os.environ['KEYCLOAK_PASSWORD']
+
+    username_input = WebDriverWait(driver, 30).until(expected_conditions.presence_of_element_located((By.ID, "username")))
+    password_input = WebDriverWait(driver, 30).until(expected_conditions.presence_of_element_located((By.ID, "password")))
+    login_button = WebDriverWait(driver, 30).until(expected_conditions.presence_of_element_located((By.ID, "kc-login")))
+
+    print('Entering username...')
+    username_input.send_keys(username)
+
+    print('Entering password...')
+    password_input.send_keys(password)
+
+    print('Clicking login button...')
+    login_button.click()
+
+    current_url = urlparse(driver.current_url)
+    expected_url = urlparse('{0}/auth/admin/master/console/'.format(base_url))
+
+    print('Current URL: {0}'.format(current_url))
+    print('Expected URL: {0}'.format(expected_url))
+
+    if current_url.path != expected_url.path:
+        print('Login failed. Current url is not expected url')
+        exit(1)
+
+    print('URLs match. Login successful.')
+
+    driver.quit()
+---
+# Source: microservices/charts/nginx-ingress/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  labels:
+    app: nginx-ingress
+    chart: nginx-ingress-1.27.0
+    heritage: Helm
+    release: pinfo-v1
+  name: pinfo-v1-nginx-ingress
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - endpoints
+      - nodes
+      - pods
+      - secrets
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+    verbs:
+      - get
+  - apiGroups:
+      - ""
+    resources:
+      - services
+    verbs:
+      - get
+      - list
+      - update
+      - watch
+  - apiGroups:
+      - extensions
+      - "networking.k8s.io" # k8s 1.14+
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+  - apiGroups:
+      - extensions
+      - "networking.k8s.io" # k8s 1.14+
+    resources:
+      - ingresses/status
+    verbs:
+      - update
+---
+# Source: microservices/charts/nginx-ingress/templates/clusterrolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: nginx-ingress
+    chart: nginx-ingress-1.27.0
+    heritage: Helm
+    release: pinfo-v1
+  name: pinfo-v1-nginx-ingress
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: pinfo-v1-nginx-ingress
+subjects:
+  - kind: ServiceAccount
+    name: pinfo-v1-nginx-ingress
+    namespace: default
+---
+# Source: microservices/charts/nginx-ingress/templates/controller-role.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  labels:
+    app: nginx-ingress
+    chart: nginx-ingress-1.27.0
+    heritage: Helm
+    release: pinfo-v1
+  name: pinfo-v1-nginx-ingress
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces
+    verbs:
+      - get
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - pods
+      - secrets
+      - endpoints
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - services
+    verbs:
+      - get
+      - list
+      - update
+      - watch
+  - apiGroups:
+      - extensions
+      - "networking.k8s.io" # k8s 1.14+
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - extensions
+      - "networking.k8s.io" # k8s 1.14+
+    resources:
+      - ingresses/status
+    verbs:
+      - update
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    resourceNames:
+      - ingress-controller-leader-nginx
+    verbs:
+      - get
+      - update
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - create
+  - apiGroups:
+      - ""
+    resources:
+      - endpoints
+    verbs:
+      - create
+      - get
+      - update
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+---
+# Source: microservices/charts/nginx-ingress/templates/controller-rolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  labels:
+    app: nginx-ingress
+    chart: nginx-ingress-1.27.0
+    heritage: Helm
+    release: pinfo-v1
+  name: pinfo-v1-nginx-ingress
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pinfo-v1-nginx-ingress
+subjects:
+  - kind: ServiceAccount
+    name: pinfo-v1-nginx-ingress
+    namespace: default
+---
+# Source: microservices/charts/counterparty-db/templates/svc-headless.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-counterparty-db-headless
+  labels:
+    app: counterparty-db
+    chart: counterparty-db-7.7.2
+    release: "pinfo-v1"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+  selector:
+    app: counterparty-db
+    release: "pinfo-v1"
+---
+# Source: microservices/charts/counterparty-db/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-counterparty-db
+  labels:
+    app: counterparty-db
+    chart: counterparty-db-7.7.2
+    release: "pinfo-v1"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+  selector:
+    app: counterparty-db
+    release: "pinfo-v1"
+    role: master
+---
+# Source: microservices/charts/instrument-db/templates/svc-headless.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-instrument-db-headless
+  labels:
+    app: instrument-db
+    chart: instrument-db-7.7.2
+    release: "pinfo-v1"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+  selector:
+    app: instrument-db
+    release: "pinfo-v1"
+---
+# Source: microservices/charts/instrument-db/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-instrument-db
+  labels:
+    app: instrument-db
+    chart: instrument-db-7.7.2
+    release: "pinfo-v1"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+  selector:
+    app: instrument-db
+    release: "pinfo-v1"
+    role: master
+---
+# Source: microservices/charts/kafka/charts/zookeeper/templates/svc-headless.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-zookeeper-headless
+  labels:
+    app.kubernetes.io/name: zookeeper
+    helm.sh/chart: zookeeper-5.4.3
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: zookeeper
+spec:
+  type: ClusterIP
+  clusterIP: None
+  publishNotReadyAddresses: true
+  ports:
+    - name: client
+      port: 2181
+      targetPort: client
+    - name: follower
+      port: 2888
+      targetPort: follower
+    - name: election
+      port: 3888
+      targetPort: election
+  selector:
+    app.kubernetes.io/name: zookeeper
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/component: zookeeper
+---
+# Source: microservices/charts/kafka/charts/zookeeper/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-zookeeper
+  labels:
+    app.kubernetes.io/name: zookeeper
+    helm.sh/chart: zookeeper-5.4.3
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: zookeeper
+spec:
+  type: ClusterIP
+  ports:
+    - name: client
+      port: 2181
+      targetPort: client
+    - name: follower
+      port: 2888
+      targetPort: follower
+    - name: election
+      port: 3888
+      targetPort: election
+  selector:
+    app.kubernetes.io/name: zookeeper
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/component: zookeeper
+---
+# Source: microservices/charts/kafka/templates/svc-headless.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-kafka-headless
+  labels:
+    app.kubernetes.io/name: kafka
+    helm.sh/chart: kafka-7.2.9
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: kafka
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: kafka
+      port: 9092
+      targetPort: kafka
+  selector:
+    app.kubernetes.io/name: kafka
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/component: kafka
+---
+# Source: microservices/charts/kafka/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-kafka
+  labels:
+    app.kubernetes.io/name: kafka
+    helm.sh/chart: kafka-7.2.9
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: kafka
+  annotations: 
+    {}
+spec:
+  type: ClusterIP
+  ports:
+    - name: kafka
+      port: 9092
+      targetPort: kafka
+  selector:
+    app.kubernetes.io/name: kafka
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/component: kafka
+---
+# Source: microservices/charts/keycloak/templates/service-headless.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-keycloak-headless
+  labels:
+    app.kubernetes.io/name: keycloak
+    helm.sh/chart: keycloak-7.4.0
+    app.kubernetes.io/instance: "pinfo-v1"
+    app.kubernetes.io/managed-by: Helm
+    service: headless
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP
+    - name: https
+      port: 8443
+      targetPort: https
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/instance: "pinfo-v1"
+---
+# Source: microservices/charts/keycloak/templates/service-http.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-keycloak-http
+  labels:
+    app.kubernetes.io/name: keycloak
+    helm.sh/chart: keycloak-7.4.0
+    app.kubernetes.io/instance: "pinfo-v1"
+    app.kubernetes.io/managed-by: Helm
+    service: http
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP
+    - name: https
+      port: 8443
+      targetPort: https
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/instance: "pinfo-v1"
+---
+# Source: microservices/charts/nginx-ingress/templates/controller-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx-ingress
+    chart: nginx-ingress-1.27.0
+    component: "controller"
+    heritage: Helm
+    release: pinfo-v1
+  name: pinfo-v1-nginx-ingress-controller
+spec:
+  
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: https
+  selector:
+    app: nginx-ingress
+    component: "controller"
+    release: pinfo-v1
+  type: "LoadBalancer"
+---
+# Source: microservices/charts/nginx-ingress/templates/default-backend-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx-ingress
+    chart: nginx-ingress-1.27.0
+    component: "default-backend"
+    heritage: Helm
+    release: pinfo-v1
+  name: pinfo-v1-nginx-ingress-default-backend
+spec:
+  
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+  selector:
+    app: nginx-ingress
+    component: "default-backend"
+    release: pinfo-v1
+  type: "ClusterIP"
+---
+# Source: microservices/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-microservices-counterparty-service
+  labels:
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm.counterparty-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 28080
+      targetPort: 28080
+      protocol: TCP
+  selector:
+    app: pinfo-v1-microservices.counterparty-service
+---
+# Source: microservices/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-microservices-valuation-service
+  labels:
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm.valuation-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 28080
+      targetPort: 28080
+      protocol: TCP
+  selector:
+    app: pinfo-v1-microservices.valuation-service
+---
+# Source: microservices/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-microservices-instrument-service
+  labels:
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm.instrument-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 28080
+      targetPort: 28080
+      protocol: TCP
+  selector:
+    app: pinfo-v1-microservices.instrument-service
+---
+# Source: microservices/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pinfo-v1-microservices-web-ui
+  labels:
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm.web-ui
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: pinfo-v1-microservices.web-ui
+---
+# Source: microservices/charts/nginx-ingress/templates/controller-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-ingress
+    chart: nginx-ingress-1.27.0
+    component: "controller"
+    heritage: Helm
+    release: pinfo-v1
+  name: pinfo-v1-nginx-ingress-controller
+  annotations:
+    {}
+spec:
+  selector:
+    matchLabels:
+      app: nginx-ingress
+      release: pinfo-v1
+  replicas: 1
+  revisionHistoryLimit: 10
+  strategy:
+    {}
+  minReadySeconds: 0
+  template:
+    metadata:
+      labels:
+        app: nginx-ingress
+        component: "controller"
+        release: pinfo-v1
+    spec:
+      dnsPolicy: ClusterFirst
+      containers:
+        - name: nginx-ingress-controller
+          image: "quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.26.1"
+          imagePullPolicy: "IfNotPresent"
+          args:
+            - /nginx-ingress-controller
+            - --default-backend-service=default/pinfo-v1-nginx-ingress-default-backend
+            - --election-id=ingress-controller-leader
+            - --ingress-class=nginx
+            - --configmap=default/pinfo-v1-nginx-ingress-controller
+          securityContext:
+            capabilities:
+                drop:
+                - ALL
+                add:
+                - NET_BIND_SERVICE
+            runAsUser: 33
+            allowPrivilegeEscalation: true
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: https
+              containerPort: 443
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+          resources:
+            {}
+      hostNetwork: false
+      serviceAccountName: pinfo-v1-nginx-ingress
+      terminationGracePeriodSeconds: 60
+---
+# Source: microservices/charts/nginx-ingress/templates/default-backend-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-ingress
+    chart: nginx-ingress-1.27.0
+    component: "default-backend"
+    heritage: Helm
+    release: pinfo-v1
+  name: pinfo-v1-nginx-ingress-default-backend
+spec:
+  selector:
+    matchLabels:
+      app: nginx-ingress
+      release: pinfo-v1
+  replicas: 1
+  revisionHistoryLimit: 10
+  template:
+    metadata:
+      labels:
+        app: nginx-ingress
+        component: "default-backend"
+        release: pinfo-v1
+    spec:
+      containers:
+        - name: nginx-ingress-default-backend
+          image: "k8s.gcr.io/defaultbackend-amd64:1.5"
+          imagePullPolicy: "IfNotPresent"
+          args:
+          securityContext:
+            runAsUser: 65534
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            {}
+      serviceAccountName: pinfo-v1-nginx-ingress-backend
+      terminationGracePeriodSeconds: 60
+---
+# Source: microservices/templates/counterparty-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pinfo-v1-microservices.counterparty-service
+  namespace: default 
+  labels:
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm.counterparty-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: microservices
+      app.kubernetes.io/instance: pinfo-v1
+  template:
+    metadata:
+      labels:
+        app: pinfo-v1-microservices.counterparty-service
+        app.kubernetes.io/name: microservices
+        app.kubernetes.io/instance: pinfo-v1
+    spec:
+      serviceAccountName: pinfo-v1-microservices
+      securityContext:
+        {}
+      initContainers:
+         - name: check-db-ready
+           image: postgres:12.1-alpine
+           command: ['sh', '-c', 
+             'until pg_isready -h pinfo-v1-counterparty-db -p 5432; 
+             do echo waiting for database; sleep 2; done;']                   
+      containers:
+        - name: microservices
+          securityContext:
+            {}
+          image: digetmp/counterparty-service:latest
+          imagePullPolicy: Always
+          env:
+            - name: THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST
+              value: "pinfo-v1-kafka"
+            - name: THORNTAIL_KAFKA_DASH_CONFIGURATION_POST
+              value: "9092"
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL
+              value: "jdbc:postgresql://pinfo-v1-counterparty-db:5432/counterparty"
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_DRIVER_DASH_NAME
+              value: "postgresql"   
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_USER_DASH_NAME
+              value: "cpty"
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_PASSWORD
+              value: "cpty"              
+          ports:
+            - name: http
+              containerPort: 28080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /counterparties/count
+              port: http
+            initialDelaySeconds: 3e+06
+            periodSeconds: 20                            
+          readinessProbe:
+            httpGet:
+              path: /counterparties/count
+              port: http
+            initialDelaySeconds: 3e+06
+            periodSeconds: 20                            
+          resources:
+            {}
+---
+# Source: microservices/templates/instrument-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pinfo-v1-microservices.instrument-service
+  namespace: default 
+  labels:
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm.instrument-service    
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: microservices
+      app.kubernetes.io/instance: pinfo-v1
+  template:
+    metadata:
+      labels:
+        app: pinfo-v1-microservices.instrument-service
+        app.kubernetes.io/name: microservices
+        app.kubernetes.io/instance: pinfo-v1
+    spec:
+      serviceAccountName: pinfo-v1-microservices
+      securityContext:
+        {}
+      initContainers:
+      - name: check-db-ready
+        image: postgres:12.1-alpine
+        command: ['sh', '-c', 
+          'until pg_isready -h pinfo-v1-instrument-db -p 5432; 
+          do echo waiting for database; sleep 2; done;']            
+      - name: check-kafka-ready
+        image: busybox
+        command: ['sh', '-c', 'until echo "TEST" | nc pinfo-v1-kafka:9092; do echo "Waiting for Kafka"; sleep 5; done;']
+      containers:
+        - name: microservices
+          securityContext:
+            {}
+          image: digetmp/instrument-service:latest
+          imagePullPolicy: Always
+          env:
+            - name: THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST
+              value: "pinfo-v1-kafka"
+            - name: THORNTAIL_KAFKA_DASH_CONFIGURATION_POST
+              value: "9092"
+            - name: THORNTAIL_PORT_OFFSET
+              value: "0"
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_INSTRUMENTDS_CONNECTION_DASH_URL
+              value: "jdbc:postgresql://pinfo-v1-instrument-db:5432/instrument"
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_INSTRUMENTDS_DRIVER_DASH_NAME
+              value: "postgresql"   
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_INSTRUMENTDS_USER_DASH_NAME
+              value: "inst"
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_INSTRUMENTDS_PASSWORD
+              value: "inst"               
+          ports:
+            - name: http
+              containerPort: 28080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /instrument/count
+              port: http
+            initialDelaySeconds: 3e+06
+            periodSeconds: 20                            
+          readinessProbe:
+            httpGet:
+              path: /instrument/count
+              port: http
+            initialDelaySeconds: 3e+06
+            periodSeconds: 20                                                 
+          resources:
+            {}
+---
+# Source: microservices/templates/ui-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pinfo-v1-microservices.web-ui
+  namespace: default 
+  labels:
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm.web-ui    
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: microservices
+      app.kubernetes.io/instance: pinfo-v1
+  template:
+    metadata:
+      labels:
+        app: pinfo-v1-microservices.web-ui
+        app.kubernetes.io/name: microservices
+        app.kubernetes.io/instance: pinfo-v1       
+    spec:
+      serviceAccountName: pinfo-v1-microservices
+      securityContext:
+        {}     
+      containers:
+        - name: microservices
+          securityContext:
+            {}
+          image: digetmp/web-ui:latest
+          imagePullPolicy: Always
+          env:
+            - name: THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST
+              value: "pinfo-v1-kafka"
+            - name: THORNTAIL_KAFKA_DASH_CONFIGURATION_POST
+              value: "9092"
+            - name: THORNTAIL_PORT_OFFSET
+              value: "0"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+#           livenessProbe:
+#             httpGet:
+#               path: /instrument
+#               port: http
+#             initialDelaySeconds: 60
+#             periodSeconds: 20                            
+#           readinessProbe:
+#             httpGet:
+#               path: /instrument
+#               port: http
+#             initialDelaySeconds: 60
+#             periodSeconds: 20                                                 
+          resources:
+            {}
+---
+# Source: microservices/templates/valuation-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pinfo-v1-microservices.valuation-service
+  namespace: default 
+  labels:
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm.valuation-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: microservices
+      app.kubernetes.io/instance: pinfo-v1
+  template:
+    metadata:
+      labels:
+        app: pinfo-v1-microservices.valuation-service
+        app.kubernetes.io/name: microservices
+        app.kubernetes.io/instance: pinfo-v1
+    spec:
+      serviceAccountName: pinfo-v1-microservices
+      securityContext:
+        {}
+      initContainers:
+      - name: check-instrument-service
+        image: curlimages/curl
+        command: ['sh', '-c', 'until curl -X GET http://pinfo-v1-microservices-instrument-service:28080/instruments/count; do echo "Waiting for Instrument Service"; sleep 5; done;']
+      - name: propagate-instruments
+        image: curlimages/curl
+        command: ['sh', '-c', 'curl -X POST http://pinfo-v1-microservices-instrument-service:28080/instruments/propagateAllInstruments']
+      containers:
+        - name: microservices
+          securityContext:
+            {}
+          image: digetmp/valuation-service:latest
+          imagePullPolicy: Always
+          env:
+            - name: THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST
+              value: "pinfo-v1-kafka"
+            - name: THORNTAIL_KAFKA_DASH_CONFIGURATION_POST
+              value: "9092"       
+            - name: THORNTAIL_PORT_OFFSET
+              value: "0"
+          ports:
+            - name: http
+              containerPort: 28080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /valuation?currency=USD
+              port: http
+            initialDelaySeconds: 3e+06
+            periodSeconds: 20              
+          readinessProbe:
+            httpGet:
+              path: /valuation?currency=USD
+              port: http
+            initialDelaySeconds: 3e+06
+            periodSeconds: 20              
+          resources:
+            {}
+---
+# Source: microservices/charts/counterparty-db/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pinfo-v1-counterparty-db
+  labels:
+    app: counterparty-db
+    chart: counterparty-db-7.7.2
+    release: "pinfo-v1"
+    heritage: "Helm"
+spec:
+  serviceName: pinfo-v1-counterparty-db-headless
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: counterparty-db
+      release: "pinfo-v1"
+      role: master
+  template:
+    metadata:
+      name: pinfo-v1-counterparty-db
+      labels:
+        app: counterparty-db
+        chart: counterparty-db-7.7.2
+        release: "pinfo-v1"
+        heritage: "Helm"
+        role: master
+    spec:      
+      securityContext:
+        fsGroup: 1001
+      initContainers:
+        - name: init-chmod-data
+          image: docker.io/bitnami/minideb:stretch
+          imagePullPolicy: "Always"
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          command:
+            - /bin/sh
+            - -c
+            - |
+              mkdir -p /bitnami/postgresql/data
+              chmod 700 /bitnami/postgresql/data
+              find /bitnami/postgresql -mindepth 0 -maxdepth 1 -not -name ".snapshot" -not -name "lost+found" | \
+                xargs chown -R 1001:1001
+              chmod -R 777 /dev/shm
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/postgresql
+              subPath: 
+            - name: dshm
+              mountPath: /dev/shm
+      containers:
+        - name: pinfo-v1-counterparty-db
+          image: docker.io/bitnami/postgresql:11.6.0-debian-9-r0
+          imagePullPolicy: "IfNotPresent"
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          securityContext:
+            runAsUser: 1001
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: POSTGRESQL_PORT_NUMBER
+              value: "5432"
+            - name: POSTGRESQL_VOLUME_DIR
+              value: "/bitnami/postgresql"
+            - name: PGDATA
+              value: "/bitnami/postgresql/data"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pinfo-v1-counterparty-db
+                  key: postgresql-password
+            - name: POSTGRES_DB
+              value: "counterparty"
+            - name: POSTGRESQL_ENABLE_LDAP
+              value: "no"
+          ports:
+            - name: postgresql
+              containerPort: 5432
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U "postgres" -d "counterparty" -h 127.0.0.1 -p 5432
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - -e
+                - |
+                  pg_isready -U "postgres" -d "counterparty" -h 127.0.0.1 -p 5432
+                  [ -f /opt/bitnami/postgresql/tmp/.initialized ]
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          volumeMounts:
+            - name: custom-init-scripts
+              mountPath: /docker-entrypoint-initdb.d/
+            - name: dshm
+              mountPath: /dev/shm
+      volumes:
+        - name: custom-init-scripts
+          configMap:
+            name: counterparty-scripts
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Gi
+        - name: data
+          emptyDir: {}
+---
+# Source: microservices/charts/instrument-db/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pinfo-v1-instrument-db
+  labels:
+    app: instrument-db
+    chart: instrument-db-7.7.2
+    release: "pinfo-v1"
+    heritage: "Helm"
+spec:
+  serviceName: pinfo-v1-instrument-db-headless
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: instrument-db
+      release: "pinfo-v1"
+      role: master
+  template:
+    metadata:
+      name: pinfo-v1-instrument-db
+      labels:
+        app: instrument-db
+        chart: instrument-db-7.7.2
+        release: "pinfo-v1"
+        heritage: "Helm"
+        role: master
+    spec:      
+      securityContext:
+        fsGroup: 1001
+      initContainers:
+        - name: init-chmod-data
+          image: docker.io/bitnami/minideb:stretch
+          imagePullPolicy: "Always"
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          command:
+            - /bin/sh
+            - -c
+            - |
+              mkdir -p /bitnami/postgresql/data
+              chmod 700 /bitnami/postgresql/data
+              find /bitnami/postgresql -mindepth 0 -maxdepth 1 -not -name ".snapshot" -not -name "lost+found" | \
+                xargs chown -R 1001:1001
+              chmod -R 777 /dev/shm
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/postgresql
+              subPath: 
+            - name: dshm
+              mountPath: /dev/shm
+      containers:
+        - name: pinfo-v1-instrument-db
+          image: docker.io/bitnami/postgresql:11.6.0-debian-9-r0
+          imagePullPolicy: "IfNotPresent"
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          securityContext:
+            runAsUser: 1001
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: POSTGRESQL_PORT_NUMBER
+              value: "5432"
+            - name: POSTGRESQL_VOLUME_DIR
+              value: "/bitnami/postgresql"
+            - name: PGDATA
+              value: "/bitnami/postgresql/data"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pinfo-v1-instrument-db
+                  key: postgresql-password
+            - name: POSTGRES_DB
+              value: "instrument"
+            - name: POSTGRESQL_ENABLE_LDAP
+              value: "no"
+          ports:
+            - name: postgresql
+              containerPort: 5432
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U "postgres" -d "instrument" -h 127.0.0.1 -p 5432
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - -e
+                - |
+                  pg_isready -U "postgres" -d "instrument" -h 127.0.0.1 -p 5432
+                  [ -f /opt/bitnami/postgresql/tmp/.initialized ]
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          volumeMounts:
+            - name: custom-init-scripts
+              mountPath: /docker-entrypoint-initdb.d/
+            - name: dshm
+              mountPath: /dev/shm
+      volumes:
+        - name: custom-init-scripts
+          configMap:
+            name: instrument-scripts
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Gi
+        - name: data
+          emptyDir: {}
+---
+# Source: microservices/charts/kafka/charts/zookeeper/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pinfo-v1-zookeeper
+  labels:
+    app.kubernetes.io/name: zookeeper
+    helm.sh/chart: zookeeper-5.4.3
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: zookeeper
+    role: zookeeper
+spec:
+  serviceName: pinfo-v1-zookeeper-headless
+  replicas: 1
+  podManagementPolicy: Parallel
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: zookeeper
+      app.kubernetes.io/instance: pinfo-v1
+      app.kubernetes.io/component: zookeeper
+  template:
+    metadata:
+      name: pinfo-v1-zookeeper
+      labels:
+        app.kubernetes.io/name: zookeeper
+        helm.sh/chart: zookeeper-5.4.3
+        app.kubernetes.io/instance: pinfo-v1
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/component: zookeeper
+    spec:
+      
+      securityContext:
+        fsGroup: 1001
+      containers:
+        - name: zookeeper
+          image: docker.io/bitnami/zookeeper:3.5.7-debian-10-r11
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            runAsUser: 1001
+          command:
+            - bash
+            - -ec
+            - |
+                # Execute entrypoint as usual after obtaining ZOO_SERVER_ID based on POD hostname
+                HOSTNAME=`hostname -s`
+                if [[ $HOSTNAME =~ (.*)-([0-9]+)$ ]]; then
+                  ORD=${BASH_REMATCH[2]}
+                  export ZOO_SERVER_ID=$((ORD+1))
+                else
+                  echo "Failed to get index from hostname $HOST"
+                  exit 1
+                fi
+                exec /entrypoint.sh /run.sh
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          env:
+            - name: ZOO_PORT_NUMBER
+              value: "2181"
+            - name: ZOO_TICK_TIME
+              value: "2000"
+            - name: ZOO_INIT_LIMIT
+              value: "10"
+            - name: ZOO_SYNC_LIMIT
+              value: "5"
+            - name: ZOO_MAX_CLIENT_CNXNS
+              value: "60"
+            - name: ZOO_4LW_COMMANDS_WHITELIST
+              value: "srvr, mntr"
+            - name: ZOO_LISTEN_ALLIPS_ENABLED
+              value: "no"
+            - name: ZOO_SERVERS
+              value: pinfo-v1-zookeeper-0.pinfo-v1-zookeeper-headless.default.svc.cluster.local:2888:3888 
+            - name: ZOO_ENABLE_AUTH
+              value: "no"
+            - name: ZOO_HEAP_SIZE
+              value: "1024"
+            - name: ZOO_LOG_LEVEL
+              value: "ERROR"
+            - name: ALLOW_ANONYMOUS_LOGIN
+              value: "yes"
+          ports:
+            - name: client
+              containerPort: 2181
+            - name: follower
+              containerPort: 2888
+            - name: election
+              containerPort: 3888
+          livenessProbe:
+            tcpSocket:
+              port: client
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          readinessProbe:
+            tcpSocket:
+              port: client
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/zookeeper
+      volumes:
+        - name: data
+          emptyDir: {}
+---
+# Source: microservices/charts/kafka/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pinfo-v1-kafka
+  labels:
+    app.kubernetes.io/name: kafka
+    helm.sh/chart: kafka-7.2.9
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: kafka
+    role: kafka
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kafka
+      app.kubernetes.io/instance: pinfo-v1
+      app.kubernetes.io/component: kafka
+  serviceName: pinfo-v1-kafka-headless
+  podManagementPolicy: "Parallel"
+  replicas: 1
+  updateStrategy:
+    type: "RollingUpdate"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kafka
+        helm.sh/chart: kafka-7.2.9
+        app.kubernetes.io/instance: pinfo-v1
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/component: kafka
+    spec:      
+      securityContext:
+        fsGroup: 1001
+        runAsUser: 1001
+      nodeSelector:
+        {}
+      tolerations:
+        []
+      affinity:
+        {}
+      containers:
+        - name: kafka
+          image: docker.io/bitnami/kafka:2.4.0-debian-10-r31
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+              value: pinfo-v1-zookeeper
+            - name: KAFKA_PORT_NUMBER
+              value: "9092"
+            - name: KAFKA_CFG_LISTENERS
+              value: "PLAINTEXT://:$(KAFKA_PORT_NUMBER)"
+            - name: KAFKA_CFG_ADVERTISED_LISTENERS
+              value: 'PLAINTEXT://$(MY_POD_NAME).pinfo-v1-kafka-headless.default.svc.cluster.local:$(KAFKA_PORT_NUMBER)'
+            - name: ALLOW_PLAINTEXT_LISTENER
+              value: "yes"
+            - name: KAFKA_CFG_BROKER_ID
+              value: "-1"
+            - name: KAFKA_CFG_DELETE_TOPIC_ENABLE
+              value: "false"
+            - name: KAFKA_HEAP_OPTS
+              value: "-Xmx1024m -Xms1024m"
+            - name: KAFKA_CFG_LOG_FLUSH_INTERVAL_MESSAGES
+              value: "10000"
+            - name: KAFKA_CFG_LOG_FLUSH_INTERVAL_MS
+              value: "1000"
+            - name: KAFKA_CFG_LOG_RETENTION_BYTES
+              value: "1073741824"
+            - name: KAFKA_CFG_LOG_RETENTION_CHECK_INTERVALS_MS
+              value: "300000"
+            - name: KAFKA_CFG_LOG_RETENTION_HOURS
+              value: "168"
+            - name: KAFKA_CFG_MESSAGE_MAX_BYTES
+              value: "1000012"
+            - name: KAFKA_CFG_LOG_SEGMENT_BYTES
+              value: "1073741824"
+            - name: KAFKA_CFG_LOG_DIRS
+              value: /bitnami/kafka/data
+            - name: KAFKA_CFG_DEFAULT_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_CFG_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM
+              value: "https"
+            - name: KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR
+              value: "1"
+            - name: KAFKA_CFG_NUM_IO_THREADS
+              value: "8"
+            - name: KAFKA_CFG_NUM_NETWORK_THREADS
+              value: "3"
+            - name: KAFKA_CFG_NUM_PARTITIONS
+              value: "1"
+            - name: KAFKA_CFG_NUM_RECOVERY_THREADS_PER_DATA_DIR
+              value: "1"
+            - name: KAFKA_CFG_SOCKET_RECEIVE_BUFFER_BYTES
+              value: "102400"
+            - name: KAFKA_CFG_SOCKET_REQUEST_MAX_BYTES
+              value: "104857600"
+            - name: KAFKA_CFG_SOCKET_SEND_BUFFER_BYTES
+              value: "102400"
+            - name: KAFKA_CFG_ZOOKEEPER_CONNECTION_TIMEOUT_MS
+              value: "6000"
+          ports:
+            - name: kafka
+              containerPort: 9092
+          livenessProbe:
+            tcpSocket:
+              port: kafka
+            initialDelaySeconds: 30000
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 2
+          readinessProbe:
+            tcpSocket:
+              port: kafka
+            initialDelaySeconds: 30000
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          volumeMounts:
+        
+      volumes:
+        
+        
+        
+        - name: data
+          emptyDir: {}
+---
+# Source: microservices/charts/keycloak/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pinfo-v1-keycloak
+  labels:
+    app.kubernetes.io/name: keycloak
+    helm.sh/chart: keycloak-7.4.0
+    app.kubernetes.io/instance: "pinfo-v1"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: keycloak
+      app.kubernetes.io/instance: "pinfo-v1"
+  replicas: 1
+  serviceName: pinfo-v1-keycloak-headless
+  podManagementPolicy: Parallel
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: keycloak
+        app.kubernetes.io/instance: "pinfo-v1"
+      annotations:
+        checksum/config-sh: 2f1d63fed818e48744e896c5a2bcf149f45ec0d1ff9885f2ea5a4e6554349002
+        checksum/config-startup: ff70b0b4352a33a8b144de7a43ebcbe36c9e91273e3d29a68b2b7c55816aa84b
+    spec:
+      restartPolicy: Always
+      serviceAccountName: default
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: keycloak
+          image: "jboss/keycloak:9.0.0"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+          command:
+            - /scripts/keycloak.sh
+          lifecycle:
+            # postStart:
+            #   exec:
+            #     command: ["/bin/sh", "-c", "ls"]
+            
+          env:
+            - name: KEYCLOAK_USER
+              value: keycloak
+            - name: KEYCLOAK_PASSWORD_FILE
+              value: /secrets/password
+            - name: JAVA_TOOL_OPTIONS
+              value: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=50.0"
+            - name: PROXY_ADDRESS_FORWARDING
+              value: "true"
+            
+            - name: DB_VENDOR
+              value: "h2"
+            # - name: KEYCLOAK_LOGLEVEL
+            #   value: DEBUG
+            # - name: WILDFLY_LOGLEVEL
+            #   value: DEBUG
+            # - name: CACHE_OWNERS
+            #   value: "2"
+            # - name: DB_QUERY_TIMEOUT
+            #   value: "60"
+            # - name: DB_VALIDATE_ON_MATCH
+            #   value: true
+            # - name: DB_USE_CAST_FAIL
+            #   value: false
+            
+          volumeMounts:
+            - name: sh
+              mountPath: /scripts
+              readOnly: true
+            - name: secrets
+              mountPath: /secrets
+              readOnly: true
+            - name: startup
+              mountPath: /opt/jboss/startup-scripts
+              readOnly: true
+            - name: keycloak-realm-secret
+              mountPath: "/realm/"
+              readOnly: true          
+            
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: https
+              containerPort: 8443
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 30000
+            
+          readinessProbe:
+            initialDelaySeconds: 30000
+            
+          resources:
+            {}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: keycloak
+                  app.kubernetes.io/instance: "pinfo-v1"
+                matchExpressions:
+                  - key: role
+                    operator: NotIn
+                    values:
+                      - test
+              topologyKey: kubernetes.io/hostname
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: keycloak
+                    app.kubernetes.io/instance: "pinfo-v1"
+                  matchExpressions:
+                    - key: role
+                      operator: NotIn
+                      values:
+                        - test
+                topologyKey: failure-domain.beta.kubernetes.io/zone
+        
+      terminationGracePeriodSeconds: 60
+      volumes:
+        - name: sh
+          configMap:
+            name: pinfo-v1-keycloak-sh
+            defaultMode: 0555
+        - name: secrets
+          secret:
+            secretName: pinfo-v1-keycloak-http
+        - name: startup
+          configMap:
+            name: pinfo-v1-keycloak-startup
+            defaultMode: 0555
+        - name: keycloak-realm-secret
+          secret:
+            secretName: keycloak-realm-secret
+---
+# Source: microservices/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: pinfo-v1-microservices.ingress-static
+  namespace: default 
+  labels:
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm.ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /auth
+        backend:
+          serviceName: pinfo-v1-keycloak-http
+          servicePort: 80   
+      - path: /
+        backend:
+          serviceName: pinfo-v1-microservices-web-ui
+          servicePort: 80
+---
+# Source: microservices/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /counterparties/$2
+  name: pinfo-v1-microservices.ingress-api-counterparties
+  namespace: default 
+  labels:
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm.ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/v1/counterparty(/|$)(.*)
+        backend:
+          serviceName: pinfo-v1-microservices-counterparty-service
+          servicePort: 28080
+---
+# Source: microservices/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /instrument/$2
+  name: pinfo-v1-microservices.ingress-api-instruments
+  namespace: default 
+  labels:
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm.ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/v1/instruments(/|$)(.*)
+        backend:
+          serviceName: pinfo-v1-microservices-instrument-service
+          servicePort: 28080
+---
+# Source: microservices/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /valuation/$2
+  name: pinfo-v1-microservices.ingress-api-valuation
+  namespace: default 
+  labels:
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm.ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/v1/valuation(/|$)(.*)
+        backend:
+          serviceName: pinfo-v1-microservices-valuation-service
+          servicePort: 28080
+---
+# Source: microservices/charts/keycloak/templates/test/pod-test.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "pinfo-v1-keycloak-test-5aswn"
+  labels:
+    app.kubernetes.io/name: keycloak
+    helm.sh/chart: keycloak-7.4.0
+    app.kubernetes.io/instance: "pinfo-v1"
+    app.kubernetes.io/managed-by: Helm
+    role: test
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  securityContext:
+    fsGroup: 1000
+  containers:
+    - name: keycloak-test
+      image: "unguiculus/docker-python3-phantomjs-selenium:v1"
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      command:
+        - python3
+        - /tests/test.py
+      env:
+        - name: KEYCLOAK_USER
+          value: keycloak
+        - name: KEYCLOAK_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pinfo-v1-keycloak-http
+              key: password
+      volumeMounts:
+        - name: tests
+          mountPath: /tests
+  volumes:
+    - name: tests
+      configMap:
+        name: pinfo-v1-keycloak-test
+  restartPolicy: Never
+---
+# Source: microservices/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "pinfo-v1-microservices-test-connection"
+  labels:
+
+    helm.sh/chart: microservices-0.1.0
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/instance: pinfo-v1
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['pinfo-v1-microservices:80']
+  restartPolicy: Never

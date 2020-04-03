@@ -62,13 +62,13 @@ spec:
             httpGet:
               path: /instrument/count
               port: http
-            initialDelaySeconds: 60
+            initialDelaySeconds: {{ .Values.liveness.delay }}
             periodSeconds: 20                            
           readinessProbe:
             httpGet:
               path: /instrument/count
               port: http
-            initialDelaySeconds: 60
+            initialDelaySeconds: {{ .Values.liveness.delay }}
             periodSeconds: 20                                                 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
