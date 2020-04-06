@@ -9,7 +9,7 @@ image:
   tag: latest
   pullPolicy: Always #IfNotPresent
 liveness:
-  delay: 120
+  delay: 3000000000000
 
 kafka:
   zookeeper:
