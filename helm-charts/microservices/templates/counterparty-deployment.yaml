@@ -57,13 +57,13 @@ spec:
             httpGet:
               path: /counterparties/count
               port: http
-            initialDelaySeconds: {{ .Values.liveness.delay }}
+            initialDelaySeconds: 60
             periodSeconds: 20                            
           readinessProbe:
             httpGet:
               path: /counterparties/count
               port: http
-            initialDelaySeconds: {{ .Values.liveness.delay }}
+            initialDelaySeconds: 60
             periodSeconds: 20                            
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

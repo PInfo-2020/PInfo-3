@@ -5,11 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: digetmp/ #stevehostettler/
+  repository: stevehostettler/
   tag: latest
-  pullPolicy: Always #IfNotPresent
-liveness:
-  delay: 120
+  pullPolicy: IfNotPresent
+
 
 kafka:
   zookeeper:
@@ -17,10 +16,7 @@ kafka:
         enabled: false
   persistence:
      enabled: false
-  livenessProbe:
-    initialDelaySeconds: 120
-  readinessProbe:
-    initialDelaySeconds: 120
+
 counterparty-db:
   driver_name: org.postgresql
   persistence:
@@ -61,10 +57,7 @@ keycloak:
         mountPath: "/realm/"
         readOnly: true          
     extraArgs: -Dkeycloak.import=/realm/realms.json
-    livenessProbe: |
-      initialDelaySeconds: 120
-    readinessProbe: |
-      initialDelaySeconds: 120
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
