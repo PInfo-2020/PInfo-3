@@ -457,7 +457,7 @@
   }, {
     "id" : "99a5983a-174f-4a98-ae18-79b30dd5ed4a",
     "clientId" : "api-gateway",
-    "rootUrl" : "https://localhost",
+    "rootUrl" : "https://129.194.69.134",
     "adminUrl" : "",
     "baseUrl" : "",
     "surrogateAuthRequired" : false,
