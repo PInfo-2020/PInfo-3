@@ -58,7 +58,7 @@ services:
       timeout: 30s
       retries: 3
     volumes:
-      - pgdata-cpty:/var/lib/postgresql/data
+      - pgdata-sho:/var/lib/postgresql/data
       - ./test-data/shopping.sql:/docker-entrypoint-initdb.d/init.sql
     restart: on-failure
     stdin_open: true
@@ -103,7 +103,7 @@ services:
       timeout: 30s
       retries: 3
     volumes:
-      - pgdata-cpty:/var/lib/postgresql/data
+      - pgdata-ing:/var/lib/postgresql/data
       - ./test-data/ingredients.sql:/docker-entrypoint-initdb.d/init.sql
     restart: on-failure
     stdin_open: true
@@ -149,7 +149,7 @@ services:
       timeout: 30s
       retries: 3
     volumes:
-      - pgdata-cpty:/var/lib/postgresql/data
+      - pgdata-pro:/var/lib/postgresql/data
       - ./test-data/profile.sql:/docker-entrypoint-initdb.d/init.sql
     restart: on-failure
     stdin_open: true
@@ -195,7 +195,7 @@ services:
       timeout: 30s
       retries: 3
     volumes:
-      - pgdata-cpty:/var/lib/postgresql/data
+      - pgdata-rec:/var/lib/postgresql/data
       - ./test-data/recipes.sql:/docker-entrypoint-initdb.d/init.sql
     restart: on-failure
     stdin_open: true
@@ -221,9 +221,10 @@ services:
        - kafka
 
 volumes:
-   pgdata-cpty:
-   pgdata-inst:
-  
+   pgdata-rec:
+   pgdata-ing:
+   pgdata-pro: 
+   pgdata-sho:
 
 networks:
   backend-network:
