@@ -7,13 +7,25 @@ import { AppComponent } from './app.component';
 
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
+import { RecipeComponent } from './recipe/recipe.component';
+import { FidgeComponent } from './fidge/fidge.component';
+import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    AboutUsComponent,
+    ProfileComponent,
+    CreateRecipeComponent,
+    RecipeComponent,
+    FidgeComponent,
+    ShoppingListComponent
   ],
  imports: [
     BrowserModule,
