@@ -11,7 +11,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
 import { RecipeComponent } from './recipe/recipe.component';
-import { FidgeComponent } from './fidge/fidge.component';
+import { FridgeComponent } from './fridge/fridge.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 
 
@@ -25,7 +25,8 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
     CreateRecipeComponent,
     RecipeComponent,
     FidgeComponent,
-    ShoppingListComponent
+    ShoppingListComponent,
+    FridgeComponent
   ],
  imports: [
     BrowserModule,
