@@ -35,9 +35,18 @@ const routes: Routes = [
 		component: RecipeComponent
 	},
 	{
-		path: 'fidge',
+		path: 'fridge',
 		component: FridgeComponent
 	},
+	{
+		path: 'profile',
+		component: ProfileComponent
+	},
+	{
+		path: 'shoppinfList',
+		component: ShoppingListComponent
+	}
+	
 	
 ];
 

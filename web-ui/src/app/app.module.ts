@@ -24,7 +24,7 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
     ProfileComponent,
     CreateRecipeComponent,
     RecipeComponent,
-    FidgeComponent,
+    FridgeComponent,
     ShoppingListComponent,
     FridgeComponent
   ],
