@@ -56,6 +56,9 @@ public class InstrumentRestService {
 		return instrumentService.get(instrumentId);
 	}
 	
+
+	
+	
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Update a given instrument",
@@ -74,6 +77,7 @@ public class InstrumentRestService {
 		instrumentProducer.send(instrument);
 	}
 
+	
 	@POST
 	@Path("propagateAllInstruments")
 	@Produces(MediaType.APPLICATION_JSON)
