@@ -23,16 +23,16 @@ install:
 script:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-- cd web-ui
-- pwd
-- npm -v
-- npm install
-- npm update
-- npm run-script build --prod
-- docker build -t dige/web-ui .
-- docker tag dige/web-ui dige/web-ui:latest      
-- docker push dige/web-ui:latest
-- cd ..
+#- cd web-ui
+#- pwd
+#- npm -v
+#- npm install
+#- npm update
+#- npm run-script build --prod
+#- docker build -t dige/web-ui .
+#- docker tag dige/web-ui dige/web-ui:latest      
+#- docker push dige/web-ui:latest
+#- cd ..
 
 - docker tag dige/recipes-service dige/recipes-service:latest
 - docker push dige/recipes-service:latest
