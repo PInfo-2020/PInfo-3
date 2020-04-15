@@ -3,9 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1"
 	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="InstrumentPU"
+	<persistence-unit name="RecipePU"
 		transaction-type="JTA">
-		<jta-data-source>java:jboss/datasources/instrumentds</jta-data-source>
+		<jta-data-source>java:jboss/datasources/recipesds</jta-data-source>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
@@ -14,7 +14,7 @@
 				value="org.hibernate.dialect.H2Dialect" />
 			<property name="hibernate.id.new_generator_mappings" value="true" />
 			<property name="hibernate.hbm2ddl.charset_name" value="UTF-8"/>	
-			<property name="javax.persistence.sql-load-script-source" value="META-INF/instruments_test_data.sql"/>
+			<property name="javax.persistence.sql-load-script-source" value="META-INF/recipes_test_data.sql"/>
 		</properties>
 	</persistence-unit>
 </persistence>
