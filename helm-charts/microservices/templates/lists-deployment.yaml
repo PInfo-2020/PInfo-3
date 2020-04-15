@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "microservices.fullname" . }}.counterparty-service
+  name: {{ include "microservices.fullname" . }}.lists-service
   namespace: {{ .Release.Namespace }} 
   labels:
     {{- include "microservices.labels" . | nindent 4 }}
-    {{- include "microservices.labels" . | nindent 4 }}.counterparty-service
+    {{- include "microservices.labels" . | nindent 4 }}.lists-service
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -14,7 +14,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ include "microservices.fullname" . }}.counterparty-service
+        app: {{ include "microservices.fullname" . }}.lists-service
         {{- include "microservices.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -28,40 +28,40 @@ spec:
          - name: check-db-ready
            image: postgres:12.1-alpine
            command: ['sh', '-c', 
-             'until pg_isready -h {{ .Release.Name }}-counterparty-db -p 5432; 
+             'until pg_isready -h {{ .Release.Name }}-lists-db -p 5432; 
              do echo waiting for database; sleep 2; done;']                   
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ .Values.image.repository }}counterparty-service:{{ .Values.image.tag }}
+          image: {{ .Values.image.repository }}lists-service:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST
               value: "{{ .Release.Name }}-kafka"
             - name: THORNTAIL_KAFKA_DASH_CONFIGURATION_POST
               value: "9092"
-            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL
-              value: "jdbc:postgresql://{{ .Release.Name }}-counterparty-db:5432/counterparty"
-            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_DRIVER_DASH_NAME
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_CONNECTION_DASH_URL
+              value: "jdbc:postgresql://{{ .Release.Name }}-lists-db:5432/lists"
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_DRIVER_DASH_NAME
               value: "postgresql"   
-            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_USER_DASH_NAME
-              value: "cpty"
-            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_PASSWORD
-              value: "cpty"              
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_USER_DASH_NAME
+              value: "lis"
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_PASSWORD
+              value: "lis"              
           ports:
             - name: http
               containerPort: 28080
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /counterparties/count
+              path: /counterparties/count #fix me!
               port: http
             initialDelaySeconds: 60
             periodSeconds: 20                            
           readinessProbe:
             httpGet:
-              path: /counterparties/count
+              path: /counterparties/count #fix me!
               port: http
             initialDelaySeconds: 60
             periodSeconds: 20                            

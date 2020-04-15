@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "microservices.fullname" . }}.counterparty-service
+  name: {{ include "microservices.fullname" . }}.recipes-service
   namespace: {{ .Release.Namespace }} 
   labels:
     {{- include "microservices.labels" . | nindent 4 }}
-    {{- include "microservices.labels" . | nindent 4 }}.counterparty-service
+    {{- include "microservices.labels" . | nindent 4 }}.recipes-service
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -14,7 +14,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ include "microservices.fullname" . }}.counterparty-service
+        app: {{ include "microservices.fullname" . }}.recipes-service
         {{- include "microservices.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -28,27 +28,27 @@ spec:
          - name: check-db-ready
            image: postgres:12.1-alpine
            command: ['sh', '-c', 
-             'until pg_isready -h {{ .Release.Name }}-counterparty-db -p 5432; 
+             'until pg_isready -h {{ .Release.Name }}-recipes-db -p 5432; 
              do echo waiting for database; sleep 2; done;']                   
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ .Values.image.repository }}counterparty-service:{{ .Values.image.tag }}
+          image: {{ .Values.image.repository }}recipes-service:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST
               value: "{{ .Release.Name }}-kafka"
             - name: THORNTAIL_KAFKA_DASH_CONFIGURATION_POST
               value: "9092"
-            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL
-              value: "jdbc:postgresql://{{ .Release.Name }}-counterparty-db:5432/counterparty"
-            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_DRIVER_DASH_NAME
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_CONNECTION_DASH_URL
+              value: "jdbc:postgresql://{{ .Release.Name }}-recipes-db:5432/recipes"
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_DRIVER_DASH_NAME
               value: "postgresql"   
-            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_USER_DASH_NAME
-              value: "cpty"
-            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_PASSWORD
-              value: "cpty"              
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_USER_DASH_NAME
+              value: "rec"
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_PASSWORD
+              value: "rec"              
           ports:
             - name: http
               containerPort: 28080
