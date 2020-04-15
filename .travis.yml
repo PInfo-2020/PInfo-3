@@ -21,29 +21,45 @@ before_install:
 install:
 - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv -in deploy_key.enc -out ./deploy_key -d
 script:
-#- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-#- docker tag kernel3/api-gateway kernel3/api-gateway:latest
-#- docker push kernel3/api-gateway:latest
-#- docker tag kernel3/regulatory-service kernel3/regulatory-service:latest
-#- docker push kernel3/regulatory-service:latest
-#- docker tag kernel3/valuation-service kernel3/valuation-service:latest
-#- docker push kernel3/valuation-service:latest
-#- docker tag kernel3/instrument-service kernel3/instrument-service:latest
-#- docker push kernel3/instrument-service:latest
-#- docker tag kernel3/counterparty-service kernel3/counterparty-service:latest
-#- docker push kernel3/counterparty-service:latest
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+- cd web-ui
+- pwd
+- npm -v
+- npm install
+- npm update
+- npm run-script build --prod
+- docker build -t dige/web-ui .
+- docker tag dige/web-ui dige/web-ui:latest      
+- docker push dige/web-ui:latest
+- cd ..
+
+- docker tag dige/recipes-service dige/recipes-service:latest
+- docker push dige/recipes-service:latest
+
+- docker tag dige/profile-service dige/profile-service:latest
+- docker push dige/profile-service:latest
+
+- docker tag dige/ingredients-service dige/ingredients-service:latest
+- docker push dige/ingredients-service:latest
+
+- docker tag dige/lists-service dige/lists-service:latest
+- docker push dige/lists-service:latest
 #- eval "$(ssh-agent -s)"
 #- chmod 600 ./deploy_key
 #- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 #- ssh-add ./deploy_key
 #- scp -r docker-compose aminman7@129.194.69.134:./
+#- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
 #- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
-#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/api-gateway:latest
-#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/regulatory-service:latest
-#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/valuation-service:latest
-#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/instrument-service:latest
-#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/counterparty-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull dige/recipes-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull dige/profile-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull dige/ingredients-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull dige/lists-service:latest
 #- ssh -i ./deploy_key aminman7@129.194.69.134 docker image ls
-  #- ssh -i ./deploy_key aminman7@129.194.69.134 cd docker-compose
-#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-microservices.yml up
-
+#- scp -r remove_docker_containers.sh aminman7@129.194.69.134:./
+#- ssh -i ./deploy_key aminman7@129.194.69.134 chmod u+x remove_docker_containers.sh
+#- ssh -i ./deploy_key aminman7@129.194.69.134 ./remove_docker_containers.sh
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-microservices.yml up &
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-log.yml up &
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-api-gw.yml up &
