@@ -7,38 +7,38 @@ import org.aerogear.kafka.SimpleKafkaProducer;
 import org.aerogear.kafka.cdi.annotation.KafkaConfig;
 import org.aerogear.kafka.cdi.annotation.Producer;
 
-import domain.model.User;
-import domain.service.UserService;
+import domain.model.Ingredient;
+import domain.service.IngredientService;
 import lombok.extern.java.Log;
 
 @Log
 @ApplicationScoped
 @KafkaConfig(bootstrapServers="#{thorntail.kafka-configuration.host}:#{thorntail.kafka-configuration.port}")
-public class UserProducer {
+public class IngredientProducer {
 	
 	@Producer
-	private SimpleKafkaProducer<String, User>producer;
+	private SimpleKafkaProducer<String,Ingredient> producer;
 	
 	@Inject
-	private UserService userService;
+	private IngredientService ingredientService;
 	
 	public void sendAllUsers(String topic) {
 		log.info("Send the current state of ALL users to the topic " + topic);
-		for (User user : userService.getAll()) {
-			producer.send(topic, user);
+		for (Ingredient ingredient : ingredientService.getAll()) {
+			producer.send(topic, ingredient);
 		}
 	}
 
-	public void send(User user, String topic) {
-		log.info("Send the state of an user to the topic " + topic + " with id " + user.getId() );
-		producer.send(topic, user);			
+	public void send(Ingredient ingredient, String topic) {
+		log.info("Send the state of an user to the topic " + topic + " with id " + ingredient.getId() );
+		producer.send(topic, ingredient);			
 	}
 
-	public void send(Long userId, String topic) {
-		log.info("Send the state of an ad to the topic " + topic + " with id " + userId);
-		User user = userService.get(userId);
-		if (user != null) {
-			this.send(user, topic);
+	public void send(Long id, String topic) {
+		log.info("Send the state of an ad to the topic " + topic + " with id " + id);
+		Ingredient ingredient = ingredientService.get(id);
+		if (ingredient != null) {
+			this.send(ingredient, topic);
 		}
 	}
 }

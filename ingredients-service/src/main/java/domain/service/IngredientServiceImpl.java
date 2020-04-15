@@ -12,49 +12,48 @@ import javax.transaction.Transactional;
 
 import domain.model.Ingredient;
 
-
 @ApplicationScoped
 @Transactional
 @Default
 public class IngredientServiceImpl implements IngredientService {
 	
-	@PersistenceContext(unitName = "UserPU")
+	@PersistenceContext(unitName = "IngredientPU")
 	private EntityManager em;	
 
 	@Override
 	public long create(Ingredient ingredient) {
-		if (em.contains(user)) {
-			throw new IllegalArgumentException("user already exists");
+		if (em.contains(ingredient)) {
+			throw new IllegalArgumentException("Ingredient already exists");
 		}
-		em.persist(user);
+		em.persist(ingredient);
 		em.flush();
 		
-		return user.getId();
+		return ingredient.getId();
 	}
 	
 	@Override
 	public void delete(Ingredient ingredient) {
-		em.remove(em.contains(user) ? user : em.merge(user));
+		em.remove(em.contains(ingredient) ? ingredient : em.merge(ingredient));
 	}
 
 	@Override
 	public void update(Ingredient ingredient) {
-		if (user == null) {
-			throw new IllegalArgumentException("User does not exist");
+		if (ingredient == null) {
+			throw new IllegalArgumentException("Ingredient does not exist");
 		}
-		em.merge(user);
+		em.merge(ingredient);
 	}
 
 	@Override
-	public User get(Long userId) {
-		return em.find(User.class, userId);
+	public Ingredient get(Long id) {
+		return em.find(Ingredient.class, id);
 	}
 
 	@Override
 	public List<Ingredient> getAll() {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<User> criteria = builder.createQuery(User.class);
-		criteria.from(User.class);
+		CriteriaQuery<Ingredient> criteria = builder.createQuery(Ingredient.class);
+		criteria.from(Ingredient.class);
 		return em.createQuery(criteria).getResultList();
 	}
 

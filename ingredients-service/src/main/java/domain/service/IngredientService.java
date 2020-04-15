@@ -12,7 +12,7 @@ public interface IngredientService {
 	
 	public void update(Ingredient ingredient);
 	
-	public Ingredient get(Ingredient ingredient);
+	public Ingredient get(Long id);
 	
 	public List<Ingredient> getAll();
 	

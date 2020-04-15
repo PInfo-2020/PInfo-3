@@ -9,9 +9,9 @@ public class Driver {
 		try {
 			// 1. Get a connection to a database
 			
-				String db_url = "jdbc:postgresql://localhost:8080/ingredients";
-				String user = "root";
-				String pwd = "root";
+				String db_url = "jdbc:h2:/META-INF/ingredients.sql";
+				String user = "sa";
+				String pwd = "sa";
 				
 				Connection conn = DriverManager.getConnection(db_url, user, pwd);
 			
@@ -21,7 +21,7 @@ public class Driver {
 				
 			// 3. Execute a SQL query
 				
-				ResultSet resSet = statement.executeQuery("select name from ingredients");
+				ResultSet resSet = statement.executeQuery("select name from Ingredients");
 			
 			// 4. Process the result set
 				
