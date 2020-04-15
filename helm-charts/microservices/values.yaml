@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: stevehostettler/
+  repository: dige/
   tag: latest
   pullPolicy: IfNotPresent
 
@@ -17,33 +17,61 @@ kafka:
   persistence:
      enabled: false
 
-counterparty-db:
+
+profile-db:
   driver_name: org.postgresql
   persistence:
      enabled: false
-  postgresDatabase: counterparty
-  postgresqlDatabase: counterparty
+  postgresDatabase: profile
+  postgresqlDatabase: profile
   global:
       persistence:
          enabled: false
-      postgresqlDatabase: counterparty
+      postgresqlDatabase: profile
   initdbScriptsConfigMap:
-    counterparty-scripts
+    profile-scripts
 
-instrument-db:
+
+recipes-db:
   driver_name: org.postgresql
   persistence:
      enabled: false
-  postgresUser: inst
-  postgresDatabase: instrument
-  postgresqlDatabase: instrument
+  postgresDatabase: recipes
+  postgresqlDatabase: recipes
   global:
       persistence:
          enabled: false
-      postgresqlDatabase: instrument
+      postgresqlDatabase: recipes
   initdbScriptsConfigMap:
-    instrument-scripts
+    recipes-scripts
 
+
+ingredients-db:
+  driver_name: org.postgresql
+  persistence:
+     enabled: false
+  postgresDatabase: ingredients
+  postgresqlDatabase: ingredients
+  global:
+      persistence:
+         enabled: false
+      postgresqlDatabase: ingredients
+  initdbScriptsConfigMap:
+    ingredients-scripts
+
+
+lists-db:
+  driver_name: org.postgresql
+  persistence:
+     enabled: false
+  postgresDatabase: lists
+  postgresqlDatabase: lists
+  global:
+      persistence:
+         enabled: false
+      postgresqlDatabase: lists
+  initdbScriptsConfigMap:
+    lists-scripts
 
 keycloak:
   keycloak:

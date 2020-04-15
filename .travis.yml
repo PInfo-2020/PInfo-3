@@ -38,10 +38,11 @@ script:
 - npm update
 - npm run-script build --prod
 - docker build -t diges/web-ui .
-- docker tag diges/web-ui dige/web-ui:latest      
+- docker tag diges/web-ui diges/web-ui:latest      
 - docker push diges/web-ui:latest
 - cd ..
 
+- docker image ls
 - docker tag diges/recipes-service diges/recipes-service:latest
 - docker push diges/recipes-service:latest
 
