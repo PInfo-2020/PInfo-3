@@ -1,4 +1,7 @@
 language: java
+
+node_js:
+- 13.9.0
 env:
   global: 
   - NODE_VERSION="13.9.0"
@@ -23,9 +26,6 @@ install:
 script:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-language: node_js
-node_js:
-  - 13.9.0
 - cd web-ui
 - pwd
 - npm -v
