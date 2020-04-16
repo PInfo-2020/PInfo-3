@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
-@Table(name="recipe")
+@Table(name="Recipe")
 @Data
 public class Recipe implements Serializable {
 
@@ -29,6 +29,13 @@ public class Recipe implements Serializable {
 	@Column(name="name")
 	@NotNull
 	private String name;
+	
+	public Recipe() {}
+
+	public Recipe(@NotNull String name) {
+		super();
+		this.name = name;
+	}
 
 	public Long getId() {
 		return id;
