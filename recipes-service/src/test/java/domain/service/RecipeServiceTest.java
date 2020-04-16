@@ -1,8 +1,10 @@
 package domain.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,22 +29,28 @@ public class RecipeServiceTest {
 	private RecipeServiceImpl recipeServiceImpl;
 
 	@Test
-	public void testGetAll() {
-		int size = initDataStore();
-		assertEquals(size, recipeServiceImpl.getAll().size());
+	void testGetAll() {
+		List<Recipe> recipes = recipeServiceImpl.getAll();
+		int size = recipes.size();
+		
+		recipeServiceImpl.create(getRandomRecipe());
+		recipeServiceImpl.create(getRandomRecipe());
+		recipeServiceImpl.create(getRandomRecipe());
+		recipeServiceImpl.create(getRandomRecipe());
+		
+		assertEquals(size + 4, recipeServiceImpl.getAll().size());
 	}
 	
-
-	private int initDataStore() {
-		em.clear();
-		List<Recipe> recipes;
-		Recipe recipe1 = new Recipe("curry");
-		Recipe recipe2 = new Recipe("hamburger");
-		recipeServiceImpl.create(recipe1);
-		recipeServiceImpl.create(recipe2);
-		recipes = recipeServiceImpl.getAll();
-		int size = recipes.size();
-		return size;
+	@Test
+	void testCreate() {
+		Recipe recipe = getRandomRecipe();
+		recipeServiceImpl.create(recipe);
+		assertNotNull(recipe.getId());
+	}
+	
+	private Recipe getRandomRecipe() {
+		Recipe recipe = new Recipe(UUID.randomUUID().toString());
+		return recipe;
 	}
 
 }
