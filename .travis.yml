@@ -44,8 +44,33 @@ script:
 - cd ..
 
 - docker image ls
+
 - docker tag diges/recipes-service diges/recipes-service:latest
 - docker push diges/recipes-service:latest
 
 - docker tag diges/profile-service diges/profile-service:latest
 - docker push diges/profile-service:latest
+
+- docker tag diges/ingredients-service diges/ingredients-service:latest
+- docker push diges/ingredients-service:latest
+
+- docker tag diges/lists-service diges/lists-service:latest
+- docker push diges/lists-service:latest
+#- eval "$(ssh-agent -s)"
+#- chmod 600 ./deploy_key
+#- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+#- ssh-add ./deploy_key
+#- scp -r docker-compose aminman7@129.194.69.134:./
+#- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
+#- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull diges/recipes-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull diges/profile-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull diges/ingredients-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull diges/lists-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker image ls
+#- scp -r remove_docker_containers.sh aminman7@129.194.69.134:./
+#- ssh -i ./deploy_key aminman7@129.194.69.134 chmod u+x remove_docker_containers.sh
+#- ssh -i ./deploy_key aminman7@129.194.69.134 ./remove_docker_containers.sh
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-microservices.yml up &
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-log.yml up &
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-api-gw.yml up &
