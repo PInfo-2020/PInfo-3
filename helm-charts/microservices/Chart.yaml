@@ -9,11 +9,19 @@ dependencies:
   - name: postgresql
     version: 7.7.2
     repository: https://kubernetes-charts.storage.googleapis.com
-    alias: counterparty-db
+    alias: recipes-database
   - name: postgresql
     version: 7.7.2
     repository: https://kubernetes-charts.storage.googleapis.com
-    alias: instrument-db
+    alias: profile-database
+  - name: postgresql
+    version: 7.7.2
+    repository: https://kubernetes-charts.storage.googleapis.com
+    alias: ingredients-database
+  - name: postgresql
+    version: 7.7.2
+    repository: https://kubernetes-charts.storage.googleapis.com
+    alias: lists-database
   - name: nginx-ingress 
     version: 1.27.0
     repository: https://kubernetes-charts.storage.googleapis.com  

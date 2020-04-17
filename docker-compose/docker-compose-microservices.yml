@@ -67,7 +67,7 @@ services:
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
   list-service:
     container_name: lists-service  
-    image: dige/lists-service:latest
+    image: diges/lists-service:latest
     hostname: lists-service
     environment:
       THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_CONNECTION_DASH_URL: "jdbc:postgresql://lists-database:5432/lists"
@@ -112,7 +112,7 @@ services:
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
   ingredients-service:
     container_name: ingredients-service  
-    image: dige/ingredients-service:latest
+    image: diges/ingredients-service:latest
     hostname: ingredients-service
     environment:
       THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_CONNECTION_DASH_URL: "jdbc:postgresql://ingredients-database:5432/ingredients"
@@ -158,7 +158,7 @@ services:
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
   ingredients-service:
     container_name: profile-service  
-    image: dige/profile-service:latest
+    image: diges/profile-service:latest
     hostname: profile-service
     environment:
       THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_PROFILE_CONNECTION_DASH_URL: "jdbc:postgresql://profile-database:5432/profile"
@@ -204,7 +204,7 @@ services:
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
   recipes-service:
     container_name: recipes-service  
-    image: dige/recipes-service:latest
+    image: diges/recipes-service:latest
     hostname: recipes-service
     environment:
       THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_CONNECTION_DASH_URL: "jdbc:postgresql://recipes-database:5432/recipes"
