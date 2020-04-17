@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.transaction.Transactional;
@@ -20,16 +21,13 @@ public class RecipeServiceImpl implements RecipeService {
 	@PersistenceContext(unitName = "RecipePU")
 	private EntityManager em;
 	
+	
 	@Override
-	public Long create(Recipe recipe) {
-		if (em.contains(recipe)) {
-			throw new IllegalArgumentException("Recipe already exists");
-		} 
+	public void create(Recipe recipe) {
+		if (recipe.getId() != null) {
+			throw new IllegalArgumentException("Recipe already exists : " + recipe.getId());
+		}
 		em.persist(recipe);
-		// Sync the transaction to get the newly generated id
-		em.flush();
-		
-		return recipe.getId();
 	}
 	
 	@Override
@@ -38,6 +36,19 @@ public class RecipeServiceImpl implements RecipeService {
 		CriteriaQuery<Recipe> criteria = builder.createQuery(Recipe.class);
 		criteria.from(Recipe.class);
 		return em.createQuery(criteria).getResultList();
+	}
+	
+	@Override
+	public Recipe get(Long recipeId) {
+		return em.find(Recipe.class, recipeId);
+	}
+	
+	@Override
+	public List<Recipe> getByName(String recipeName) {
+		TypedQuery<Recipe> query = em.createQuery("SELECT r FROM Recipe r WHERE r.name = :recipeName", Recipe.class);
+		query.setParameter("recipeName", recipeName);
+		List<Recipe> results = query.getResultList();
+		return results;
 	}
 
 }

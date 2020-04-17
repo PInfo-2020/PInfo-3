@@ -1,8 +1,6 @@
 package api.rest;
 
-import java.net.URI;
 import java.util.List;
-import java.util.Locale.Category;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -10,9 +8,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.MediaType;
 
 import domain.model.Recipe;
 import domain.service.RecipeService;
@@ -24,25 +22,30 @@ public class RecipeRestService {
 	@Inject
 	private RecipeService recipeService;
 	
-	@GET
-	@Produces("application/json")
+	
+	@GET // Return all of the recipes
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Recipe> getAll() {
 		return recipeService.getAll();
 	}
 	
-	@POST
-	@Consumes("application/json")
-	public Response create(Recipe recipe) {
-		Long newId = null;
-		try {
-			newId = recipeService.create(recipe);
-		} catch(IllegalArgumentException i) {
-			return Response.status(Status.BAD_REQUEST).build();
-		} catch(Exception e) {
-			return Response.status(Status.BAD_GATEWAY).build();
-		}
-		
-		return Response.status(Status.CREATED).location(URI.create("/recipe/" + newId.toString())).build();
+	@POST // Create a new recipe
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void create(Recipe recipe) {
+		recipeService.create(recipe);
 	}
-
+	
+	@GET // Find a recipe by id
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Recipe get(@PathParam("id") Long recipeId) {
+		return recipeService.get(recipeId);
+	}
+	
+	@GET // Find recipes by name
+	@Path("/name/{name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Recipe> getByName(@PathParam("name") String recipeName) {
+		return recipeService.getByName(recipeName);
+	}
 }
