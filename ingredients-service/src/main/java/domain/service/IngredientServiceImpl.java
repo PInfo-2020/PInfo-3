@@ -15,7 +15,7 @@ import lombok.extern.java.Log;
 @Log
 public class IngredientServiceImpl implements IngredientService {
 	
-	@PersistenceContext(unitName = "IngredientPU")
+	@PersistenceContext(unitName = "IngredientsPU")
 	private EntityManager em;
 	
 	@Override

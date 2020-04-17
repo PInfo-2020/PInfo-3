@@ -1,3 +1,4 @@
+/*
 package api.rest;
 
 import static io.restassured.RestAssured.when;
@@ -33,3 +34,4 @@ public class InstrumentRestServiceIT {
 	}
 
 }
+*/
