@@ -20,8 +20,12 @@ cache:
 #  - "recipes"
 
 jobs:
-  include: 
-  - stage: "building images and sonar"
+  include:
+  - stage: "preapre" 
+    script:
+      - nvm install $NODE_VERSION
+      - node -v
+  - stage: "build images"
     language: java
     jdk: openjdk11
     services: 
@@ -34,38 +38,23 @@ jobs:
     script: 
       - mvn clean install -Ppackage-docker-image
       - mvn sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3 -Dsonar.organization=pinfo-2020 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
-    script:
-      - nvm install $NODE_VERSION
-      - node -v
-      - cd web-ui         
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker tag diges/ingredients-service diges/ingredients-service:latest
+      - docker push diges/ingredients-service:latest
+      - docker tag diges/lists-service diges/lists-service:latest
+      - docker push diges/lists-service:latest
+      - docker tag diges/profile-service diges/profile-service:latest
+      - docker push diges/profile-service:latest
+      - docker tag diges/recipes-service diges/recipes-service:latest
+      - docker push diges/recipes-service:latest
+  - stage: "build web-ui"
+      - cd web-ui
       - pwd
       - npm -v
       - npm install
       - npm update
       - npm run-script build --prod
       - docker build -t diges/web-ui .
-
-
-  - stage: "push images"
-    services:
-      - docker
-    script:
-      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - docker tag diges/ingredients-service diges/ingredients-service:latest
-      - docker push diges/ingredients-service:latest
-    script:
-      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - docker tag diges/lists-service diges/lists-service:latest
-      - docker push diges/listss-service:latest
-    script:
-      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - docker tag diges/profile-service diges/profile-service:latest
-      - docker push diges/profile-service:latest
-    script:
-      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - docker tag diges/recipes-service diges/recipes-service:latest
-      - docker push diges/recipes-service:latest
-    script:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker tag diges/web-ui diges/web-ui:latest
       - docker push diges/web-ui:latest
