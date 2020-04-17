@@ -48,7 +48,6 @@ jobs:
       - docker tag diges/recipes-service diges/recipes-service:latest
       - docker push diges/recipes-service:latest
   - stage: "build web-ui"
-    script:
       - cd web-ui
       - pwd
       - npm -v
