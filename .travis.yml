@@ -20,7 +20,7 @@ stages:
   - build
   - "webui"
   - "ingredients"
-  -  "lists"
+  - "lists"
   - "profile"
   - "recipes"
 
@@ -102,9 +102,9 @@ jobs:
     before_script:
       - cd recipes-service
       - mvn install -Ppackage-docker-image
-   after_success:
-     - docker tag diges/recipes-service diges/recipes-service:latest
-     - docker push diges/recipes-service:latest
+    after_success:
+      - docker tag diges/recipes-service diges/recipes-service:latest
+      - docker push diges/recipes-service:latest
   
 
 #- eval "$(ssh-agent -s)"
