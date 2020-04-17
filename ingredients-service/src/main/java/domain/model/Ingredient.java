@@ -4,12 +4,13 @@ package domain.model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "Ingredients")
 public class Ingredient implements Serializable {
@@ -17,7 +18,6 @@ public class Ingredient implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	@NotNull
 	private int id;
@@ -32,7 +32,7 @@ public class Ingredient implements Serializable {
 	/*
 	@Column(name = "type")
 	private ArrayList<Boolean> type;
-	*/
+	
 	public Ingredient() {}
 	
 	public int getId() {
@@ -53,7 +53,7 @@ public class Ingredient implements Serializable {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	/*
+
 	public ArrayList<Boolean> getType() {
 		return type;
 	}

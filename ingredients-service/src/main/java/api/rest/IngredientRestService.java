@@ -16,9 +16,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import api.msg.IngredientProducer;
 import domain.model.Ingredient;
 import domain.service.IngredientService;
+
 
 @ApplicationScoped
 @Path("/ingredients")
@@ -26,9 +26,14 @@ public class IngredientRestService {
 	
 	@Inject
 	private IngredientService ingredientService;
-	@Inject
-	private IngredientProducer ingredientProducer;
 	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Ingredient> getAll() {
+		return ingredientService.getAll();
+	}
+	
+	/*
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Ingredient ingredient) {
@@ -76,11 +81,5 @@ public class IngredientRestService {
 	public Ingredient get(@PathParam("id") Long id) {
 		return ingredientService.get(id);
 	}
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Ingredient> getAll(){
-		return ingredientService.getAll();
-	}
-
+	*/
 }
