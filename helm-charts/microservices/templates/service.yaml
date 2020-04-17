@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "microservices.fullname" . }}-counterparty-service
+  name: {{ include "microservices.fullname" . }}-profile-service
   labels:
-    {{- include "microservices.labels" . | nindent 4 }}.counterparty-service
+    {{- include "microservices.labels" . | nindent 4 }}.profile-service
 spec:
   type: ClusterIP
   ports:
@@ -11,14 +11,14 @@ spec:
       targetPort: 28080
       protocol: TCP
   selector:
-    app: {{ include "microservices.fullname" . }}.counterparty-service
+    app: {{ include "microservices.fullname" . }}.profile-service
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "microservices.fullname" . }}-valuation-service
+  name: {{ include "microservices.fullname" . }}-recipes-service
   labels:
-    {{- include "microservices.labels" . | nindent 4 }}.valuation-service
+    {{- include "microservices.labels" . | nindent 4 }}.recipes-service
 spec:
   type: ClusterIP
   ports:
@@ -26,14 +26,14 @@ spec:
       targetPort: 28080
       protocol: TCP
   selector:
-    app: {{ include "microservices.fullname" . }}.valuation-service
+    app: {{ include "microservices.fullname" . }}.recipes-service
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "microservices.fullname" . }}-instrument-service
+  name: {{ include "microservices.fullname" . }}-ingredients-service
   labels:
-    {{- include "microservices.labels" . | nindent 4 }}.instrument-service
+    {{- include "microservices.labels" . | nindent 4 }}.ingredients-service
 spec:
   type: ClusterIP
   ports:
@@ -41,7 +41,23 @@ spec:
       targetPort: 28080
       protocol: TCP
   selector:
-    app: {{ include "microservices.fullname" . }}.instrument-service
+    app: {{ include "microservices.fullname" . }}.ingredients-service
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "microservices.fullname" . }}-lists-service
+  labels:
+    {{- include "microservices.labels" . | nindent 4 }}.lists-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 28080
+      targetPort: 28080
+      protocol: TCP
+  selector:
+    app: {{ include "microservices.fullname" . }}.lists-service
 ---
 apiVersion: v1
 kind: Service

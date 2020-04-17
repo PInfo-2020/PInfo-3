@@ -5,17 +5,25 @@
 replicaCount: 1
 
 image:
-  repository: dige/
+  repository: diges/
   tag: latest
   pullPolicy: IfNotPresent
 
 
 kafka:
   zookeeper:
-     persistence:
-        enabled: false
+    livenessProbe:
+      initialDelaySeconds: 120
+    readinessProbe:
+      initialDelaySeconds: 120
+    persistence:
+      enabled: false
   persistence:
      enabled: false
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 120
 
 
 profile-db:
@@ -30,20 +38,10 @@ profile-db:
       postgresqlDatabase: profile
   initdbScriptsConfigMap:
     profile-scripts
-
-
-recipes-db:
-  driver_name: org.postgresql
-  persistence:
-     enabled: false
-  postgresDatabase: recipes
-  postgresqlDatabase: recipes
-  global:
-      persistence:
-         enabled: false
-      postgresqlDatabase: recipes
-  initdbScriptsConfigMap:
-    recipes-scripts
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 120
 
 
 ingredients-db:
@@ -58,6 +56,28 @@ ingredients-db:
       postgresqlDatabase: ingredients
   initdbScriptsConfigMap:
     ingredients-scripts
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 120
+
+
+recipes-db:
+  driver_name: org.postgresql
+  persistence:
+     enabled: false
+  postgresDatabase: recipes
+  postgresqlDatabase: recipes
+  global:
+      persistence:
+         enabled: false
+      postgresqlDatabase: recipes
+  initdbScriptsConfigMap:
+    recipes-scripts
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 120
 
 
 lists-db:
@@ -72,6 +92,10 @@ lists-db:
       postgresqlDatabase: lists
   initdbScriptsConfigMap:
     lists-scripts
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 120
 
 keycloak:
   keycloak:
@@ -85,6 +109,11 @@ keycloak:
         mountPath: "/realm/"
         readOnly: true          
     extraArgs: -Dkeycloak.import=/realm/realms.json
+    livenessProbe: |
+      initialDelaySeconds: 120
+    readinessProbe: |
+      initialDelaySeconds: 120
+
 
 imagePullSecrets: []
 nameOverride: ""

@@ -23,8 +23,8 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /counterparties/$2
-  name: {{ include "microservices.fullname" . }}.ingress-api-counterparties
+    nginx.ingress.kubernetes.io/rewrite-target: /recipes/$2
+  name: {{ include "microservices.fullname" . }}.ingress-api-recipes
   namespace: {{ .Release.Namespace }} 
   labels:
     {{- include "microservices.labels" . | nindent 4 }}
@@ -33,17 +33,17 @@ spec:
   rules:
   - http:
       paths:
-      - path: /api/v1/counterparty(/|$)(.*)
+      - path: /api/v1/recipes(/|$)(.*)
         backend:
-          serviceName: {{ include "microservices.fullname" . }}-counterparty-service
+          serviceName: {{ include "microservices.fullname" . }}-recipes-service
           servicePort: 28080    
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /instrument/$2
-  name: {{ include "microservices.fullname" . }}.ingress-api-instruments
+    nginx.ingress.kubernetes.io/rewrite-target: /ingredients/$2
+  name: {{ include "microservices.fullname" . }}.ingress-api-ingredients
   namespace: {{ .Release.Namespace }} 
   labels:
     {{- include "microservices.labels" . | nindent 4 }}
@@ -52,17 +52,17 @@ spec:
   rules:
   - http:
       paths:
-      - path: /api/v1/instruments(/|$)(.*)
+      - path: /api/v1/ingredients(/|$)(.*)
         backend:
-          serviceName: {{ include "microservices.fullname" . }}-instrument-service
+          serviceName: {{ include "microservices.fullname" . }}-ingredients-service
           servicePort: 28080
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /valuation/$2
-  name: {{ include "microservices.fullname" . }}.ingress-api-valuation
+    nginx.ingress.kubernetes.io/rewrite-target: /lists/$2
+  name: {{ include "microservices.fullname" . }}.ingress-api-lists
   namespace: {{ .Release.Namespace }} 
   labels:
     {{- include "microservices.labels" . | nindent 4 }}
@@ -71,7 +71,26 @@ spec:
   rules:
   - http:
       paths:
-      - path: /api/v1/valuation(/|$)(.*)
+      - path: /api/v1/lists(/|$)(.*)
         backend:
-          serviceName: {{ include "microservices.fullname" . }}-valuation-service
+          serviceName: {{ include "microservices.fullname" . }}-lists-service
+          servicePort: 28080                                                  
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /profile/$2
+  name: {{ include "microservices.fullname" . }}.ingress-api-profile
+  namespace: {{ .Release.Namespace }} 
+  labels:
+    {{- include "microservices.labels" . | nindent 4 }}
+    {{- include "microservices.labels" . | nindent 4 }}.ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/v1/profile(/|$)(.*)
+        backend:
+          serviceName: {{ include "microservices.fullname" . }}-profile-service
           servicePort: 28080                                                  

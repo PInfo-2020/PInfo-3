@@ -156,7 +156,7 @@ services:
     tty: true
 
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
-  ingredients-service:
+  profile-service:
     container_name: profile-service  
     image: diges/profile-service:latest
     hostname: profile-service
