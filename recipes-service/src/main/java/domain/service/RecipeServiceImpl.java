@@ -23,10 +23,8 @@ public class RecipeServiceImpl implements RecipeService {
 	
 	
 	@Override
-	public void create(Recipe recipe) {
-		if (recipe.getId() != null) {
-			throw new IllegalArgumentException("Recipe already exists : " + recipe.getId());
-		}
+	public void create(Recipe recipe, Long size) {
+		recipe.setId(size);
 		em.persist(recipe);
 	}
 	
@@ -45,10 +43,18 @@ public class RecipeServiceImpl implements RecipeService {
 	
 	@Override
 	public List<Recipe> getByName(String recipeName) {
-		TypedQuery<Recipe> query = em.createQuery("SELECT r FROM Recipe r WHERE r.name = :recipeName", Recipe.class);
+		TypedQuery<Recipe> query = em.createQuery("SELECT r FROM Recipe r WHERE r.name LIKE CONCAT('%',:recipeName,'%')", Recipe.class);
 		query.setParameter("recipeName", recipeName);
 		List<Recipe> results = query.getResultList();
 		return results;
+	}
+	
+	@Override
+	public Long count() {
+		CriteriaBuilder qb = em.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+		cq.select(qb.count(cq.from(Recipe.class)));
+		return em.createQuery(cq).getSingleResult();
 	}
 
 }

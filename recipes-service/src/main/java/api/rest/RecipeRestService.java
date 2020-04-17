@@ -32,7 +32,7 @@ public class RecipeRestService {
 	@POST // Create a new recipe
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void create(Recipe recipe) {
-		recipeService.create(recipe);
+		recipeService.create(recipe, recipeService.count()+1);
 	}
 	
 	@GET // Find a recipe by id
@@ -42,10 +42,18 @@ public class RecipeRestService {
 		return recipeService.get(recipeId);
 	}
 	
-	@GET // Find recipes by name
+	@GET // Find recipes by string contains in name
 	@Path("/name/{name}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Recipe> getByName(@PathParam("name") String recipeName) {
 		return recipeService.getByName(recipeName);
 	}
+	
+	@GET // Return the number of recipes
+	@Path("/count")
+	@Produces(MediaType.APPLICATION_JSON)
+    public Long count() {
+		return recipeService.count();
+	}
+	
 }

@@ -5,9 +5,10 @@ import domain.model.Recipe;
 
 public interface RecipeService {
 	
-	public void create(Recipe recipe);
+	public void create(Recipe recipe, Long size);
 	public List<Recipe> getAll();
 	public Recipe get(Long recipeId);
 	public List<Recipe> getByName(String recipeName);
+	public Long count();
 
 }
