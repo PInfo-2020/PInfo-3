@@ -16,17 +16,17 @@ before_script:
 - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv -in deploy_key.enc -out ./deploy_key -d
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-stages:
-  - build
-  - "webui"
-  - "ingredients"
-  - "lists"
-  - "profile"
-  - "recipes"
+#stages:
+#  - "sonar-cloud"
+#  - "webui"
+#  - "ingredients"
+#  - "lists"
+#  - "profile"
+#  - "recipes"
 
 jobs:
   include: 
-  - stage: build
+  - stage: "sonar-cloud"
     language: java
     jdk: openjdk11
     addons:
