@@ -7,15 +7,11 @@ replicaCount: 1
 image:
   repository: diges/
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: IfNotPresent #Always
 
 
 kafka:
   zookeeper:
-    livenessProbe:
-      initialDelaySeconds: 120
-    readinessProbe:
-      initialDelaySeconds: 120
     persistence:
       enabled: false
   persistence:
@@ -23,7 +19,7 @@ kafka:
   livenessProbe:
      initialDelaySeconds: 120
   readinessProbe:
-     initialDelaySeconds: 120
+     initialDelaySeconds: 70
 
 
 profile-db:
@@ -101,10 +97,10 @@ keycloak:
         mountPath: "/realm/"
         readOnly: true          
     extraArgs: -Dkeycloak.import=/realm/realms.json
-    livenessProbe: |
-      initialDelaySeconds: 120
-    readinessProbe: |
-      initialDelaySeconds: 120
+    #   livenessProbe: |
+    #  initialDelaySeconds: 120
+    #readinessProbe: |
+    #  initialDelaySeconds: 120
 
 
 imagePullSecrets: []

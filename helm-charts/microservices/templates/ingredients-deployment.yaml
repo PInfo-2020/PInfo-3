@@ -58,13 +58,13 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /instruments/count #fix me!
+              path: /instrument/count #fix me!
               port: http
             initialDelaySeconds: 60
             periodSeconds: 20                            
           readinessProbe:
             httpGet:
-              path: /instruments/count #fix me!
+              path: /instrument/count #fix me!
               port: http
             initialDelaySeconds: 60
             periodSeconds: 20                            

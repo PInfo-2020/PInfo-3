@@ -6,6 +6,5 @@ metadata:
   labels:
 {{- include "microservices.labels" . | nindent 4 }}
 data:
-  {{ (.Files.Glob "test-data/app-config.json").AsConfig | indent 2 }}
----
-
+  app-config.json: |-
+{{ .Files.Get "test-data/app-config.json" | indent 4 }}
