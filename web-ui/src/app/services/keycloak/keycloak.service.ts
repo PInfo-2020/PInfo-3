@@ -14,7 +14,7 @@ export class KeycloakService {
             url: environment.keycloak.url,
             realm: environment.keycloak.realm,
             clientId: environment.keycloak.clientId,
-     /*       'ssl-required': 'external',
+           /* 'ssl-required': 'external',
             'public-client': true,*/
         });
         KeycloakService.auth.loggedIn = false;
