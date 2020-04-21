@@ -1,7 +1,13 @@
 #!/bin/sh
 set -e
 
+echo "here2"
+
 export KONG_NGINX_DAEMON=off
+#chmod 777 /usr/local/kong/ssl/certs
+#chown -R kong /usr/local/kong/ssl/certs
+
+echo "here1"
 
 has_transparent() {
   echo "$1" | grep -E "[^\s,]+\s+transparent\b" >/dev/null
@@ -12,6 +18,7 @@ if [[ "$1" == "kong" ]]; then
 
   if [[ "$2" == "docker-start" ]]; then
     shift 2
+    echo "chaning permission"
     kong prepare -p "$PREFIX" "$@"
     chown -R kong "$PREFIX"
 

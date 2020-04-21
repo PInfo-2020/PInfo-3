@@ -53,7 +53,7 @@ services:
       POSTGRES_PASSWORD: lis
       POSTGRES_DB: lis
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "sho", "-d", "sho"]
+      test: ["CMD", "pg_isready", "-U", "lis", "-d", "lis"]
       interval: 30s
       timeout: 30s
       retries: 3
