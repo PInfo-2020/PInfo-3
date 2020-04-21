@@ -56,7 +56,7 @@ services:
     volumes:      
       - ../web-ui/dist:/www/data:ro
 #    Assuming we want to put our own certificates, we should put them in /usr/local/kong/ssl/certs
-      - ./certs:/usr/local/kong/ssl/certs      
+     # - ./certs:/usr/local/kong/ssl/certs      
     ports:
      - 80:80
      - 443:443
