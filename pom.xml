@@ -42,8 +42,6 @@
 		<module>recipes-service</module>
 		<module>ingredients-service</module>
 		<module>lists-service</module>
-
-
 	</modules>
 
 

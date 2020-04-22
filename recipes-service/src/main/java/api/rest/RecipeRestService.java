@@ -12,6 +12,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import domain.model.Comment;
+import domain.model.Grade;
 import domain.model.Recipe;
 import domain.service.RecipeService;
 
@@ -54,6 +56,56 @@ public class RecipeRestService {
 	@Produces(MediaType.APPLICATION_JSON)
     public Long count() {
 		return recipeService.count();
+	}
+	
+	@GET // Return the number of comments
+	@Path("/countComment")
+	@Produces(MediaType.APPLICATION_JSON)
+    public Long countComment() {
+		return recipeService.countComment();
+	}
+	
+	@POST // Add a new comment to a recipe
+	@Path("/comment")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addComment(Comment comment) {
+		recipeService.addComment(comment, recipeService.countComment()+1, recipeService.count());
+	}
+	
+	@GET // Return all of the comments of a recipe
+	@Path("/{id}/comment")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Comment> getAllComments(@PathParam("id") Long recipeId) {
+		return recipeService.getAllComments(recipeId);
+	}
+	
+	@GET // Return the number of grades
+	@Path("/countComment")
+	@Produces(MediaType.APPLICATION_JSON)
+    public Long countGrade() {
+		return recipeService.countGrade();
+	}
+	
+	@POST // Add a new grade to a recipe
+	@Path("/grade")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addGrade(Grade grade) {
+		List<Grade> grades = recipeService.getAllGrades(grade.getUserId());
+		recipeService.addGrade(grade, recipeService.countGrade()+1, recipeService.count(), grades);
+	}
+	
+	@GET // Return all of the grades from a user
+	@Path("/user/{id}/grade")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Grade> getAllGrades(@PathParam("id") Long userId) {
+		return recipeService.getAllGrades(userId);
+	}
+	
+	@GET // Return the grade of a recipe
+	@Path("/{id}/grade")
+	@Produces(MediaType.APPLICATION_JSON)
+    public double getGrade(@PathParam("id") Long recipeId) {
+		return recipeService.getGrade(recipeId);
 	}
 	
 }
