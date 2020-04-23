@@ -7,6 +7,8 @@
 INSERT INTO Recipe (id, name) values (1, 'nom1');
 INSERT INTO Recipe (id, name) values (2, 'nom3');
 INSERT INTO Recipe (id, name) values (3, 'nom3');
+INSERT INTO Ingredient (id, recipeId, ingredientId, quantite) values (1, 3, 7, 3.0);
+INSERT INTO Ingredient (id, recipeId, ingredientId, quantite) values (2, 3, 8, 5.0);
 INSERT INTO Comment (id, recipeId, commentRecipe) values (1, 1, 'C''est bon');
 INSERT INTO Comment (id, recipeId, commentRecipe) values (2, 3, 'C''est pas bon');
 INSERT INTO Comment (id, recipeId, commentRecipe) values (3, 3, 'C''est delicieux');

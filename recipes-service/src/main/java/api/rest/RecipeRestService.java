@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 
 import domain.model.Comment;
 import domain.model.Grade;
+import domain.model.Ingredient;
 import domain.model.Recipe;
 import domain.service.RecipeService;
 
@@ -31,10 +32,10 @@ public class RecipeRestService {
 		return recipeService.getAll();
 	}
 	
-	@POST // Create a new recipe
+	@POST // Create a new recipe and return his id
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void create(Recipe recipe) {
-		recipeService.create(recipe, recipeService.count()+1);
+	public Long create(Recipe recipe) {
+		return recipeService.create(recipe, recipeService.count()+1);
 	}
 	
 	@GET // Find a recipe by id
@@ -56,6 +57,13 @@ public class RecipeRestService {
 	@Produces(MediaType.APPLICATION_JSON)
     public Long count() {
 		return recipeService.count();
+	}
+	
+	@GET // Return the number of ingredients
+	@Path("/count")
+	@Produces(MediaType.APPLICATION_JSON)
+    public Long countIngredient() {
+		return recipeService.countIngredient();
 	}
 	
 	@GET // Return the number of comments
@@ -106,6 +114,29 @@ public class RecipeRestService {
 	@Produces(MediaType.APPLICATION_JSON)
     public double getGrade(@PathParam("id") Long recipeId) {
 		return recipeService.getGrade(recipeId);
+	}
+	
+	@POST // Create a new ingredient
+	@Path("/{id}/addingredients")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void createIngredient(List<Ingredient> ingredients, @PathParam("id") Long recipeId) {
+		for (Ingredient ingredient : ingredients) {
+			recipeService.createIngredient(ingredient, recipeId, recipeService.countIngredient()+1);
+		}
+	}
+	
+	@GET // Return all of the ingredients of a recipe
+	@Path("/{id}/ingredient")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Ingredient> getAllIngredients(@PathParam("id") Long recipeId) {
+		return recipeService.getAllIngredients(recipeId);
+	}
+	
+	@GET // Return the 3 best recipes
+	@Path("/top")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Recipe> getBestRecipes() {
+		return recipeService.getBestRecipes();
 	}
 	
 }
