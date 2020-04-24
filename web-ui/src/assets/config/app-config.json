@@ -11,15 +11,15 @@
         "responseMode": "fragment"
     },
     "ingredientsService": {
-        "url": "https://pinfo3.unige.ch/api/v1/ingredients"
+        "url": "http://pinfo3.unige.ch/api/v1/ingredients"
     },
     "listsService": {
-        "url": "https://pinfo3.unige.ch/api/v1/lists"
+        "url": "http://pinfo3.unige.ch/api/v1/lists"
     },
     "profileService": {
-        "url": "https://pinfo3.unige.ch/api/v1/profiles"
+        "url": "http://pinfo3.unige.ch/api/v1/profiles"
     },
     "recipesService": {
-        "url": "https://pinfo3.unige.ch/api/v1/recipes"
+        "url": "http://pinfo3.unige.ch/api/v1/recipes"
     }
 }
