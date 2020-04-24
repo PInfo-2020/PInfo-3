@@ -33,7 +33,7 @@ script:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 - cd web-ui
-- sed 's/localhost:4200/129.194.69.134/' e2e/protractor.conf.js
+#- sed 's/localhost:4200/129.194.69.134/' e2e/protractor.conf.js
 - pwd
 - npm -v
 - npm install
