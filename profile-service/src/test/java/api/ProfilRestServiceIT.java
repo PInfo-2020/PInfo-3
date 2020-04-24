@@ -1,4 +1,4 @@
-package api;
+/*package api;
 
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.containsString;
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import io.restassured.RestAssured;
 
-public class CounterpartyRestServiceIT {
+public class ProfilRestServiceIT {
 
 	@BeforeAll
 	public static void setup() {
@@ -32,4 +32,4 @@ public class CounterpartyRestServiceIT {
 		when().get("/984500C2EEUEB4A0C629").then().body(containsString("984500C2EEUEB4A0C629"));
 	}
 
-}
+}*/

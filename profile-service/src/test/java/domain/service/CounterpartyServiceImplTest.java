@@ -1,4 +1,4 @@
-package domain.service;
+/*package domain.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -98,4 +98,4 @@ class CounterpartyServiceImplTest {
 
 		return c;
 	}
-}
+}*/
