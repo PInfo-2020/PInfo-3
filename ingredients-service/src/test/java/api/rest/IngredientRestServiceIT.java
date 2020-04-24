@@ -1,4 +1,3 @@
-/*
 package api.rest;
 
 import static io.restassured.RestAssured.when;
@@ -9,11 +8,11 @@ import org.junit.jupiter.api.Test;
 
 import io.restassured.RestAssured;
 
-public class InstrumentRestServiceIT {
+public class IngredientRestServiceIT {
 
 	@BeforeAll
 	public static void setup() {
-		RestAssured.baseURI = "http://localhost:28080/instrument";
+		RestAssured.baseURI = "http://localhost:28080/ingredients";
 		RestAssured.port = 8080;
 	}
 
@@ -34,4 +33,3 @@ public class InstrumentRestServiceIT {
 	}
 
 }
-*/

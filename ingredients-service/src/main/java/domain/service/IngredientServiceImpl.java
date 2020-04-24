@@ -25,11 +25,11 @@ public class IngredientServiceImpl implements IngredientService {
 		criteria.from(Ingredient.class);
 		return (List<Ingredient>) em.createQuery(criteria).getResultList();
 	}
-	/*
+	
 	@Override
 	public long create(Ingredient ingredient) {
 		if (em.contains(ingredient)) {
-			throw new IllegalArgumentException("Ingredient already exists");
+			throw new IllegalArgumentException("ingredient already exists");
 		}
 		em.persist(ingredient);
 		em.flush();
@@ -41,18 +41,19 @@ public class IngredientServiceImpl implements IngredientService {
 	public void delete(Ingredient ingredient) {
 		em.remove(em.contains(ingredient) ? ingredient : em.merge(ingredient));
 	}
-
+	
+	
 	@Override
 	public void update(Ingredient ingredient) {
 		if (ingredient == null) {
-			throw new IllegalArgumentException("Ingredient does not exist");
+			throw new IllegalArgumentException("ingredient does not exist");
 		}
 		em.merge(ingredient);
 	}
 
 	@Override
-	public Ingredient get(Long id) {
+	public Ingredient get(int id) {
 		return em.find(Ingredient.class, id);
 	}
-	*/
+	
 }
