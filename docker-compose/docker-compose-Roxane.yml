@@ -1,0 +1,50 @@
+version: "2.1"
+
+services:
+
+
+   iam:
+     image: jboss/keycloak:4.8.3.Final
+     container_name: iam
+     hostname: iam
+     networks:
+      - gateway-network
+      - backend-network       
+     restart: on-failure
+     ports:
+       - 8080:8080
+     volumes:      
+       - ./realms.json:/opt/jboss/keycloak/realms.json
+       - ./master.realm.json:/opt/jboss/keycloak/master.realm.json.json
+     environment:
+       - KEYCLOAK_USER=admin
+       - KEYCLOAK_PASSWORD=password
+   #    - DB_VENDOR=postgres
+   #    - DB_USER=admin
+   #    - DB_PASSWORD=password
+   #    - DB_ADDR=iam-db
+   #    - DB_PORT=5432
+   #    - DB_DATABASE=keycloakdb
+   #    - PROXY_ADDRESS_FORWARDING=true
+   #    - KEYCLOAK_IMPORT=/tmp/iam-config/master.realm.json
+     expose:
+       - 8080
+     command:
+       - "-b 0.0.0.0"
+#       - "-Dkeycloak.import=/opt/jboss/keycloak/master.realm.json"
+#     depends_on:
+   #    iam-db :
+   #      condition: service_healthy
+         
+volumes:
+   pgdata-kong:
+   pgdata-iam:
+   
+networks:
+  frontend-network:
+     driver: bridge 
+  gateway-network:
+     driver: bridge     
+  backend-network:
+    external:
+      name: microservices_backend-network

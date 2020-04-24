@@ -57,6 +57,10 @@ script:
 
 - docker tag diges/lists-service diges/lists-service:latest
 - docker push diges/lists-service:latest
+
+- docker tag diges/api-gateway  diges/api-gateway:latest
+- docker push diges/api-gateway:latest
+
 #- eval "$(ssh-agent -s)"
 #- chmod 600 ./deploy_key
 #- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
