@@ -27,11 +27,36 @@ public class Recipe implements Serializable {
 	@NotNull
 	private String name;
 	
+	@Column(name="description")
+	@NotNull
+	private String description;
+	
+	@Column(name="instructions")
+	@NotNull
+	private String instructions;
+	
+	@Column(name="minutes")
+	@NotNull
+	private int minutes;
+	
+	@Column(name="personnes")
+	@NotNull
+	private int personnes;
+	
+	@Column(name="userId")
+	@NotNull
+	private Long userId;
+	
 	public Recipe() {}
 
-	public Recipe(@NotNull String name) {
+	public Recipe(@NotNull String name, @NotNull String description, @NotNull String instructions, @NotNull int minutes, @NotNull int personnes, @NotNull Long userId) {
 		super();
 		this.name = name;
+		this.description = description;
+		this.instructions = instructions;
+		this.minutes = minutes;
+		this.personnes = personnes;
+		this.userId = userId;
 	}
 
 	public Long getId() {
@@ -49,6 +74,45 @@ public class Recipe implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getDescription() {
+		return description;
+	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public String getInstructions() {
+		return instructions;
+	}
+
+	public void setInstructions(String instructions) {
+		this.instructions = instructions;
+	}
+	
+	public int getMinutes() {
+		return minutes;
+	}
+
+	public void setMinutes(int minutes) {
+		this.minutes = minutes;
+	}
+	
+	public int getPersonnes() {
+		return personnes;
+	}
+
+	public void setPersonnes(int personnes) {
+		this.personnes = personnes;
+	}
+	
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 	
 }

@@ -7,6 +7,9 @@
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>domain.model.Recipe</class>
+		<class>domain.model.Comment</class>
+		<class>domain.model.Grade</class>
+		<class>domain.model.Ingredient</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
 			<property name="javax.persistence.jdbc.url"
