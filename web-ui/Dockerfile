@@ -6,26 +6,24 @@
 #EXPOSE 80
 
 
-# Stage 1: Build the application.
+#Stage 1: Build the application.
 
+FROM node:latest AS build-phase
 
+WORKDIR /webapp
 
-#FROM node:latest AS build-phase
+COPY package*.json /webapp/
 
-#WORKDIR /webapp
+RUN npm install
 
-#COPY package*.json /webapp/
+COPY ./ /webapp/
 
-#RUN npm install
-
-#COPY ./ /webapp/
-
-#RUN npm run build -- --output-path=./dist --prod
+RUN npm run build -- --output-path=./dist 
 
 # Stage 2: Deploy the application on an Nginx server.
-#FROM nginx:latest
+FROM nginx:latest
 
-#COPY --from=build-phase /webapp/dist/ /usr/share/nginx/html
+COPY --from=build-phase /webapp/dist/ /usr/share/nginx/html
 
-FROM nginx:1.17.1-alpine
-COPY /dist /usr/share/nginx/html
+#FROM nginx:1.17.1-alpine
+#COPY /dist /usr/share/nginx/html
