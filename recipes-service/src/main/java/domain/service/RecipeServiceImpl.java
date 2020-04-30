@@ -207,5 +207,23 @@ public class RecipeServiceImpl implements RecipeService {
 		}
 		return results;
 	}
+	
+	@Override
+	public double getUserGrade(Long userId) {
+		log.info("retrieve the final grade of a user");
+		TypedQuery<Recipe> query = em.createQuery("SELECT r FROM Recipe r WHERE r.userId = :userId ", Recipe.class);
+		query.setParameter("userId", userId);
+		List<Recipe> results = query.getResultList();
+		double mean = 0;
+		for (Recipe recipe : results) {
+			mean += this.getGrade(recipe.getId());
+		}
+		mean /= results.size();
+		mean = mean*100;
+		mean = Math.round(mean);
+		mean = mean /100;
+		
+		return mean;
+	}
 
 }

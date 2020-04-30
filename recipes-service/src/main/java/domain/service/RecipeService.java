@@ -25,5 +25,6 @@ public interface RecipeService {
 	public double getGrade(Long recipeId);
 	public List<Ingredient> getAllIngredients(Long recipeId);
 	public List<Recipe> getBestRecipes();
+	public double getUserGrade(Long userId);
 
 }

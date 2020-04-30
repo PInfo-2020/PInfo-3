@@ -213,6 +213,30 @@ public class RecipeServiceTest {
 		assertTrue(recipeServiceImpl.getBestRecipes().contains(recipe4));
 	}
 	
+	@Test
+	void testGetUserGrade() {
+		List<Recipe> recipes = recipeServiceImpl.getAll();
+		long sizeL = (long) recipes.size();
+		Recipe recipe = new Recipe("n", "d", "i", 10, 1, (long) 2);
+		Recipe recipe2 = new Recipe("n2", "d2", "i2", 10, 1, (long) 2);
+		Recipe recipe3 = new Recipe("n3", "d3", "i3", 10, 1, (long) 3);
+		
+		recipeServiceImpl.create(recipe, sizeL + 1);
+		recipeServiceImpl.create(recipe2, sizeL + 2);
+		recipeServiceImpl.create(recipe3, sizeL + 3);
+		
+		List<Grade> grades = recipeServiceImpl.getAllGrades((long) 0);
+		long sizeL2 = (long) recipeServiceImpl.countGrade();
+		long nbRecipes = (long) recipeServiceImpl.count();
+		Grade grade = new Grade((long) 1, (long) 0, 5);
+		Grade grade2 = new Grade((long) 2, (long) 0, 2);
+		
+		recipeServiceImpl.addGrade(grade, sizeL2 + 1, nbRecipes, grades);
+		recipeServiceImpl.addGrade(grade2, sizeL2 + 2, nbRecipes, grades);
+		
+		assertEquals(3.5, recipeServiceImpl.getUserGrade((long) 2));
+	}
+	
 	private Recipe getRandomRecipe() {
 		Recipe recipe = new Recipe(UUID.randomUUID().toString(), UUID.randomUUID().toString(),
 				UUID.randomUUID().toString(), ThreadLocalRandom.current().nextInt(0, 500), ThreadLocalRandom.current().nextInt(0, 500),

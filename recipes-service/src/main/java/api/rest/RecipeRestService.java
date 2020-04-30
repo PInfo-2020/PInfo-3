@@ -103,7 +103,7 @@ public class RecipeRestService {
 	}
 	
 	@GET // Return all of the grades from a user
-	@Path("/user/{id}/grade")
+	@Path("/user/{id}/grades")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Grade> getAllGrades(@PathParam("id") Long userId) {
 		return recipeService.getAllGrades(userId);
@@ -137,6 +137,13 @@ public class RecipeRestService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Recipe> getBestRecipes() {
 		return recipeService.getBestRecipes();
+	}
+	
+	@GET // Return the grade of a user (the mean of all grades from recipes created by the user)
+	@Path("/user/{id}/grade")
+	@Produces(MediaType.APPLICATION_JSON)
+    public double getUserGrade(@PathParam("id") Long userId) {
+		return recipeService.getUserGrade(userId);
 	}
 	
 }
