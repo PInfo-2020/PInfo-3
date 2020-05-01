@@ -1,0 +1,13 @@
+.logo {
+    height: 200px;
+    width: auto;
+    padding: 10px;
+    display: block;
+    margin: 0 auto;
+}
+
+.text {
+  text-align: justify;
+  text-align-last: center;
+  }
+  

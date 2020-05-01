@@ -5,45 +5,85 @@
 replicaCount: 1
 
 image:
-  repository: stevehostettler/
+  repository: diges/
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always #IfNotPresent 
 
 
 kafka:
   zookeeper:
-     persistence:
-        enabled: false
+    persistence:
+      enabled: false
   persistence:
      enabled: false
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 70
 
-counterparty-db:
+
+profile-db:
   driver_name: org.postgresql
   persistence:
      enabled: false
-  postgresDatabase: counterparty
-  postgresqlDatabase: counterparty
+  postgresDatabase: profile
+  postgresqlDatabase: profile
   global:
       persistence:
          enabled: false
-      postgresqlDatabase: counterparty
-  initdbScriptsConfigMap:
-    counterparty-scripts
+      postgresqlDatabase: profile
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 120
 
-instrument-db:
+
+ingredients-db:
   driver_name: org.postgresql
   persistence:
      enabled: false
-  postgresUser: inst
-  postgresDatabase: instrument
-  postgresqlDatabase: instrument
+  postgresDatabase: ingredients
+  postgresqlDatabase: ingredients
   global:
       persistence:
          enabled: false
-      postgresqlDatabase: instrument
-  initdbScriptsConfigMap:
-    instrument-scripts
+      postgresqlDatabase: ingredients
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 120
 
+
+recipes-db:
+  driver_name: org.postgresql
+  persistence:
+     enabled: false
+  postgresDatabase: recipes
+  postgresqlDatabase: recipes
+  global:
+      persistence:
+         enabled: false
+      postgresqlDatabase: recipes
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 120
+
+
+lists-db:
+  driver_name: org.postgresql
+  persistence:
+     enabled: false
+  postgresDatabase: lists
+  postgresqlDatabase: lists
+  global:
+      persistence:
+         enabled: false
+      postgresqlDatabase: lists
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 120
 
 keycloak:
   keycloak:
@@ -57,6 +97,11 @@ keycloak:
         mountPath: "/realm/"
         readOnly: true          
     extraArgs: -Dkeycloak.import=/realm/realms.json
+    #   livenessProbe: |
+    #  initialDelaySeconds: 120
+    #readinessProbe: |
+    #  initialDelaySeconds: 120
+
 
 imagePullSecrets: []
 nameOverride: ""

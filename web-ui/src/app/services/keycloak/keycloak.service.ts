@@ -9,13 +9,13 @@ export class KeycloakService {
 
     static auth: any = {};
 
-    static init(): Promise<any> {
+    init(): Promise<any> {
         const keycloakAuth: Keycloak.KeycloakInstance = Keycloak({
             url: environment.keycloak.url,
             realm: environment.keycloak.realm,
             clientId: environment.keycloak.clientId,
-            'ssl-required': 'external',
-            'public-client': true,
+           /* 'ssl-required': 'external',
+            'public-client': true,*/
         });
         KeycloakService.auth.loggedIn = false;
         return new Promise((resolve, reject) => {

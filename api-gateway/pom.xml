@@ -46,7 +46,7 @@
 							<dockerHost>${dockerHost}</dockerHost>						
 							<images>
 								<image>
-									<name>digetmp/%a:%l</name>
+									<name>diges/%a:%l</name>
 									<build>										
 										<dockerFileDir>.</dockerFileDir>
 										<assembly>

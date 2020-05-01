@@ -319,7 +319,7 @@
 							<dockerHost>${dockerHost}</dockerHost>
 							<images>
 								<image>
-									<name>dige/%a:%l</name>
+									<name>diges/%a:%l</name>
 									<run>
 										<ports>
 											<port>8080:8080</port>

@@ -42,38 +42,38 @@ services:
     depends_on:
       - zookeeper
 
-  shopping-database:
+  lists-database:
     image: postgres:10
-    container_name: dige/shopping-database
-    hostname: dige/shopping-database
+    container_name: lists-database
+    hostname: lists-database
     networks:
      - backend-network
     environment:
-      POSTGRES_USER: sho
-      POSTGRES_PASSWORD: sho
-      POSTGRES_DB: sho
+      POSTGRES_USER: lis
+      POSTGRES_PASSWORD: lis
+      POSTGRES_DB: lis
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "sho", "-d", "sho"]
+      test: ["CMD", "pg_isready", "-U", "lis", "-d", "lis"]
       interval: 30s
       timeout: 30s
       retries: 3
     volumes:
-      - pgdata-cpty:/var/lib/postgresql/data
-      - ./test-data/shopping.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata-lists:/var/lib/postgresql/data
+      - ./test-data/list.sql:/docker-entrypoint-initdb.d/init.sql
     restart: on-failure
     stdin_open: true
     tty: true
 
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
-  shopping-service:
-    container_name: shopping-service  
-    image: dige/shopping-service:latest
-    hostname: shopping-service
+  list-service:
+    container_name: lists-service  
+    image: diges/lists-service:latest
+    hostname: lists-service
     environment:
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL: "jdbc:postgresql://shopping-database:5432/shopping"
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_DRIVER_DASH_NAME: 'postgresql'   
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_USER_DASH_NAME: 'pro'
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_PASSWORD: 'pro'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_CONNECTION_DASH_URL: "jdbc:postgresql://lists-database:5432/lists"
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_DRIVER_DASH_NAME: 'postgresql'   
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_USER_DASH_NAME: 'lis'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_PASSWORD: 'lis'
       THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
       THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
     networks:
@@ -89,8 +89,8 @@ services:
 
   ingredients-database:
     image: postgres:10
-    container_name: dige/ingredients-database
-    hostname: dige/ingredients-database
+    container_name: ingredients-database
+    hostname: ingredients-database
     networks:
      - backend-network
     environment:
@@ -103,7 +103,7 @@ services:
       timeout: 30s
       retries: 3
     volumes:
-      - pgdata-cpty:/var/lib/postgresql/data
+      - pgdata-ing:/var/lib/postgresql/data
       - ./test-data/ingredients.sql:/docker-entrypoint-initdb.d/init.sql
     restart: on-failure
     stdin_open: true
@@ -112,13 +112,13 @@ services:
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
   ingredients-service:
     container_name: ingredients-service  
-    image: dige/ingredients-service:latest
+    image: diges/ingredients-service:latest
     hostname: ingredients-service
     environment:
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL: "jdbc:postgresql://ingredients-database:5432/ingredients"
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_DRIVER_DASH_NAME: 'postgresql'   
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_USER_DASH_NAME: 'ing'
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_PASSWORD: 'ing'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_CONNECTION_DASH_URL: "jdbc:postgresql://ingredients-database:5432/ingredients"
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_DRIVER_DASH_NAME: 'postgresql'   
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_USER_DASH_NAME: 'ing'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_PASSWORD: 'ing'
       THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
       THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
     networks:
@@ -135,8 +135,8 @@ services:
 
   profile-database:
     image: postgres:10
-    container_name: dige/profile-database
-    hostname: dige/profile-database
+    container_name: profile-database
+    hostname: profile-database
     networks:
      - backend-network
     environment:
@@ -149,22 +149,22 @@ services:
       timeout: 30s
       retries: 3
     volumes:
-      - pgdata-cpty:/var/lib/postgresql/data
+      - pgdata-pro:/var/lib/postgresql/data
       - ./test-data/profile.sql:/docker-entrypoint-initdb.d/init.sql
     restart: on-failure
     stdin_open: true
     tty: true
 
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
-  ingredients-service:
+  profile-service:
     container_name: profile-service  
-    image: dige/profile-service:latest
+    image: diges/profile-service:latest
     hostname: profile-service
     environment:
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL: "jdbc:postgresql://profile-database:5432/profile"
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_DRIVER_DASH_NAME: 'postgresql'   
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_USER_DASH_NAME: 'pro'
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_PASSWORD: 'pro'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_PROFILE_CONNECTION_DASH_URL: "jdbc:postgresql://profile-database:5432/profile"
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_PROFILE_DRIVER_DASH_NAME: 'postgresql'   
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_PROFILE_USER_DASH_NAME: 'pro'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_PROFILE_PASSWORD: 'pro'
       THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
       THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
     networks:
@@ -181,8 +181,8 @@ services:
 
   recipes-database:
     image: postgres:10
-    container_name: dige/recipes-database
-    hostname: dige/recipes-database
+    container_name: recipes-database
+    hostname: recipes-database
     networks:
      - backend-network
     environment:
@@ -195,7 +195,7 @@ services:
       timeout: 30s
       retries: 3
     volumes:
-      - pgdata-cpty:/var/lib/postgresql/data
+      - pgdata-rec:/var/lib/postgresql/data
       - ./test-data/recipes.sql:/docker-entrypoint-initdb.d/init.sql
     restart: on-failure
     stdin_open: true
@@ -204,13 +204,13 @@ services:
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
   recipes-service:
     container_name: recipes-service  
-    image: dige/recipes-service:latest
+    image: diges/recipes-service:latest
     hostname: recipes-service
     environment:
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_CONNECTION_DASH_URL: "jdbc:postgresql://recipes-database:5432/recipes"
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_DRIVER_DASH_NAME: 'postgresql'   
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_USER_DASH_NAME: 'rec'
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_COUNTERPARTYDS_PASSWORD: 'rec'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_CONNECTION_DASH_URL: "jdbc:postgresql://recipes-database:5432/recipes"
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_DRIVER_DASH_NAME: 'postgresql'   
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_USER_DASH_NAME: 'rec'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_PASSWORD: 'rec'
       THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
       THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
     networks:
@@ -221,9 +221,10 @@ services:
        - kafka
 
 volumes:
-   pgdata-cpty:
-   pgdata-inst:
-  
+   pgdata-rec:
+   pgdata-ing:
+   pgdata-pro: 
+   pgdata-lists:
 
 networks:
   backend-network:

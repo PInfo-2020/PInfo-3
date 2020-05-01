@@ -25,7 +25,7 @@ services:
     tty: true
             
    api-gateway:
-    image: dige/api-gateway
+    image: diges/api-gateway
     container_name:  api-gateway
     hostname:  api-gateway
     networks:
@@ -56,7 +56,7 @@ services:
     volumes:      
       - ../web-ui/dist:/www/data:ro
 #    Assuming we want to put our own certificates, we should put them in /usr/local/kong/ssl/certs
-      - ./certs:/usr/local/kong/ssl/certs      
+     # - ./certs:/usr/local/kong/ssl/certs      
     ports:
      - 80:80
      - 443:443
@@ -67,7 +67,7 @@ services:
           condition: service_healthy
 
    api-gateway-init:
-    image: dige/api-gateway
+    image: diges/api-gateway
     container_name:  api-gateway-init
     hostname:  api-gateway-init
     networks:
@@ -123,7 +123,7 @@ services:
        - DB_PORT=5432
        - DB_DATABASE=keycloakdb
        - PROXY_ADDRESS_FORWARDING=true
-       - KEYCLOAK_IMPORT=/tmp/iam-config/realms.json
+#       - KEYCLOAK_IMPORT=/tmp/iam-config/realms.json
      depends_on:
         iam-db :
           condition: service_healthy

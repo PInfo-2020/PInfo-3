@@ -1,8 +1,11 @@
+
 language: java
+
 env:
   global: 
   - NODE_VERSION="13.9.0"
   - SERVER_IP_ADDRESS=129.194.69.134
+
 services:
 - docker
 addons:
@@ -12,37 +15,69 @@ addons:
       secure: MVpHYotI+Kn9c492kURlipq8lqeuQ8dRxsAIaUUtouTr6IdAZAAXHSFn9zQ2pEk5J/PZZaRa9lmCBexpL47XYjzEnkealoyLtuIyK2vP6e7BFFvRp3wsdaeVTpQl3VRYsYyTiGXXCPVmmwxn8h3uUutHzrn89QvIkMHPzMc0VjOSv2+B9i/6EFg1BiKE0iTkllPYC06+4LIQ14HJkzhgl9DN3dSACQChA7SAisD/T2eRNpinfJP/k+hRo4I2eB+6G6JjktHre4/OcXX+OEIA6xExQjULCiijzhrUVYHhcTmoMo5EmrBPuKool8If6tTR+Gh7Gt2A7xGS9BslSmEIhpZmil4QKjbLrgOHqHV7zCVgeXCVla42S3Ge9EMdpskHtGMeGpEZ4wb5FwdrZKGJ0SX0RhbrrW+E9k3tQxNu4ErSXlN8urXBEWqf91bpnR5dXWbrw1ZTbVgOf0W7rduoGV/L6NJrmWyauegSLYFQbfZ5klbDOmI3IHI4jIo/uN9jsHpPags/6GGlhDWbI8f1yRqAGwtIZlP0X+DG41N7h13xlvJH8IFi307cUzCINNxv+xzu0Owi3yWMurpFYqZvP6pDYP/RrOJEYE7/yhd/vfiZ868CB1AFbXiQrraMqB1OZs7rbJ5qxvWHTt+f7nlCT4kKnRyDZJ+FxZRz0GzImcs=
 cache:
   directories:
-  - ".autoconf"
-  - "$HOME/.m2"
+  - .autoconf
+  - $HOME/.m2
+  - node_modules
+
 before_install:
-- mvn test
+#- mvn test
 - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dmaven.test.skip=true -Ppackage-docker-image
 - mvn sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3 -Dsonar.organization=pinfo-2020 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
+
 install:
 - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv -in deploy_key.enc -out ./deploy_key -d
+- nvm install $NODE_VERSION
+- node -v
+
 script:
-#- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-#- docker tag kernel3/api-gateway kernel3/api-gateway:latest
-#- docker push kernel3/api-gateway:latest
-#- docker tag kernel3/regulatory-service kernel3/regulatory-service:latest
-#- docker push kernel3/regulatory-service:latest
-#- docker tag kernel3/valuation-service kernel3/valuation-service:latest
-#- docker push kernel3/valuation-service:latest
-#- docker tag kernel3/instrument-service kernel3/instrument-service:latest
-#- docker push kernel3/instrument-service:latest
-#- docker tag kernel3/counterparty-service kernel3/counterparty-service:latest
-#- docker push kernel3/counterparty-service:latest
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+- cd web-ui
+#- sed 's/localhost:4200/129.194.69.134/' e2e/protractor.conf.js
+- pwd
+- npm -v
+#- npm install
+#- npm update
+#- npm run-script build --prod
+#- npm run build -- --output-path=./web-ui/dist
+#- ls ./web-ui/dist
+- docker build -t diges/web-ui .
+- docker tag diges/web-ui diges/web-ui:latest      
+- docker push diges/web-ui:latest
+- cd ..
+
+- docker image ls
+
+- docker tag diges/recipes-service diges/recipes-service:latest
+- docker push diges/recipes-service:latest
+
+- docker tag diges/profile-service diges/profile-service:latest
+- docker push diges/profile-service:latest
+
+- docker tag diges/ingredients-service diges/ingredients-service:latest
+- docker push diges/ingredients-service:latest
+
+- docker tag diges/lists-service diges/lists-service:latest
+- docker push diges/lists-service:latest
+
+- docker tag diges/api-gateway  diges/api-gateway:latest
+- docker push diges/api-gateway:latest
+
 #- eval "$(ssh-agent -s)"
 #- chmod 600 ./deploy_key
 #- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 #- ssh-add ./deploy_key
 #- scp -r docker-compose aminman7@129.194.69.134:./
+#- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
 #- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
-#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/api-gateway:latest
-#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/regulatory-service:latest
-#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/valuation-service:latest
-#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/instrument-service:latest
-#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull kernel3/counterparty-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull diges/recipes-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull diges/profile-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull diges/ingredients-service:latest
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull diges/lists-service:latest
 #- ssh -i ./deploy_key aminman7@129.194.69.134 docker image ls
-  #- ssh -i ./deploy_key aminman7@129.194.69.134 cd docker-compose
-#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-microservices.yml up
+#- scp -r remove_docker_containers.sh aminman7@129.194.69.134:./
+#- ssh -i ./deploy_key aminman7@129.194.69.134 chmod u+x remove_docker_containers.sh
+#- ssh -i ./deploy_key aminman7@129.194.69.134 ./remove_docker_containers.sh
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-microservices.yml up &
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-log.yml up &
+#- ssh -i ./deploy_key aminman7@129.194.69.134 docker-compose -f docker-compose/docker-compose-api-gw.yml up &
