@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {ExtraOptions, Routes, RouterModule } from '@angular/router';
+
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import { AboutUsComponent } from './about-us/about-us.component';
@@ -8,6 +9,15 @@ import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { FridgeComponent } from './fridge/fridge.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+
+import {
+  NbAuthComponent,
+  NbLoginComponent,
+  NbLogoutComponent,
+  NbRegisterComponent,
+  NbRequestPasswordComponent,
+  NbResetPasswordComponent,
+} from '@nebular/auth';
 
 const routes: Routes = [
 	{
@@ -45,10 +55,44 @@ const routes: Routes = [
 	{
 		path: 'shoppinfList',
 		component: ShoppingListComponent
-	}
+	},
+	{
+    path: 'auth',
+    component: NbAuthComponent,
+    children: [
+      {
+        path: '',
+        component: NbLoginComponent,
+      },
+      {
+        path: 'login',
+        component: NbLoginComponent,
+      },
+      {
+        path: 'register',
+        component: NbRegisterComponent,
+      },
+      {
+        path: 'logout',
+        component: NbLogoutComponent,
+      },
+      {
+        path: 'request-password',
+        component: NbRequestPasswordComponent,
+      },
+      {
+        path: 'reset-password',
+        component: NbResetPasswordComponent,
+      },
+    ],
+  },
 	
 	
 ];
+
+const config: ExtraOptions = {
+  useHash: true,
+};
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
