@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: diges/
   tag: latest
-  pullPolicy: IfNotPresent #Always
+  pullPolicy: Always #IfNotPresent 
 
 
 kafka:
