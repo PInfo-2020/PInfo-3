@@ -1,0 +1,38 @@
+.logo {
+    height: 100px;
+    width: auto;
+    padding: 10px;
+    display: block;
+    /* margin: 0 auto; */
+   
+}
+
+.titre {
+    color: black;
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 120;
+    font-weight: bold;
+}
+
+.profile {
+    color : black;
+    padding: 14px 25px;    
+    text-decoration: none;
+    display: inline-block;
+}
+
+.link {
+    text-align: right;
+    list-style-type: none; 
+}
+
+.img {
+    list-style-type: none; 
+}
+
+.contrainer1 {
+    padding: 1px 0;
+    margin: auto;
+   
+}
