@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -18,7 +19,7 @@ public class ItemCart implements Serializable{
 	
 	public ItemCart() {}
 	
-	public ItemCart(int userID, int ingredientID, double quantity) {
+	public ItemCart(@NotNull int userID,@NotNull int ingredientID,@NotNull double quantity) {
 		super();
 		this.userID = userID;
 		this.ingredientID = ingredientID;

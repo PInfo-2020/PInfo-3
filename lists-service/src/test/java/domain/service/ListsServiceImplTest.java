@@ -45,7 +45,7 @@ class ListsServiceImplTest {
 	@Test
 	void testmodIngredientCart() {
 		listsServiceImpl.createItemCart(new ItemCart(1,1,1));
-		listsServiceImpl.modIngredientCart(1, 1, 4);
+		listsServiceImpl.modIngredientCart(new ItemCart(1,1,4));
 
 		assertEquals(4, listsServiceImpl.getAllCart(1).get(0).getQuantity());
 	}
@@ -53,25 +53,29 @@ class ListsServiceImplTest {
 	@Test
 	void testmodIngredientFridge() {
 		listsServiceImpl.createItemFridge(new ItemFridge(2,2,2));
-		listsServiceImpl.modIngredientFridge(1, 1, 10);
+		listsServiceImpl.modIngredientFridge(new ItemFridge(1, 1, 10));
 
 		assertEquals(10, listsServiceImpl.getAllFridge(1).get(0).getQuantity());
 	}
 	
 	@Test
 	void testremoveIngredientCart() {
-		listsServiceImpl.createItemCart(new ItemCart(1,1,1));
-		listsServiceImpl.createItemCart(new ItemCart(1,2,2));
-		listsServiceImpl.removeIngredientCart(1, 1);
+		ItemCart i1 = new ItemCart(1,1,1);
+		ItemCart i2 = new ItemCart(1,2,2);
+		listsServiceImpl.createItemCart(i1);
+		listsServiceImpl.createItemCart(i2);
+		listsServiceImpl.removeIngredientCart(i1);
 
 		assertEquals(1, listsServiceImpl.getAllCart(1).size());
 	}
 	
 	@Test
 	void testremoveIngredientFridge() {
-		listsServiceImpl.createItemFridge(new ItemFridge(2,2,2));
-		listsServiceImpl.createItemFridge(new ItemFridge(2,1,1));
-		listsServiceImpl.removeIngredientFridge(2, 1);
+		ItemFridge i1 = new ItemFridge(2,2,2);
+		ItemFridge i2 = new ItemFridge(2,1,1);
+		listsServiceImpl.createItemFridge(i1);
+		listsServiceImpl.createItemFridge(i2);
+		listsServiceImpl.removeIngredientFridge(i2);
 
 		assertEquals(1, listsServiceImpl.getAllFridge(2).size());
 	}
@@ -83,7 +87,7 @@ class ListsServiceImplTest {
 //		listsServiceImpl.createItemCart(new ItemCart(1,2,2));
 //		listsServiceImpl.createItemCart(new ItemCart(2,1,1));
 //		listsServiceImpl.createItemCart(new ItemCart(2,2,2));
-//		listsServiceImpl.modIngredientCart(3, 1, 4);
+//		listsServiceImpl.modIngredientCart(new ItemCart(3, 1, 4));
 //		listsServiceImpl.removeIngredientCart(1, 1);
 //		ArrayList<ItemCart> listItem = listsServiceImpl.getAllCartTEST();
 //		for (ItemCart i : listItem) {

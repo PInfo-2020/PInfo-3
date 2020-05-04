@@ -1,6 +1,7 @@
 package domain.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import domain.model.ItemCart;
 import domain.model.ItemFridge;
@@ -15,17 +16,15 @@ public interface ListsService {
 	
 	public ArrayList<ItemFridge> getAllFridge(int userID);
 
-	public void modIngredientCart(int userID, int ingredientID, double quantity);
+	public void modIngredientCart(ItemCart itemCart);
 	
-	public void modIngredientFridge(int userID, int ingredientID, double quantity);
+	public void modIngredientFridge(ItemFridge itemFridge);
 	
-//	public void subIngredientCart(int userID, int ingredientID, double quantity);
-//	
-//	public void subIngredientFridge(int userID, int ingredientID, double quantity);
+	public void removeIngredientCart(ItemCart itemCart);
 	
-	public void removeIngredientCart(int userID, int ingredientID);
-	
-	public void removeIngredientFridge(int userID, int ingredientID);
+	public void removeIngredientFridge(ItemFridge itemFridge);
 
-	public ArrayList<ItemCart> getAllCartTEST();
+//	public ArrayList<ItemCart> getAllCartTEST();
+
+	public HashMap<Integer, Double> getAllFridgeRecipe(int userID);
 }

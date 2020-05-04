@@ -52,7 +52,4 @@ public class ItemCartID implements Serializable {
 	public void setIngredientID(int ingredientID) {
 		this.ingredientID = ingredientID;
 	}
-	
-	
-
 }
