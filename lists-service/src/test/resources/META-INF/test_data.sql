@@ -1,0 +1,3 @@
+--INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES (1, 3, 2);
+--INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES (1, 4, 2);
+--INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES (3, 5, 2);
