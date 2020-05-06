@@ -30,12 +30,26 @@ public class Ingredient implements Serializable {
 	@NotNull
 	private String unit;
 	
-	/*
-	@Column(name = "type")
-	private ArrayList<Boolean> type;
+	@Column(name = "vegetarian")
+	@NotNull
+	private boolean vegetarian;
+	
+	@Column(name = "vegan")
+	@NotNull
+	private boolean vegan;
 	
 	public Ingredient() {}
+	
+	/*
+	public Ingredient(int id, String name, String unit, boolean vegetarian, boolean vegan) {
+		this.id = id;
+		this.name = name;
+		this.unit = unit;
+		this.vegetarian = vegetarian;
+		this.vegan = vegan;
+	}
 	*/
+	
 	
 	public int getId() {
 		return id;
@@ -61,14 +75,20 @@ public class Ingredient implements Serializable {
 		this.unit = unit;
 	}
 
-	/*
-	public ArrayList<Boolean> getType() {
-		return type;
+	public boolean getVegetarian() {
+		return vegetarian;
 	}
-
-	public void setType(ArrayList<Boolean> type) {
-		this.type = type;
+	
+	public void setVegetarian(boolean vegetarian) {
+		this.vegetarian = vegetarian;
 	}
-	*/
+	
+	public boolean getVegan() {
+		return vegan;
+	}
+	
+	public void setVegan(boolean vegan) {
+		this.vegan = vegan;
+	}
 	
 }

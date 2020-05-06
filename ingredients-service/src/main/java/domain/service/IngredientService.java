@@ -6,14 +6,20 @@ import domain.model.Ingredient;
 
 public interface IngredientService {
 	
-	public long create(Ingredient ingredient);
+	public List<Ingredient> getAll();
+	
+	public Ingredient getById(int id);
+	
+	public Ingredient getByName(String name);
+	
+	public String getUnitByName(String name);
+	
+	public int create(Ingredient ingredient);
 	
 	public void delete(Ingredient ingredient);
 	
 	public void update(Ingredient ingredient);
 	
-	public Ingredient get(int id);
-	
-	public List<Ingredient> getAll();
+	public boolean existByName(String name);
 	
 }

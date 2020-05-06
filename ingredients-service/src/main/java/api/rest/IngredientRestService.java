@@ -33,8 +33,29 @@ public class IngredientRestService {
 		return ingredientService.getAll();
 	}
 	
-	/*
+	@GET
+	@Path("/id/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Ingredient getById(@PathParam("id") int id) {
+		return ingredientService.getById(id);
+	}
+	
+	@GET
+	@Path("/name/{name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Ingredient getByName(@PathParam("name") String name) {
+		return ingredientService.getByName(name);
+	}
+	
+	@GET
+	@Path("/unit/{name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getUnitByName(@PathParam("name") String name) {
+		return ingredientService.getUnitByName(name);
+	}
+	
 	@POST
+	@Path("/create")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Ingredient ingredient) {
 		try {
@@ -44,42 +65,30 @@ public class IngredientRestService {
 		} catch(Exception e) {
 			return Response.status(Status.BAD_GATEWAY).build();
 		}
-		
-		ingredientProducer.send(ingredient, "IngredientCreate");
 		return Response.ok().build();
 	}
 	
 	@DELETE
-	@Path("{id}")
-	public Response delete(@PathParam("id") Long id) {
+	@Path("/delete/{id}")
+	public Response delete(@PathParam("id") int id) {
 		try {
-			ingredientService.delete(ingredientService.get(id));
-			ingredientProducer.send(id, "IngredientDeleted");
+			ingredientService.delete(ingredientService.getById(id));
 		} catch(Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
-		
 		return Response.ok().build();
 	}
 	
 	@PUT
+	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(Ingredient ingredient) {
 		try {
 			ingredientService.update(ingredient);
-			ingredientProducer.send(ingredient, "IngredientUpdate");
 		} catch(Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
-		
 		return Response.ok().build();
 	}
-	
-	@GET
-	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Ingredient get(@PathParam("id") Long id) {
-		return ingredientService.get(id);
-	}
-	*/
+
 }
