@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.0.7",
+    "@angular/cdk": "^9.0.7",
     "@angular/common": "~9.0.7",
     "@angular/compiler": "~9.0.7",
     "@angular/core": "~9.0.7",
@@ -19,6 +20,14 @@
     "@angular/platform-browser": "~9.0.7",
     "@angular/platform-browser-dynamic": "~9.0.7",
     "@angular/router": "~9.0.7",
+    "@nebular/auth": "5.0.0",
+    "@nebular/bootstrap": "5.0.0",
+    "@nebular/security": "5.0.0",
+    "@nebular/theme": "5.0.0",
+    "bootstrap": "^4.4.1",
+    "jquery": "^3.5.0",
+    "keycloak-js": "^9.0.3",
+    "react-router-dom": "^4.2.2",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

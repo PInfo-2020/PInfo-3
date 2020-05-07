@@ -3,12 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1"
 	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="CounterpartyPUTest"
+	<persistence-unit name="ListsPUTest"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<class>domain.model.Address</class>
-		<class>domain.model.Counterparty</class>
-		<class>domain.model.Registration</class>
+		<class>domain.model.ItemCart</class>
+		<class>domain.model.ItemFridge</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
 			<property name="javax.persistence.jdbc.url"
@@ -23,7 +22,7 @@
 				value="org.hibernate.dialect.H2Dialect" />
 			<property name="hibernate.id.new_generator_mappings" value="true" />
 			<property name="hibernate.hbm2ddl.charset_name" value="UTF-8"/>	
-			<property name="javax.persistence.sql-load-script-source" value="META-INF/instruments_test_data.sql"/>
+			<property name="javax.persistence.sql-load-script-source" value="META-INF/test_data.sql"/>
 		</properties>
 	</persistence-unit>
 </persistence>

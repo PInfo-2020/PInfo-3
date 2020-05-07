@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +14,20 @@ import { RecipeComponent } from './recipe/recipe.component';
 import { FridgeComponent } from './fridge/fridge.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 
+import { APP_BASE_HREF } from '@angular/common';
+import { AppInitService } from './app.init';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { KeycloakService } from './services/keycloak/keycloak.service';
+import { KeycloakInterceptorService } from './services/keycloak/keycloak.interceptor.service';
+declare var window: any;
+
+export function init_config(appLoadService: AppInitService, keycloak: KeycloakService) {
+  return () =>  appLoadService.init().then( () => {
+     console.info(window.config);
+     keycloak.init();
+    },
+   );
+}
 
 @NgModule({
   declarations: [
@@ -31,9 +45,27 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
  imports: [
     BrowserModule,
     FormsModule,
-	AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    AppInitService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: init_config,
+      deps: [AppInitService, KeycloakService],
+      multi: true,
+    },
+    { provide: APP_BASE_HREF, useValue: '/' },
+    
+
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: KeycloakInterceptorService,
+      multi: true,
+    },
+    KeycloakService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

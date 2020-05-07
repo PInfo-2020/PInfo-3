@@ -53,7 +53,7 @@ services:
       POSTGRES_PASSWORD: lis
       POSTGRES_DB: lis
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "sho", "-d", "sho"]
+      test: ["CMD", "pg_isready", "-U", "lis", "-d", "lis"]
       interval: 30s
       timeout: 30s
       retries: 3
@@ -156,7 +156,7 @@ services:
     tty: true
 
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
-  ingredients-service:
+  profile-service:
     container_name: profile-service  
     image: diges/profile-service:latest
     hostname: profile-service

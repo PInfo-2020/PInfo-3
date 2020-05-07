@@ -29,7 +29,10 @@ spec:
            image: postgres:12.1-alpine
            command: ['sh', '-c', 
              'until pg_isready -h {{ .Release.Name }}-ingredients-db -p 5432; 
-             do echo waiting for database; sleep 2; done;']                   
+             do echo waiting for database; sleep 2; done;']
+         - name: check-kafka-ready
+           image: busybox
+           command: ['sh', '-c', 'until echo "TEST" | nc {{ .Release.Name }}-kafka:9092; do echo "Waiting for Kafka"; sleep 5; done;']                   
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -55,13 +58,13 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /counterparties/count #fix me!
+              path: /instrument/count #fix me!
               port: http
             initialDelaySeconds: 60
             periodSeconds: 20                            
           readinessProbe:
             httpGet:
-              path: /counterparties/count #fix me!
+              path: /instrument/count #fix me!
               port: http
             initialDelaySeconds: 60
             periodSeconds: 20                            

@@ -5,17 +5,21 @@
 replicaCount: 1
 
 image:
-  repository: dige/
+  repository: diges/
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always #IfNotPresent 
 
 
 kafka:
   zookeeper:
-     persistence:
-        enabled: false
+    persistence:
+      enabled: false
   persistence:
      enabled: false
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 70
 
 
 profile-db:
@@ -28,22 +32,10 @@ profile-db:
       persistence:
          enabled: false
       postgresqlDatabase: profile
-  initdbScriptsConfigMap:
-    profile-scripts
-
-
-recipes-db:
-  driver_name: org.postgresql
-  persistence:
-     enabled: false
-  postgresDatabase: recipes
-  postgresqlDatabase: recipes
-  global:
-      persistence:
-         enabled: false
-      postgresqlDatabase: recipes
-  initdbScriptsConfigMap:
-    recipes-scripts
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 120
 
 
 ingredients-db:
@@ -56,8 +48,26 @@ ingredients-db:
       persistence:
          enabled: false
       postgresqlDatabase: ingredients
-  initdbScriptsConfigMap:
-    ingredients-scripts
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 120
+
+
+recipes-db:
+  driver_name: org.postgresql
+  persistence:
+     enabled: false
+  postgresDatabase: recipes
+  postgresqlDatabase: recipes
+  global:
+      persistence:
+         enabled: false
+      postgresqlDatabase: recipes
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 120
 
 
 lists-db:
@@ -70,8 +80,10 @@ lists-db:
       persistence:
          enabled: false
       postgresqlDatabase: lists
-  initdbScriptsConfigMap:
-    lists-scripts
+  livenessProbe:
+     initialDelaySeconds: 120
+  readinessProbe:
+     initialDelaySeconds: 120
 
 keycloak:
   keycloak:
@@ -85,6 +97,11 @@ keycloak:
         mountPath: "/realm/"
         readOnly: true          
     extraArgs: -Dkeycloak.import=/realm/realms.json
+    #   livenessProbe: |
+    #  initialDelaySeconds: 120
+    #readinessProbe: |
+    #  initialDelaySeconds: 120
+
 
 imagePullSecrets: []
 nameOverride: ""
