@@ -1,5 +1,6 @@
 package api.rest;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -12,6 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import api.msg.RecipeConsumer;
+import api.msg.RecipeProducer;
 import domain.model.Comment;
 import domain.model.Grade;
 import domain.model.Ingredient;
@@ -24,6 +27,15 @@ public class RecipeRestService {
 	
 	@Inject
 	private RecipeService recipeService;
+	
+	@Inject
+	private RecipeProducer recipeProducer;
+	
+//	@Inject
+//	private RecipeConsumer recipeConsumer;
+	
+	private boolean test = false;
+	private List<Recipe> recipes;
 	
 	
 	@GET // Return all of the recipes
@@ -144,6 +156,35 @@ public class RecipeRestService {
 	@Produces(MediaType.APPLICATION_JSON)
     public double getUserGrade(@PathParam("id") Long userId) {
 		return recipeService.getUserGrade(userId);
+	}
+	
+	@GET // Return all the recipes that contains ingredients from user of id userID
+	@Path("/user/{id}/fridge/recipe")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Recipe> getRecipesByFridge(@PathParam("id") Long userId) {
+		recipeProducer.send(userId);
+		
+		while(!test) {
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		test = false;
+		
+//		HashMap<Integer, Double> ingredients = recipeConsumer.consumeIngredients();
+//		recipeService.getRecipeByHashMap(rt);
+		return recipes;
+	}
+	
+	public void setRecipes(List<Recipe> recipes) {
+		this.recipes = recipes;
+	}
+	
+	public void setTest(boolean test) {
+		this.test = test;
 	}
 	
 }
