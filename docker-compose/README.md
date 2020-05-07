@@ -41,8 +41,16 @@
 					!docker-compose-Roxane!
 - the docker-compose-Roxane is for running ONLY the keycloak with its internal h2 database.
 
-- command: docker-compose -f docker-compose-api-gw.yml up
+- command: docker-compose -f docker-compose-Roxane.yml up
 
+					!docker-compose-Luka-Nathan-kafka.yml!
+- docker-compose-Luka-Nathan-kafka.yml is for Luka and Nathan when they want to test the kafka for their microservices:
+- you don't need api-gateway to test kafka
+- it runs:
+	- recepies-service
+	- lists-service
+	- kafka
+- command: docker-compose -f docker-compose-Luka-Nathan-kafka.yml up
 
 					!docker-compose-Luka-Salma-kafka.yml!
 - docker-compose-Luka-Salma-kafka.yml is for Luka and Salma when they want to test the kafka for their microservices:
