@@ -37,6 +37,7 @@ public class RecipeServiceImpl implements RecipeService {
 		em.persist(recipe);
 		return recipe.getId();
 	}
+
 	
 	@Override
 	public void createIngredient(Ingredient ingredient, Long recipeId, Long size) {
@@ -155,16 +156,17 @@ public class RecipeServiceImpl implements RecipeService {
 		TypedQuery<Grade> query = em.createQuery("SELECT g FROM Grade g WHERE g.recipeId = :recipeId ", Grade.class);
 		query.setParameter("recipeId", recipeId);
 		List<Grade> results = query.getResultList();
-		double mean = 0;
+		double mean = 0.0;
 		if (results.size() != 0) {
 			for (Grade g : results) {
 				mean += g.getGradeRecipe();
 			}
 			mean /= results.size();
+			
+			mean = mean*100;
+			mean = Math.round(mean);
+			mean = mean /100;
 		}
-		mean = mean*100;
-		mean = Math.round(mean);
-		mean = mean /100;
 		return mean;
 	}
 	
@@ -215,13 +217,15 @@ public class RecipeServiceImpl implements RecipeService {
 		query.setParameter("userId", userId);
 		List<Recipe> results = query.getResultList();
 		double mean = 0;
-		for (Recipe recipe : results) {
-			mean += this.getGrade(recipe.getId());
+		if (results.size() != 0) {
+			for (Recipe recipe : results) {
+				mean += this.getGrade(recipe.getId());
+			}
+			mean /= results.size();
+			mean = mean*100;
+			mean = Math.round(mean);
+			mean = mean /100;
 		}
-		mean /= results.size();
-		mean = mean*100;
-		mean = Math.round(mean);
-		mean = mean /100;
 		
 		return mean;
 	}

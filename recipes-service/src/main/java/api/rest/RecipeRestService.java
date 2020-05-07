@@ -60,7 +60,7 @@ public class RecipeRestService {
 	}
 	
 	@GET // Return the number of ingredients
-	@Path("/count")
+	@Path("/countIngredient")
 	@Produces(MediaType.APPLICATION_JSON)
     public Long countIngredient() {
 		return recipeService.countIngredient();
@@ -88,7 +88,7 @@ public class RecipeRestService {
 	}
 	
 	@GET // Return the number of grades
-	@Path("/countComment")
+	@Path("/countGrade")
 	@Produces(MediaType.APPLICATION_JSON)
     public Long countGrade() {
 		return recipeService.countGrade();
