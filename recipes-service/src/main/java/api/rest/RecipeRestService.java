@@ -166,8 +166,6 @@ public class RecipeRestService {
 		recipeProducer.send(userId);
 		
 		while(!test) {
-			this.getAll();
-			System.out.println("TEST");
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
