@@ -179,16 +179,16 @@ public class RecipeRestService {
 		recipes =  vide;
 		
 //		HashMap<Integer, Double> ingredients = recipeConsumer.consumeIngredients();
-//		recipeService.getRecipeByHashMap(rt);
+//		recipeService.getRecipeByHashMap();
 		return r;
 	}
 	
 	public void setRecipes(List<Recipe> recipes) {
-		this.recipes = recipes;
+		RecipeRestService.recipes = recipes;
 	}
 	
 	public void setTest(boolean test) {
-		this.test = test;
+		RecipeRestService.test = test;
 	}
 	
 }
