@@ -18,7 +18,7 @@
 		<skip-docker-build>false</skip-docker-build>
 		<version.postgresql>42.2.2</version.postgresql>
 	</properties>
-
+	
 
 	<dependencies>
 		<dependency>
@@ -58,9 +58,9 @@
 			<artifactId>logging</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>
+    		<groupId>com.h2database</groupId>
+    		<artifactId>h2</artifactId>
+ 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -235,40 +235,40 @@
 				</executions>
 			</plugin>
 			
-						<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sql-maven-plugin</artifactId>
-				<version>1.5</version>
-				<dependencies>
-					<dependency>
-						<groupId>com.h2database</groupId>
-						<artifactId>h2</artifactId>
-						<version>${version.h2}</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<driver>org.h2.Driver</driver>
-					<url>jdbc:h2:${java.io.tmpdir}/target/InstrumentDB;AUTO_SERVER=TRUE;AUTO_SERVER=TRUE</url>
-					<username>sa</username>
-					<password>sa</password>
-					<autocommit>true</autocommit>
-					<skip>${maven.test.skip}</skip>
-				</configuration>
-				<executions>
-					<execution>
-						<id>create-db</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<srcFiles>
-								<srcFile>${project.basedir}/src/main/resources/META-INF/instruments_test_data.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.codehaus.mojo</groupId> -->
+<!-- 				<artifactId>sql-maven-plugin</artifactId> -->
+<!-- 				<version>1.5</version> -->
+<!-- 				<dependencies> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>com.h2database</groupId> -->
+<!-- 						<artifactId>h2</artifactId> -->
+<!-- 						<version>${version.h2}</version> -->
+<!-- 					</dependency> -->
+<!-- 				</dependencies> -->
+<!-- 				<configuration> -->
+<!-- 					<driver>org.h2.Driver</driver> -->
+<!-- 					<url>jdbc:h2:${java.io.tmpdir}/target/RecipeDB;AUTO_SERVER=TRUE</url> -->
+<!-- 					<username>sa</username> -->
+<!-- 					<password>sa</password> -->
+<!-- 					<autocommit>true</autocommit> -->
+<!-- 					<skip>${maven.test.skip}</skip> -->
+<!-- 				</configuration> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<id>create-db</id> -->
+<!-- 						<phase>pre-integration-test</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>execute</goal> -->
+<!-- 						</goals> -->
+<!-- 						<configuration> -->
+<!-- 							<srcFiles> -->
+<!-- 								<srcFile>${project.basedir}/src/main/resources/META-INF/recipes_test_data.sql</srcFile> -->
+<!-- 							</srcFiles> -->
+<!-- 						</configuration> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
 		</plugins>
 	</build>
 </project>

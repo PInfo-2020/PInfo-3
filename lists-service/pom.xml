@@ -79,6 +79,10 @@
 			<version>${hibernate-entitymanager.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.aerogear.kafka</groupId>
+			<artifactId>kafka-cdi-extension</artifactId>
+		</dependency>
 
 
 		<dependency>

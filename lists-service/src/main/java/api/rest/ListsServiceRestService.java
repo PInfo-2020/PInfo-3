@@ -1,6 +1,5 @@
-package api;
+package api.rest;
 
-import java.util.HashMap;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -34,8 +33,8 @@ public class ListsServiceRestService {
 	@GET // Get the fridge from a user
 	@Path("/fridge/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<Integer, Double> getAllFridge(@PathParam("id") int userID) {
-		return listsService.getAllFridgeRecipe(userID);
+	public List<ItemFridge> getAllFridge(@PathParam("id") int userID) {
+		return listsService.getAllFridge(userID);
 	}
 	
 	@POST // Modify/Add an item to cart of a user
