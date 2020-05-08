@@ -18,7 +18,7 @@ public class RecipeProducer {
 	private SimpleKafkaProducer<String, Long> producer;
 
 	public void send(Long userId) {
-		log.info("Send user id " + userId + "to ListsService");
+		log.info("Send user id " + userId + " to ListsService");
 		producer.send("userReq", userId);
 	}
 
