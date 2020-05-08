@@ -1,8 +1,8 @@
 # WebUi
 
-For import node_module `npm install` (go it one time after git pull)
+For import node_module in web-ui `npm install` (go it one time after git pull)
 
-For run docker-compose `docker-compose -f docker-compose-Roxane.yml up`
+For run docker-compose in docker-compose `docker-compose -f docker-compose-Roxane.yml up`
 
 Go to chrome `localhost:8080`
 
