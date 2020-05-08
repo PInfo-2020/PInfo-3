@@ -1,4 +1,4 @@
-package api;
+package api.rest;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
