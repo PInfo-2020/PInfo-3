@@ -1,5 +1,6 @@
 package api.rest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,8 +35,8 @@ public class RecipeRestService {
 //	@Inject
 //	private RecipeConsumer recipeConsumer;
 	
-	private boolean test = false;
-	private List<Recipe> recipes;
+	static private boolean test = false;
+	static private List<Recipe> recipes = new ArrayList<Recipe>();
 	
 	
 	@GET // Return all of the recipes
@@ -173,10 +174,13 @@ public class RecipeRestService {
 			}
 		}
 		test = false;
+		List<Recipe> vide = new ArrayList<Recipe>();
+		List<Recipe> r = recipes;
+		recipes =  vide;
 		
 //		HashMap<Integer, Double> ingredients = recipeConsumer.consumeIngredients();
 //		recipeService.getRecipeByHashMap(rt);
-		return recipes;
+		return r;
 	}
 	
 	public void setRecipes(List<Recipe> recipes) {
