@@ -1,5 +1,30 @@
 # WebUi
 
+For import node_module `npm install` (go it one time after git pull)
+
+For run docker-compose `docker-compose -f docker-compose-Roxane.yml up`
+
+Go to chrome `localhost:8080`
+
+`Administration console`
+
+Username : admin
+Password : password
+
+Click on Master and choose `Add realm`
+
+Import : Select file and select `docker-compose/realm-export.json`
+
+Keycloak is good now ! 
+
+Go in web-ui file
+
+`ng serve`
+
+Open chrome and go `localhost:4200`
+
+exit `ng serve` : ctrl + C
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.7.
 
 ## Development server
