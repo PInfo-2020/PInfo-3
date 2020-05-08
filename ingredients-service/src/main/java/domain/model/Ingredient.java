@@ -40,7 +40,7 @@ public class Ingredient implements Serializable {
 	
 	public Ingredient() {}
 	
-	/*
+	
 	public Ingredient(int id, String name, String unit, boolean vegetarian, boolean vegan) {
 		this.id = id;
 		this.name = name;
@@ -48,8 +48,6 @@ public class Ingredient implements Serializable {
 		this.vegetarian = vegetarian;
 		this.vegan = vegan;
 	}
-	*/
-	
 	
 	public int getId() {
 		return id;

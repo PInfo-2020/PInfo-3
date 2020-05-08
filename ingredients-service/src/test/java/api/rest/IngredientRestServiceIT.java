@@ -6,7 +6,10 @@ import static org.hamcrest.Matchers.containsString;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import domain.model.Ingredient;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+
 
 public class IngredientRestServiceIT {
 
@@ -38,33 +41,20 @@ public class IngredientRestServiceIT {
 	
 	@Test
 	public void testCreate() {
-	   String payload = "{\n" +
-	            "  \"id\": \"1000\",\n" +
-	            "  \"name\": \"egg\",\n" +
-	            "  \"unit\": \"unit\"\n" +
-	            "  \"vegetarian\": \"1\"\n" +
-	            "  \"vegan\": \"0\"\n" +
-	            "}";
-		with().body(payload).when().post("/create").then().statusCode(200);
-		when().get("/").then().body(containsString("egg"));
+	   Ingredient ingredient = new Ingredient(1000, "egg", "unit", true, false);
+	   with().contentType(ContentType.JSON).body(ingredient).when().request("POST", "/create").then().statusCode(200);
+	   when().get("/").then().body(containsString("egg"));
 	}
 	
 	@Test
 	public void testUpdate() {
-	   String payload = "{\n" +
-	            "  \"id\": \"1000\",\n" +
-	            "  \"name\": \"lemon\",\n" +
-	            "  \"unit\": \"unit\"\n" +
-	            "  \"vegetarian\": \"1\"\n" +
-	            "  \"vegan\": \"1\"\n" +
-	            "}";
-		with().body(payload).when().put("/update").then().statusCode(200);
-		when().get("/").then().body(containsString("lemon"));
+	   Ingredient ingredient = new Ingredient(1, "lemon", "unit", true, true);
+	   with().contentType(ContentType.JSON).body(ingredient).when().request("PUT", "/update").then().statusCode(200);
 	}
 	
 	@Test
 	public void testDelete() {
-		when().delete("/delete/1000").then().statusCode(200);
+		with().contentType(ContentType.JSON).when().request("DELETE", "/delete/4").then().statusCode(200);
 	}
 	
 }
