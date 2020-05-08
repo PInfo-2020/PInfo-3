@@ -35,7 +35,6 @@
 		<dockerHost>tcp://localhost:2375</dockerHost>
 	</properties>
 
-
 	<modules>
 		<module>api-gateway</module>
 		<module>profile-service</module>
@@ -43,7 +42,6 @@
 		<module>ingredients-service</module>
 		<module>lists-service</module>
 	</modules>
-
 
 	<dependencyManagement>
 		<dependencies>

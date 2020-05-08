@@ -1,9 +1,9 @@
 thorntail:
   datasources:
     data-sources:
-      instrumentds:
+      ingredients:
         driver-name: myh2
-        connection-url: jdbc:h2:${java.io.tmpdir}/target/InstrumentDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        connection-url: jdbc:h2:${java.io.tmpdir}/target/IngredientsDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
         user-name: sa
         password: sa  
     jdbc-drivers:
