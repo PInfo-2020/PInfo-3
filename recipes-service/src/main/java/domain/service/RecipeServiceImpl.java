@@ -17,6 +17,7 @@ import javax.transaction.Transactional;
 import domain.model.Comment;
 import domain.model.Grade;
 import domain.model.Ingredient;
+import domain.model.Item;
 import domain.model.Recipe;
 import lombok.extern.java.Log;
 
@@ -229,5 +230,16 @@ public class RecipeServiceImpl implements RecipeService {
 		
 		return mean;
 	}
+	
+	
+	@Override
+	public List<Recipe> getRecipesByFridge(ArrayList<Item> items) {
+		log.info("retrieve all recipes by Fridge");
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Recipe> criteria = builder.createQuery(Recipe.class);
+		criteria.from(Recipe.class);
+		return em.createQuery(criteria).getResultList();
+	}
+	
 
 }

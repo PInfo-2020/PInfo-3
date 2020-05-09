@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.aerogear.kafka.cdi.annotation.Consumer;
 import org.aerogear.kafka.cdi.annotation.KafkaConfig;
 
+import domain.model.Item;
 import domain.service.ListsService;
 import lombok.extern.java.Log;
 
@@ -16,6 +17,8 @@ import lombok.extern.java.Log;
 @KafkaConfig(bootstrapServers = "#{thorntail.kafka-configuration.host}:#{thorntail.kafka-configuration.port}")
 @Log
 public class ListsConsumer {
+	
+	private Object o = new Object();
 	
 	@Inject
 	private ListsProducer listsProducer;
@@ -29,7 +32,27 @@ public class ListsConsumer {
 		
 		int userID = (int) ((long) userId);
 		HashMap<Integer, Double> ingredients = listsService.getAllFridgeRecipe(userID);
-		listsProducer.sendAllFridge(ingredients);
+		
+		synchronized(o) {
+			for (HashMap.Entry<Integer, Double> entry : ingredients.entrySet()) {
+				Item item = new Item((long) entry.getKey(), entry.getValue());
+				listsProducer.sendItem(item);
+			}
+			
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			@SuppressWarnings("deprecation")
+			Boolean bool = new Boolean(true);
+		
+			listsProducer.sendBoolean(bool);
+			
+		}
+		
 	}
 	
 }
