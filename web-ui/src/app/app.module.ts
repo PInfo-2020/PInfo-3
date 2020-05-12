@@ -45,9 +45,11 @@ export function init_config(appLoadService: AppInitService, keycloak: KeycloakSe
  imports: [
     BrowserModule,
     FormsModule,
-	AppRoutingModule,
+    AppRoutingModule,
+    HttpClientModule,
   ],
-  providers: [  AppInitService,
+  providers: [
+    AppInitService,
     {
       provide: APP_INITIALIZER,
       useFactory: init_config,
@@ -55,6 +57,7 @@ export function init_config(appLoadService: AppInitService, keycloak: KeycloakSe
       multi: true,
     },
     { provide: APP_BASE_HREF, useValue: '/' },
+    
 
     {
       provide: HTTP_INTERCEPTORS,

@@ -1,5 +1,5 @@
 #Creates the services.
-curl -S -s -i -X POST --url http://api-gateway:8001/services --data "name=lists-service" --data-urlencode "url=http://129.194.69.134:12085/shopping"
+curl -S -s -i -X POST --url http://api-gateway:8001/services --data "name=lists-service" --data-urlencode "url=http://129.194.69.134:12085/lists"
 curl -S -s -i -X POST --url http://api-gateway:8001/services --data "name=ingredients-service" --data-urlencode "url=http://129.194.69.134:12084/ingredients"
 curl -S -s -i -X POST --url http://api-gateway:8001/services --data "name=profile-service" --data-urlencode "url=http://129.194.69.134:12083/profile"
 curl -S -s -i -X POST --url http://api-gateway:8001/services --data "name=recipes-service" --data-urlencode "url=http://129.194.69.134:12082/recipes"

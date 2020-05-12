@@ -33,12 +33,14 @@ script:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 - cd web-ui
-- sed 's/localhost:4200/129.194.69.134/' e2e/protractor.conf.js
+#- sed 's/localhost:4200/129.194.69.134/' e2e/protractor.conf.js
 - pwd
 - npm -v
-- npm install
-- npm update
-- npm run-script build --prod
+#- npm install
+#- npm update
+#- npm run-script build --prod
+#- npm run build -- --output-path=./web-ui/dist
+#- ls ./web-ui/dist
 - docker build -t diges/web-ui .
 - docker tag diges/web-ui diges/web-ui:latest      
 - docker push diges/web-ui:latest
