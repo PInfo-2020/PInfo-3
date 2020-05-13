@@ -22,7 +22,7 @@ import {
 const routes: Routes = [
 	{
 		path: '',
-		component: LoginComponent
+		component: HomeComponent
 	},
 	{
 		path: 'login',
@@ -53,7 +53,7 @@ const routes: Routes = [
 		component: ProfileComponent
 	},
 	{
-		path: 'shoppinfList',
+		path: 'shoppingList',
 		component: ShoppingListComponent
 	},
 	{

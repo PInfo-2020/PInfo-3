@@ -8,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class FridgeComponent implements OnInit {
 
   constructor() { }
-
+  
   ngOnInit(): void {
   }
-
+  add(){
+    alert("Hello");
 }
+}
+
