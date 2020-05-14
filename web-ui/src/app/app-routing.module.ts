@@ -20,6 +20,7 @@ import {
 } from '@nebular/auth';
 
 const routes: Routes = [
+  
 	{
 		path: '',
 		component: HomeComponent

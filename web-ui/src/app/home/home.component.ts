@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { KeycloakService } from '../services/keycloak/keycloak.service';
+import { KeycloakInstance } from 'keycloak-js';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  public keycloakAuth: KeycloakInstance;
+
+
+  constructor(public keycloak: KeycloakService) { }
 
   ngOnInit(): void {
+    this.keycloakAuth = this.keycloak.getKeycloakAuth();
+    if (this.keycloak.isLoggedIn() === false) {
+        this.keycloak.login();
+    }
   }
 
 }

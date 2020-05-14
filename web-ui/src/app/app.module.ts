@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule} from '@angular/core';
+import { APP_INITIALIZER, NgModule} from '@angular/core';
 
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +21,14 @@ import { KeycloakService } from './services/keycloak/keycloak.service';
 import { KeycloakInterceptorService } from './services/keycloak/keycloak.interceptor.service';
 declare var window: any;
 
+export function init_config(appLoadService: AppInitService, keycloak: KeycloakService) {
+   return () =>  appLoadService.init().then( () => {
+     console.info(window.config);
+     keycloak.init();
+     },
+     );
+  }
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,9 +48,16 @@ declare var window: any;
     AppRoutingModule,
     HttpClientModule,
   ],
-   bootstrap: [AppComponent],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
+
+    AppInitService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: init_config,
+      deps: [AppInitService, KeycloakService],
+      multi: true,
+    },
     
 
     {
@@ -51,6 +66,7 @@ declare var window: any;
       multi: true,
     },
     KeycloakService,
-  ]
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -7,7 +7,6 @@
   "include": [
     "src/main.ts",
     "src/polyfills.ts",
-    "src/**/*.ts",
-   "src/**/*.prod.ts"
+   
   ]
 }
