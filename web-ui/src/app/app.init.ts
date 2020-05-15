@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { from } from 'rxjs';
 import {  map } from 'rxjs/operators';
@@ -10,7 +11,7 @@ export class AppInitService {
   // Important: It should return a Promise
   public init() {
     return from(
-        fetch('assets/config/app-config.json').then(function(response) {
+        fetch('../assets/config/app-config.json').then(function(response) {
           return response.json();
         }),
       ).pipe(
