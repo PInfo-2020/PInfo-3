@@ -11,4 +11,6 @@ public interface ProfileService {
 	public ArrayList<Profile> getDataOneUser(String usernameID);
 	
 	public ArrayList<PlannedRecipe> getAllPlannedRecipesFromOneUser(String usernameID);
+	
+	public int addNewPlannedRecipe(int rowID, String usernameID, int recipeID);
 }

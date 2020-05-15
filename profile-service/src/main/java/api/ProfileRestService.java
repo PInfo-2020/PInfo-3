@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -16,13 +17,14 @@ import domain.service.*;
 import io.swagger.annotations.ApiOperation;
 
 @ApplicationScoped
+@Path("/")
 public class ProfileRestService {
 	
 	@Inject
 	private ProfileService ps;
 
 	@GET
-	@Path("/profiles")
+	@Path("profiles")
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Get all profiles")
 	public List<Profile>  getDataUsers(){
@@ -30,7 +32,7 @@ public class ProfileRestService {
 	}
 	
 	@GET
-	@Path("/{usernameID}")
+	@Path("{usernameID}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Get data by given usernameID")
 	public ArrayList<Profile> getDataOneUser(@PathParam("usernameID") String usernameID){
@@ -38,12 +40,18 @@ public class ProfileRestService {
 	}
 	
 	@GET
-	@Path("/plannedrecipes/{usernameID}")
+	@Path("plannedrecipes/{usernameID}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<PlannedRecipe> getAllPlannedRecipesFromOneUser(@PathParam("usernameID") String usernameID) {
 		return ps.getAllPlannedRecipesFromOneUser(usernameID);
 	}
 	
+	@GET
+	@Path("{usernameID}/{recipeID}/addNewPlannedRecipe/{rowID}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int addNewPlannedRecipe(@PathParam("rowID") int rowID,@PathParam("usernameID") String usernameID,@PathParam("recipeID") int recipeID) {
+		return ps.addNewPlannedRecipe(rowID, usernameID, recipeID);
+	}
 	
 	
 }

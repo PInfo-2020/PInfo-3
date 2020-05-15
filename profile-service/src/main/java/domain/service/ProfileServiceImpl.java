@@ -52,5 +52,26 @@ public class ProfileServiceImpl implements ProfileService {
 		cq.where(p1);
 		return (ArrayList<PlannedRecipe>) em.createQuery(cq).getResultList();
 	}
+	
+	@Override
+	public int addNewPlannedRecipe(int rowID, String usernameID, int recipeID) {
+		PlannedRecipe pr = new PlannedRecipe(rowID,usernameID,recipeID);
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<PlannedRecipe> cq = cb.createQuery(PlannedRecipe.class);
+		Root<PlannedRecipe> root = cq.from(PlannedRecipe.class);
+		cq.select(root);
+		Predicate p1 = cb.equal(root.get("usernameID"), pr.getUsernameID());
+		Predicate p2 = cb.equal(root.get("recipeID"), pr.getRecipeID());
+		Predicate pFinal = cb.and(p1,p2);
+		cq.where(pFinal);
+		if (em.createQuery(cq).getResultList().size() == 1) {
+			//if already in db do nothing
+			return 0;
+		} else {
+			//otherwise add it
+			em.persist(pr);
+			return 1;
+		}
+	}
 
 }
