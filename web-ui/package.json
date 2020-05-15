@@ -25,7 +25,7 @@
     "@nebular/security": "5.0.0",
     "@nebular/theme": "5.0.0",
     "bootstrap": "^4.4.1",
-    "jquery": "^3.5.0",
+    "jquery": "^3.5.1",
     "keycloak-js": "^9.0.3",
     "react-router-dom": "^4.2.2",
     "rxjs": "~6.5.4",
