@@ -7,7 +7,7 @@ public class ItemCartID implements Serializable {
 	
 	public ItemCartID() {}
 	
-	public ItemCartID(int userID, int ingredientID) {
+	public ItemCartID(String userID, int ingredientID) {
 		this.userID = userID;
 		this.ingredientID = ingredientID;
 	}
@@ -17,7 +17,7 @@ public class ItemCartID implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int userID;
+	private String userID;
 	
 	private int ingredientID;
 	
@@ -25,7 +25,7 @@ public class ItemCartID implements Serializable {
 	public boolean equals(Object object) {
 		if (object instanceof ItemCartID) {
 			ItemCartID itemCartID = (ItemCartID) object;
-			if ((this.userID == itemCartID.getUserID()) && (this.ingredientID == itemCartID.getIngredientID())) {
+			if ((this.userID.equals(itemCartID.getUserID())) && (this.ingredientID == itemCartID.getIngredientID())) {
 				return true;
 			}
 		}
@@ -37,11 +37,11 @@ public class ItemCartID implements Serializable {
 		return Objects.hash(userID, ingredientID);
 	}
 
-	public int getUserID() {
+	public String getUserID() {
 		return userID;
 	}
 
-	public void setUserID(int userID) {
+	public void setUserID(String userID) {
 		this.userID = userID;
 	}
 

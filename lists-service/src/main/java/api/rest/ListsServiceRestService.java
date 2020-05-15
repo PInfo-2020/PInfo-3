@@ -26,14 +26,14 @@ public class ListsServiceRestService {
 	@GET // Get the cart from a user
 	@Path("/cart/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<ItemCart> getAllCart(@PathParam("id") int userID) {
+	public List<ItemCart> getAllCart(@PathParam("id") String userID) {
 		return listsService.getAllCart(userID);
 	}
 	
 	@GET // Get the fridge from a user
 	@Path("/fridge/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<ItemFridge> getAllFridge(@PathParam("id") int userID) {
+	public List<ItemFridge> getAllFridge(@PathParam("id") String userID) {
 		return listsService.getAllFridge(userID);
 	}
 	

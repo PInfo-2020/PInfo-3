@@ -28,56 +28,56 @@ class ListsServiceImplTest {
 
 	@Test
 	void testgetAllCart() {
-		listsServiceImpl.createItemCart(new ItemCart(1,1,1));
-		listsServiceImpl.createItemCart(new ItemCart(2,2,2));
-		assertEquals(1, listsServiceImpl.getAllCart(1).size());
+		listsServiceImpl.createItemCart(new ItemCart("1",1,1));
+		listsServiceImpl.createItemCart(new ItemCart("2",2,2));
+		assertEquals(1, listsServiceImpl.getAllCart("1").size());
 	}
 
 	@Test
 	void testgetAllFridge() {
-		listsServiceImpl.createItemFridge(new ItemFridge(1,1,1));
-		listsServiceImpl.createItemFridge(new ItemFridge(1,2,2));
-		listsServiceImpl.createItemFridge(new ItemFridge(2,1,1));
-		listsServiceImpl.createItemFridge(new ItemFridge(2,2,2));
-		assertEquals(2, listsServiceImpl.getAllFridge(1).size());
+		listsServiceImpl.createItemFridge(new ItemFridge("1",1,1));
+		listsServiceImpl.createItemFridge(new ItemFridge("1",2,2));
+		listsServiceImpl.createItemFridge(new ItemFridge("2",1,1));
+		listsServiceImpl.createItemFridge(new ItemFridge("2",2,2));
+		assertEquals(2, listsServiceImpl.getAllFridge("1").size());
 	}
 	
 	@Test
 	void testmodIngredientCart() {
-		listsServiceImpl.createItemCart(new ItemCart(1,1,1));
-		listsServiceImpl.modIngredientCart(new ItemCart(1,1,4));
+		listsServiceImpl.createItemCart(new ItemCart("1",1,1));
+		listsServiceImpl.modIngredientCart(new ItemCart("1",1,4));
 
-		assertEquals(4, listsServiceImpl.getAllCart(1).get(0).getQuantity());
+		assertEquals(4, listsServiceImpl.getAllCart("1").get(0).getQuantity());
 	}
 	
 	@Test
 	void testmodIngredientFridge() {
-		listsServiceImpl.createItemFridge(new ItemFridge(2,2,2));
-		listsServiceImpl.modIngredientFridge(new ItemFridge(1, 1, 10));
+		listsServiceImpl.createItemFridge(new ItemFridge("2",2,2));
+		listsServiceImpl.modIngredientFridge(new ItemFridge("1", 1, 10));
 
-		assertEquals(10, listsServiceImpl.getAllFridge(1).get(0).getQuantity());
+		assertEquals(10, listsServiceImpl.getAllFridge("1").get(0).getQuantity());
 	}
 	
 	@Test
 	void testremoveIngredientCart() {
-		ItemCart i1 = new ItemCart(1,1,1);
-		ItemCart i2 = new ItemCart(1,2,2);
+		ItemCart i1 = new ItemCart("1",1,1);
+		ItemCart i2 = new ItemCart("1",2,2);
 		listsServiceImpl.createItemCart(i1);
 		listsServiceImpl.createItemCart(i2);
 		listsServiceImpl.removeIngredientCart(i1);
 
-		assertEquals(1, listsServiceImpl.getAllCart(1).size());
+		assertEquals(1, listsServiceImpl.getAllCart("1").size());
 	}
 	
 	@Test
 	void testremoveIngredientFridge() {
-		ItemFridge i1 = new ItemFridge(2,2,2);
-		ItemFridge i2 = new ItemFridge(2,1,1);
+		ItemFridge i1 = new ItemFridge("2",2,2);
+		ItemFridge i2 = new ItemFridge("2",1,1);
 		listsServiceImpl.createItemFridge(i1);
 		listsServiceImpl.createItemFridge(i2);
 		listsServiceImpl.removeIngredientFridge(i2);
 
-		assertEquals(1, listsServiceImpl.getAllFridge(2).size());
+		assertEquals(1, listsServiceImpl.getAllFridge("2").size());
 	}
 	
 	

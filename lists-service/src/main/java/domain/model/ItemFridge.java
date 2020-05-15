@@ -18,7 +18,7 @@ public class ItemFridge implements Serializable{
 	
 	public ItemFridge() {}
 	
-	public ItemFridge(int userID, int ingredientID, double quantity) {
+	public ItemFridge(String userID, int ingredientID, double quantity) {
 		super();
 		this.userID = userID;
 		this.ingredientID = ingredientID;
@@ -33,7 +33,7 @@ public class ItemFridge implements Serializable{
 	
 	@Id
 	@Column(name="userID", nullable=false)
-	private int userID;
+	private String userID;
 	
 	@Id
 	@Column(name="ingredientID", nullable=false)
@@ -42,11 +42,11 @@ public class ItemFridge implements Serializable{
 	@Column(name="quantity", nullable=false)
 	private double quantity;
 
-	public int getUserID() {
+	public String getUserID() {
 		return userID;
 	}
 
-	public void setUserID(int userID) {
+	public void setUserID(String userID) {
 		this.userID = userID;
 	}
 

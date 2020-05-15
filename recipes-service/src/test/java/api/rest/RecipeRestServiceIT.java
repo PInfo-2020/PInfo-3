@@ -31,7 +31,7 @@ public class RecipeRestServiceIT {
 	
 	@Test
 	public void testCreate() {
-		Recipe recipe = new Recipe("nom4", "d4", "i4", 10, 1, (long) 3);
+		Recipe recipe = new Recipe("nom4", "d4", "i4", 10, 1, "3");
 		with().contentType(ContentType.JSON).body(recipe).when().request("POST", "/").then().statusCode(200);
 	}
 	
@@ -100,7 +100,7 @@ public class RecipeRestServiceIT {
 	
 	@Test
 	public void testAddGrade() {
-		Grade grade = new Grade((long) 1, (long) 0, 5);
+		Grade grade = new Grade((long) 1, "0", 5);
 		with().contentType(ContentType.JSON).body(grade).when().request("POST", "/grade").then().statusCode(204);
 	}
 	

@@ -143,7 +143,7 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 	
 	@Override
-	public List<Grade> getAllGrades(Long userId) {
+	public List<Grade> getAllGrades(String userId) {
 		log.info("retrieve all grades given by a user");
 		TypedQuery<Grade> query = em.createQuery("SELECT g FROM Grade g WHERE g.userId = :userId ", Grade.class);
 		query.setParameter("userId", userId);
@@ -212,7 +212,7 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 	
 	@Override
-	public double getUserGrade(Long userId) {
+	public double getUserGrade(String userId) {
 		log.info("retrieve the final grade of a user");
 		TypedQuery<Recipe> query = em.createQuery("SELECT r FROM Recipe r WHERE r.userId = :userId ", Recipe.class);
 		query.setParameter("userId", userId);

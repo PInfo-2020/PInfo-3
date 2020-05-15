@@ -12,9 +12,9 @@ public interface ListsService {
 
 	public void createItemFridge(ItemFridge itemFridge);
 
-	public ArrayList<ItemCart> getAllCart(int userID);
+	public ArrayList<ItemCart> getAllCart(String userID);
 	
-	public ArrayList<ItemFridge> getAllFridge(int userID);
+	public ArrayList<ItemFridge> getAllFridge(String userID);
 
 	public void modIngredientCart(ItemCart itemCart);
 	
@@ -26,5 +26,5 @@ public interface ListsService {
 
 //	public ArrayList<ItemCart> getAllCartTEST();
 
-	public HashMap<Integer, Double> getAllFridgeRecipe(int userID);
+	public HashMap<Integer, Double> getAllFridgeRecipe(String userID);
 }

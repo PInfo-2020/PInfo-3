@@ -27,11 +27,11 @@ public class ListsConsumer {
 	private ListsService listsService;
 
 	@Consumer(topics = "userReq", groupId = "ch.unige")
-	public void consumeUserID(Long userId) {
+	public void consumeUserID(String userId) {
 		log.info("Consumer got following user id : " + userId);
 		
-		int userID = (int) ((long) userId);
-		HashMap<Integer, Double> ingredients = listsService.getAllFridgeRecipe(userID);
+		//int userID = (int) ((long) userId);
+		HashMap<Integer, Double> ingredients = listsService.getAllFridgeRecipe(userId);
 		
 		synchronized(o) {
 			for (HashMap.Entry<Integer, Double> entry : ingredients.entrySet()) {

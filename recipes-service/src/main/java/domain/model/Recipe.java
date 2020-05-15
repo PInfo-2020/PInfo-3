@@ -45,11 +45,11 @@ public class Recipe implements Serializable {
 	
 	@Column(name="userId")
 	@NotNull
-	private Long userId;
+	private String userId;
 	
 	public Recipe() {}
 
-	public Recipe(@NotNull String name, @NotNull String description, @NotNull String instructions, @NotNull int minutes, @NotNull int personnes, @NotNull Long userId) {
+	public Recipe(@NotNull String name, @NotNull String description, @NotNull String instructions, @NotNull int minutes, @NotNull int personnes, @NotNull String userId) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -107,11 +107,11 @@ public class Recipe implements Serializable {
 		this.personnes = personnes;
 	}
 	
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	
