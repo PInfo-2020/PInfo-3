@@ -5,9 +5,9 @@
     <a class='ml-auto text-dark mr-5' routerLink="/profile" routerLinkActive="active">Profile</a>
 </nav>
 
-<form class="h-75">
+<div class="full">
   <div class="row mb-5">
-    <div class="col-2">
+    <!-- <div class="col-2">
       <div class="form-check ml-5">
         <input class="form-check-input" type="checkbox" value="" id="vegetarian">
         <label class="form-check-label" for="vegetarian">
@@ -20,7 +20,7 @@
           Vegan
         </label>
       </div>
-    </div>
+    </div> -->
 
     <div class="col-10">
       <div class="row">
@@ -31,57 +31,56 @@
           <input type="text" class="form-control" placeholder="Number of people">
         </div>
         <div class="col-2">
-          <input type="text" class="form-control" placeholder="Duration">
+          <input type="text" class="form-control" placeholder="Duration (min)">
         </div>
       </div>
       <div class="row mt-3">
         <div class="col-4">
-          <textarea class="form-control" id="description" placeholder="Description" rows="4"></textarea>
-        </div>
-        <div class="col-2">
-          <input type="text" class="form-control" placeholder="Photo...">
+          <textarea class="form-control" id="descriptionRecette" placeholder="Description" rows="4"></textarea>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row mt-5 ml-5 mr-2 row-w d-inline-block">
-    <div class="col border border-w" id="div1">
-      <div class="row mb-5">
-        <div class="col-4">
-          <input type="text" class="form-control" id="ingredient" placeholder="Research ingredient">
+  <div class="d-flex flex-row">
+    <div class="row mt-5 ml-5 mr-2 row-w d-inline-block">
+      <div class="col border border-w" id="div1">
+        <div class="row mb-5">
+          <div class="col-4">
+            <input type="text" class="form-control" id="ingredient" placeholder="Research ingredient">
+          </div>
+          <div class="col-2">
+            <input type="text" class="form-control" id="quantity" placeholder="Quantity">
+          </div>
+          <div class="col-2">
+            <input type="text" class="form-control" id="unit" disabled>
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn btn-secondary mr-1 button-w" (click)="plus()">+</button>
+            <button type="button" class="btn btn-secondary button-w" (click)="minus()">-</button>
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn btn-secondary mr-1" (click)="addBlock1()">Add</button>
+          </div>
         </div>
-        <div class="col-2">
-          <input type="text" class="form-control" id="quantity" placeholder="Quantity">
-        </div>
-        <div class="col-2">
-          <input type="text" class="form-control" id="unit" disabled>
-        </div>
-        <div class="col-2">
-          <button type="button" class="btn btn-secondary mr-1 button-w" (click)="plus()">+</button>
-          <button type="button" class="btn btn-secondary button-w" (click)="minus()">-</button>
-        </div>
-        <div class="col-2">
-          <button type="button" class="btn btn-secondary mr-1" (click)="addBlock1()">Add</button>
+      </div>
+    </div>
+
+    <div class="row mt-5 mr-5 ml-2 row-w d-inline-block">
+      <div class="col border border-w" id="div2">
+        <div class="row">
+          <div class="col-8">
+            <textarea class="form-control" id="descriptionInstruction" rows="6" placeholder="Instruction"></textarea>
+          </div>
+          <div class="col-3">
+            <button type="button" class="btn btn-secondary mr-1" (click)="addBlock2()">Add</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row mt-5 mr-5 ml-2 row-w d-inline-block">
-    <div class="col border border-w">
-      <div class="row">
-        <div class="col-8">
-          <textarea class="form-control" id="description" placeholder="Instruction" rows="4"></textarea>
-        </div>
-        <div class="col-3">
-          <button type="button" class="btn btn-secondary mr-1">Add</button>
-        </div>
-      </div>
-    </div>
+  <div>
+    <button type="submit" class="btn btn-primary">Finish</button>
   </div>
-
-<div>
-  <button type="submit" class="btn btn-primary">Submit</button>
 </div>
-</form>

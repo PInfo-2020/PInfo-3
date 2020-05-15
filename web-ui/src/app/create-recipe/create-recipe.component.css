@@ -1,6 +1,6 @@
 html, body{
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .border-w {
@@ -13,4 +13,11 @@ html, body{
 
 .row-w {
   width: 45%;
+}
+
+.full {
+  /* height: 100vh;
+  background-image: url('burger2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover; */
 }
