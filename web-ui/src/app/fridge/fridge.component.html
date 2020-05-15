@@ -19,7 +19,25 @@
       <div class="col-1">
         <input type="text" class="form-control" placeholder="Unit">
       </div>
-      <button type="button" (click)="add()" class="btn btn-light">Add</button>
+      <button type="button" class="btn btn-light" (click)="onAdd()">Add</button>
       <button type="button" class="btn btn-light">Add new ingredient</button>
     </div>
   </form>
+
+  <!-- <form>
+    <div class="form-row">
+      <div class="col-1.5">
+        <input type="text" class="form-control">
+        <p> {{getIngredient()}}</p> 
+      </div>
+      <div class="col-1">
+        <input type="text" class="form-control">
+      </div>
+      <div class="col-1">
+        <input type="text" class="form-control">
+      </div>
+    </div>
+  </form> -->
+<h4>{{ingredient}}</h4>
+  
+<input type="text" class="form-control" [(ngModel)]="ingredient"> 
