@@ -351,6 +351,34 @@
       "FreeOTP",
       "Google Authenticator"
     ],
+  "users" : [ {
+     "id" : "8e80618c-2572-4651-be91-731527251034",
+     "createdTimestamp" : 1589554078595,
+     "username" : "penguin",
+     "enabled" : true,
+     "totp" : false,
+     "emailVerified" : false,
+     "credentials" : [ {
+       "type" : "password",
+      "hashedSaltedValue" : "TW2rlocakF3QIllppdn1mLAYxk5P1a69SQSpGoDsVGIuooitA5ZMjZEPR8z/t2f1DrVmRdyJOdLm188KcNLgOA==",
+      "salt" : "rKKQ++Ur1XVnImK4ZxxYNw==",
+       "hashIterations" : 27500,
+     "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+       "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1589554573404,
+     "config" : { }
+      } ],
+      "disableableCredentialTypes" : [ "password" ],
+      "requiredActions" : [ ],
+     "realmRoles" : [ "offline_access", "uma_authorization" ],
+     "clientRoles" : {
+       "account" : [ "manage-account", "view-profile" ]
+      },
+      "notBefore" : 0,
+     "groups" : [ ]
+   } ],
     "scopeMappings": [
       {
         "clientScope": "offline_access",
