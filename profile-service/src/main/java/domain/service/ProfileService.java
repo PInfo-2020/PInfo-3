@@ -12,5 +12,16 @@ public interface ProfileService {
 	
 	public ArrayList<PlannedRecipe> getAllPlannedRecipesFromOneUser(String usernameID);
 	
-	public int addNewPlannedRecipe(int rowID, String usernameID, int recipeID);
+	public int addNewPlannedRecipe(PlannedRecipe pr);
+	
+	public int addNewUser(Profile p);
+
+	public List<PlannedRecipe> getAllPlannedRecipes();
+
+	public List<Profile> getTenBest();
+
+	public void removeOneUser(Profile p);
+	
+	public void removeOnePlannedRecipe(PlannedRecipe pr);
+
 }

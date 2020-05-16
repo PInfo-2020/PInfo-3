@@ -1,11 +1,11 @@
 thorntail:
   datasources:
     data-sources:
-      profile:
+      plannedrecipe:
         driver-name: myh2
         connection-url: jdbc:h2:${java.io.tmpdir}/target/profile;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false;DB_CLOSE_ON_EXIT=FALSE
         user-name: sa
-        password: sa 
+        password: sa
     jdbc-drivers:
       myh2:
         driver-class-name: org.h2.Driver
@@ -14,4 +14,4 @@ thorntail:
       postgresql:
         driver-class-name: org.postgresql.Driver
         xa-datasource-class-name: org.postgresql.xa.PGXADataSource
-        driver-module-name: org.postgresql        
+        driver-module-name: org.postgresql

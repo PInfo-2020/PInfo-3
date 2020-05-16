@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -17,14 +18,14 @@ import domain.service.*;
 import io.swagger.annotations.ApiOperation;
 
 @ApplicationScoped
-@Path("/")
+@Path("/profiles")
 public class ProfileRestService {
-	
+
 	@Inject
 	private ProfileService ps;
 
 	@GET
-	@Path("profiles")
+	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Get all profiles")
 	public List<Profile>  getDataUsers(){
@@ -32,11 +33,18 @@ public class ProfileRestService {
 	}
 	
 	@GET
-	@Path("{usernameID}")
+	@Path("/{usernameID}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Get data by given usernameID")
 	public ArrayList<Profile> getDataOneUser(@PathParam("usernameID") String usernameID){
 		return ps.getDataOneUser(usernameID);
+	}
+	
+	@GET
+	@Path("/plannedrecipes")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<PlannedRecipe> getAllPlannedRecipes() {
+		return ps.getAllPlannedRecipes();
 	}
 	
 	@GET
@@ -45,13 +53,29 @@ public class ProfileRestService {
 	public ArrayList<PlannedRecipe> getAllPlannedRecipesFromOneUser(@PathParam("usernameID") String usernameID) {
 		return ps.getAllPlannedRecipesFromOneUser(usernameID);
 	}
-	
-	@GET
-	@Path("{usernameID}/{recipeID}/addNewPlannedRecipe/{rowID}")
+		
+	@POST
+	@Path("{usernameID}/{recipeID}/addNewPlannedRecipe")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public int addNewPlannedRecipe(@PathParam("rowID") int rowID,@PathParam("usernameID") String usernameID,@PathParam("recipeID") int recipeID) {
-		return ps.addNewPlannedRecipe(rowID, usernameID, recipeID);
+		PlannedRecipe pr = new PlannedRecipe(usernameID,recipeID);
+		return ps.addNewPlannedRecipe(pr);
 	}
 	
+	@POST
+	@Path("{usernameID}/{username}/addNewUser")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int addNewUser(@PathParam("usernameID") String usernameID, @PathParam("username") String username) {
+		Profile p = new Profile(usernameID,username,0);
+		return ps.addNewUser(p);		
+	}
+	
+	@GET
+	@Path("/TenBest")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<Profile> getTenBest() {
+		return ps.getTenBest();
+		
+	}
 	
 }

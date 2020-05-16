@@ -14,25 +14,72 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
-import domain.model.Address;
-import domain.model.Counterparty;
-import domain.model.Registration;
-import domain.model.STATUS;
+
+import domain.model.PlannedRecipe;
+import domain.model.PlannedRecipeID;
+import domain.model.Profile;
 import eu.drus.jpa.unit.api.JpaUnit;
 
 @ExtendWith(JpaUnit.class)
 @ExtendWith(MockitoExtension.class)
-class CounterpartyServiceImplTest {
+class ProfileServiceImplTest {
+	//Testes unitaires sans docker blabla
+	// Run with Junit only
 
 	@Spy
-	@PersistenceContext(unitName = "CounterpartyPUTest")
+	@PersistenceContext(unitName = "ProfilesPU")
 	EntityManager em;
 
 	@InjectMocks
-	private CounterpartyServiceImpl counterpartyServiceImpl;
+	private ProfileServiceImpl psi;
 
 	@Test
+	void getDataUsers() {
+		List<Profile> profiles = psi.getDataUsers();
+		int nbrOfRowBefore = profiles.size();
+		int nbrOfRowAfter = 0;
+		//Add new profiles in the db
+		Profile p = new Profile("8","Sannji",5);
+		psi.addNewUser(p);
+		nbrOfRowAfter = profiles.size();
+		assertEquals(nbrOfRowBefore +1, nbrOfRowAfter);
+		//Verify that a row has efficiently been added
+	}
+	
+
+	
+//	@Test
+/*	void  getDataOneUser() {
+		//based on the usernameID
+		List<Profile> profile =  psi.getDataUsers();
+		int nbrOfRowBefore = profile.size();
+		int nbrofRowAfter = 0;
+		
+	}
+	
+	@Test
+	void getAllPlannedRecipesFromOneUser() {
+		
+	}
+	
+	@Test
+	void addNewPlannedRecipe() {
+		
+	}
+	
+	
+	
+/*	@Test
 	void testGetAll() {
 		int size = initDataStore();
 		assertEquals(size, counterpartyServiceImpl.getAll().size());
@@ -74,6 +121,7 @@ class CounterpartyServiceImplTest {
 		}
 		return size + counterparties.size();
 	}
+
 
 	private Counterparty getRandomCounterparty() {
 		Counterparty c = new Counterparty();
