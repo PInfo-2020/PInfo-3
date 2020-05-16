@@ -36,10 +36,10 @@
 	</properties>
 
 	<modules>
-<!-- 		<module>api-gateway</module> -->
-<!-- 		<module>profile-service</module> -->
+		<module>api-gateway</module>
+		<module>profile-service</module>
 		<module>recipes-service</module>
-<!-- 		<module>ingredients-service</module> -->
+		<module>ingredients-service</module>
 		<module>lists-service</module>
 	</modules>
 
