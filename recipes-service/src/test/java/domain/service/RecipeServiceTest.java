@@ -160,8 +160,8 @@ public class RecipeServiceTest {
 		List<Ingredient> ingredients = recipeServiceImpl.getAllIngredients((long) 1);
 		int size = ingredients.size();
 		long sizeL = (long) recipeServiceImpl.countIngredient();
-		Ingredient ingredient = new Ingredient((long) 1, 8.5);
-		Ingredient ingredient2 = new Ingredient((long) 2, 3.2);
+		Ingredient ingredient = new Ingredient((long) 1, 8.5,0,0);
+		Ingredient ingredient2 = new Ingredient((long) 2, 3.2,0,0);
 		
 		recipeServiceImpl.createIngredient(ingredient, (long) 1, sizeL + 1);
 		recipeServiceImpl.createIngredient(ingredient2, (long) 1, sizeL + 2);
@@ -173,7 +173,7 @@ public class RecipeServiceTest {
 	void testCreateIngredient() {
 		recipeServiceImpl.create(getRandomRecipe(),(long) 0);
 		long sizeL = (long) recipeServiceImpl.countIngredient();
-		Ingredient ingredient = new Ingredient((long) 1, 8.5);
+		Ingredient ingredient = new Ingredient((long) 1, 8.5,0,0);
 		
 		recipeServiceImpl.createIngredient(ingredient, (long) 1, sizeL + 1);
 		

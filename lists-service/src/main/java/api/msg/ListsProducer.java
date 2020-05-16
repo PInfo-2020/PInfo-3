@@ -7,7 +7,7 @@ import org.aerogear.kafka.SimpleKafkaProducer;
 import org.aerogear.kafka.cdi.annotation.KafkaConfig;
 import org.aerogear.kafka.cdi.annotation.Producer;
 
-import domain.model.Item;
+import domain.model.Fridge;
 import lombok.extern.java.Log;
 
 
@@ -16,19 +16,13 @@ import lombok.extern.java.Log;
 @Log
 public class ListsProducer {
 	
-	@Producer
-	private SimpleKafkaProducer<String, Item> producer;
 	
 	@Producer
-	private SimpleKafkaProducer<String, Boolean> producer2;
+	private SimpleKafkaProducer<String, Fridge> producer;
 	
-	public void sendItem(Item item) {
-		log.info("Send an item");
-		producer.send("itemReq", item);	
-	}
 	
-	public void sendBoolean(Boolean bool) {
-		log.info("Send the bool");
-		producer2.send("boolReq", bool);	
+	public void sendItem(Fridge fridge) {
+		log.info("Send a fridge");
+		producer.send("itemReq", fridge);	
 	}
 }

@@ -52,7 +52,7 @@ public class RecipeRestServiceIT {
 	
 	@Test
 	public void testCountIngredient() {
-		when().get("/countIngredient").then().body(containsString("2"));
+		when().get("/countIngredient").then().body(containsString("3"));
 	}
 	
 	@Test
@@ -106,7 +106,7 @@ public class RecipeRestServiceIT {
 	
 	@Test
 	public void testCreateIngredient() {
-		Ingredient ingredient = new Ingredient((long) 1, 10.0);
+		Ingredient ingredient = new Ingredient((long) 1, 10.0,0,0);
 		List<Ingredient> ingredients = new ArrayList<Ingredient>();
 		ingredients.add(ingredient);
 		with().contentType(ContentType.JSON).body(ingredients).when().request("POST", "/1/addingredients").then().statusCode(204);

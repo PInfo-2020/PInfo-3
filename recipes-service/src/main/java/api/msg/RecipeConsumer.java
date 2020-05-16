@@ -1,7 +1,7 @@
 package api.msg;
 
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -10,7 +10,8 @@ import org.aerogear.kafka.cdi.annotation.Consumer;
 import org.aerogear.kafka.cdi.annotation.KafkaConfig;
 
 import api.rest.RecipeRestService;
-import domain.model.Item;
+import domain.model.Fridge;
+import domain.model.Recipe;
 import domain.service.RecipeServiceImpl;
 import lombok.extern.java.Log;
 
@@ -19,31 +20,22 @@ import lombok.extern.java.Log;
 @Log
 public class RecipeConsumer {
 	
-	ArrayList<Item> items = new ArrayList<Item>();
-	
 	@Inject
 	RecipeRestService rest;
 	
 	@Inject
 	RecipeServiceImpl impl;
 	
+	
 	@Consumer(topics = "itemReq", groupId = "ch.unige")
-	public void consumeIngredients(Item item) {
-		log.info("Consumer got following item : " + item.getQuantity());
-		items.add(item);
-	}
-	
-	
-	@Consumer(topics = "boolReq", groupId = "ch.unige")
-	public void consumeCommunication(Boolean bool) {
-		log.info("End of the communication");
+	public void consumeIngredients(Fridge fridge) {
+		log.info("Consumer got the fridge");
 		
-		// Récupérer les recettes
-		// ArrayList<Item> vides = new ArrayList<Item>();
-		// items = vides;
+		List<Recipe> recipes = impl.getRecipesByFridge(fridge);
 		
-		rest.setRecipes(impl.getAll());
+		rest.setRecipes(recipes);
 		rest.setTest(true);
+		
 	}
 	
 

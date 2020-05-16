@@ -1,7 +1,6 @@
 package api.rest;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -14,7 +13,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import api.msg.RecipeConsumer;
 import api.msg.RecipeProducer;
 import domain.model.Comment;
 import domain.model.Grade;
@@ -32,8 +30,6 @@ public class RecipeRestService {
 	@Inject
 	private RecipeProducer recipeProducer;
 	
-//	@Inject
-//	private RecipeConsumer recipeConsumer;
 	
 	static private boolean test = false;
 	static private List<Recipe> recipes = new ArrayList<Recipe>();
@@ -178,10 +174,30 @@ public class RecipeRestService {
 		List<Recipe> r = recipes;
 		recipes =  vide;
 		
-//		HashMap<Integer, Double> ingredients = recipeConsumer.consumeIngredients();
-//		recipeService.getRecipeByHashMap();
 		return r;
 	}
+	
+	@GET // Find all recipes that are vegetarian
+	@Path("/vegetarien")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Recipe> getByVegetarien() {
+		return recipeService.getByVegetarien();
+	}
+	
+	@GET // Find all recipes that are vegan
+	@Path("/vegetarien")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Recipe> getByVegan() {
+		return recipeService.getByVegan();
+	}
+	
+	@GET // Return all of the recipes created by the user of id userId
+	@Path("/user/{id}/recipes")
+	@Produces(MediaType.APPLICATION_JSON)
+    public List<Recipe> getCreatedRecipes(@PathParam("id") String userId) {
+		return recipeService.getCreatedRecipes(userId);
+	}
+	
 	
 	public void setRecipes(List<Recipe> recipes) {
 		RecipeRestService.recipes = recipes;

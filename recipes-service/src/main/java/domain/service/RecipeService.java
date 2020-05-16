@@ -1,12 +1,11 @@
 package domain.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import domain.model.Comment;
+import domain.model.Fridge;
 import domain.model.Grade;
 import domain.model.Ingredient;
-import domain.model.Item;
 import domain.model.Recipe;
 
 public interface RecipeService {
@@ -28,6 +27,9 @@ public interface RecipeService {
 	public List<Ingredient> getAllIngredients(Long recipeId);
 	public List<Recipe> getBestRecipes();
 	public double getUserGrade(String userId);
-	public List<Recipe> getRecipesByFridge(ArrayList<Item> items);
+	public List<Recipe> getRecipesByFridge(Fridge fridge);
+	public List<Recipe> getByVegetarien();
+	public List<Recipe> getByVegan();
+	public List<Recipe> getCreatedRecipes(String userId);
 
 }
