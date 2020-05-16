@@ -24,14 +24,9 @@ import lombok.Data;
 public class PlannedRecipe implements Serializable {
 	
 	public PlannedRecipe() {}
-	public PlannedRecipe(@NotNull int rowID, @NotNull String usernameID, @NotNull int recipeID) {
+	public PlannedRecipe(@NotNull String usernameID, @NotNull int recipeID) {
 		super();
 		this.rowID	= rowID;
-		this.usernameID = usernameID;
-		this.recipeID = recipeID;
-	}
-	public PlannedRecipe( @NotNull String usernameID, @NotNull int recipeID) {
-		super();
 		this.usernameID = usernameID;
 		this.recipeID = recipeID;
 	}

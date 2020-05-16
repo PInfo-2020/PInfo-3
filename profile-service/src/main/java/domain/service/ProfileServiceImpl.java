@@ -22,8 +22,8 @@ public class ProfileServiceImpl implements ProfileService {
 
     @PersistenceContext(unitName = "ProfilesPU")
     private EntityManager em;
-
-    public ProfileService ps;
+    // making the following var public was a reason for thorntail crash : amazing
+    private ProfileService ps;
 	@Override
 	public List<Profile> getDataUsers() {
 		// TODO Auto-generated method stub
@@ -104,34 +104,26 @@ public class ProfileServiceImpl implements ProfileService {
 		return (List<PlannedRecipe>)em.createQuery( criteria ).getResultList();
 	}
 
+
+
 	@Override
-	public List<Profile> getTenBest() {
-		// TODO Auto-generated method stub
-		return null;
+	public void removeOneUser(Profile p) {
+		ProfileID pk = new ProfileID(p.getUsernameID(), p.getUsername(), p.getScore());
+		p = em.find(Profile.class, pk);
+		em.remove(p);
+		
+	}
+
+	@Override
+	public void removeOnePlannedRecipe(PlannedRecipe pr) {
+		PlannedRecipeID pk = new PlannedRecipeID(pr.getUsernameID(), pr.getRecipeID());
+		pr = em.find(PlannedRecipe.class, pk);
+		em.remove(pr);
+		
 	}
 	
 
-//	@Override
-//	public List<Profile> getTenBest() {
-//			// Add some log if you want to be able to debug this mess -_-
-//			CriteriaBuilder builder = em.getCriteriaBuilder();
-//			CriteriaQuery<Profile> criteria = builder.createQuery(Profile.class);
-//			criteria.from(Profile.class);
-//			List<Profile> profiles = em.createQuery(criteria).getResultList();
-//			Map<Profile, Double> tenBest = new HashMap<Profile, Double>();
-//			
-//			List<Profile> pr = new ArrayList<Profile>();
-//			List<Profile> lp = ps.getDataUsers();
-//			for(Profile pp : lp) {
-//				usrID.add(pp.getUsernameID());
-//				scr.add(pp.get)
-//				
-//			}
-			
-
 		
-
-
 	
 
 }

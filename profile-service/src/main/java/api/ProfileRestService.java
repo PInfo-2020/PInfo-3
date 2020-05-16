@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -70,12 +71,18 @@ public class ProfileRestService {
 		return ps.addNewUser(p);		
 	}
 	
-	@GET
-	@Path("/TenBest")
+	@DELETE // Remove an item to cart of a user
+	@Path("/removeOneUser/")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Profile> getTenBest() {
-		return ps.getTenBest();
-		
+	public void removeOneUser(Profile p) {
+		ps.removeOneUser(p);
 	}
 	
+	@DELETE // Remove an item to fridge of a user
+	@Path("/removefromplannedrecipe")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void removeOnePlannedRecipe(PlannedRecipe pr) {
+		ps.removeOnePlannedRecipe(pr);
+	}
+
 }

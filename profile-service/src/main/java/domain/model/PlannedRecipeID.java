@@ -6,8 +6,7 @@ public class PlannedRecipeID implements Serializable {
 	
 	public PlannedRecipeID() {}
 	
-	public PlannedRecipeID(int rowID, String usernameID, int recipeID) {
-		this.rowID = rowID;
+	public PlannedRecipeID(String usernameID, int recipeID) {
 		this.usernameID = usernameID;
 		this.recipeID = recipeID;
 	}

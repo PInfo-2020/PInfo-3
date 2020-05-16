@@ -18,8 +18,6 @@ public interface ProfileService {
 
 	public List<PlannedRecipe> getAllPlannedRecipes();
 
-	public List<Profile> getTenBest();
-
 	public void removeOneUser(Profile p);
 	
 	public void removeOnePlannedRecipe(PlannedRecipe pr);
