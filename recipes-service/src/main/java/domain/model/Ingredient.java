@@ -33,12 +33,22 @@ public class Ingredient implements Serializable {
 	@NotNull
 	private double quantite;
 	
+	@Column(name="vegetarien")
+	@NotNull
+	private int vegetarien;
+	
+	@Column(name="vegan")
+	@NotNull
+	private int vegan;
+	
 	public Ingredient() {}
 
-	public Ingredient(@NotNull Long ingredientId, @NotNull double quantite) {
+	public Ingredient(@NotNull Long ingredientId, @NotNull double quantite, @NotNull int vegetarien, @NotNull int vegan) {
 		super();
 		this.ingredientId = ingredientId;
 		this.quantite = quantite;
+		this.vegetarien = vegetarien;
+		this.vegan = vegan;
 	}
 	
 	public Long getId() {
@@ -71,6 +81,22 @@ public class Ingredient implements Serializable {
 
 	public void setQuantite(double quantite) {
 		this.quantite = quantite;
+	}
+	
+	public int getVegetarien() {
+		return vegetarien;
+	}
+
+	public void setVegetarien(int vegetarien) {
+		this.vegetarien = vegetarien;
+	}
+	
+	public int getVegan() {
+		return vegan;
+	}
+
+	public void setVegan(int vegan) {
+		this.vegan = vegan;
 	}
 
 	

@@ -41,7 +41,7 @@ public class ListsServiceImpl implements ListsService {
 	}
     
     @Override
-    public HashMap<Integer, Double> getAllFridgeRecipe(int userID){
+    public HashMap<Integer, Double> getAllFridgeRecipe(String userID){
     	ArrayList<ItemFridge> itemFridgeList = getAllFridge(userID);
     	HashMap<Integer, Double> myHash = new HashMap<Integer, Double>();
     	for (ItemFridge i: itemFridgeList) {
@@ -52,7 +52,7 @@ public class ListsServiceImpl implements ListsService {
 
 
 	@Override
-	public ArrayList<ItemCart> getAllCart(int userID) {
+	public ArrayList<ItemCart> getAllCart(String userID) {
 		log.info("Renvoie la liste des items cart pour un certain user");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<ItemCart> cq = cb.createQuery(ItemCart.class);
@@ -64,7 +64,7 @@ public class ListsServiceImpl implements ListsService {
 	}
 	
 	@Override
-	public ArrayList<ItemFridge> getAllFridge(int userID) {
+	public ArrayList<ItemFridge> getAllFridge(String userID) {
 		log.info("Renvoie la liste des items fridge pour un certain user");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<ItemFridge> cq = cb.createQuery(ItemFridge.class);

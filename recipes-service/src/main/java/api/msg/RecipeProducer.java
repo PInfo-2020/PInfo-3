@@ -15,10 +15,10 @@ import lombok.extern.java.Log;
 public class RecipeProducer {
 	
 	@Producer
-	private SimpleKafkaProducer<String, Long> producer;
+	private SimpleKafkaProducer<String, String> producer;
 
-	public void send(Long userId) {
-		log.info("Send user id " + userId + "to ListsService");
+	public void send(String userId) {
+		log.info("Send user id " + userId + " to ListsService");
 		producer.send("userReq", userId);
 	}
 

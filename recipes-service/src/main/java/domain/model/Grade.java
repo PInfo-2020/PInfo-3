@@ -27,7 +27,7 @@ public class Grade implements Serializable {
 	
 	@Column(name="userId")
 	@NotNull
-	private Long userId;
+	private String userId;
 	
 	@Column(name="gradeRecipe")
 	@NotNull
@@ -35,7 +35,7 @@ public class Grade implements Serializable {
 	
 	public Grade() {}
 
-	public Grade(@NotNull Long recipeId, @NotNull Long userId, @NotNull int gradeRecipe) {
+	public Grade(@NotNull Long recipeId, @NotNull String userId, @NotNull int gradeRecipe) {
 		super();
 		this.recipeId = recipeId;
 		this.userId = userId;
@@ -58,11 +58,11 @@ public class Grade implements Serializable {
 		this.recipeId = recipeId;
 	}
 	
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

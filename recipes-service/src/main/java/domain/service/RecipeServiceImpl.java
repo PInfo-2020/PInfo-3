@@ -15,6 +15,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.transaction.Transactional;
 
 import domain.model.Comment;
+import domain.model.Fridge;
 import domain.model.Grade;
 import domain.model.Ingredient;
 import domain.model.Recipe;
@@ -142,7 +143,7 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 	
 	@Override
-	public List<Grade> getAllGrades(Long userId) {
+	public List<Grade> getAllGrades(String userId) {
 		log.info("retrieve all grades given by a user");
 		TypedQuery<Grade> query = em.createQuery("SELECT g FROM Grade g WHERE g.userId = :userId ", Grade.class);
 		query.setParameter("userId", userId);
@@ -211,7 +212,7 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 	
 	@Override
-	public double getUserGrade(Long userId) {
+	public double getUserGrade(String userId) {
 		log.info("retrieve the final grade of a user");
 		TypedQuery<Recipe> query = em.createQuery("SELECT r FROM Recipe r WHERE r.userId = :userId ", Recipe.class);
 		query.setParameter("userId", userId);
@@ -229,5 +230,115 @@ public class RecipeServiceImpl implements RecipeService {
 		
 		return mean;
 	}
+	
+	@Override
+	public List<Recipe> getRecipesByFridge(Fridge fridge) {
+		log.info("retrieve all recipes that contain ingredients in Fridge");
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Recipe> criteria = builder.createQuery(Recipe.class);
+		criteria.from(Recipe.class);
+		List<Recipe> allRecipes = em.createQuery(criteria).getResultList();
+		List<Recipe> newRecipes = new ArrayList<Recipe>();
+		for (Recipe r : allRecipes) {
+			TypedQuery<Ingredient> query = em.createQuery("SELECT i FROM Ingredient i WHERE i.recipeId = :recipeId ", Ingredient.class);
+			query.setParameter("recipeId", r.getId());
+			List<Ingredient> results = query.getResultList();
+			ArrayList<Integer> booleans = new ArrayList<Integer>();
+			int compteur = 0;
+			for(@SuppressWarnings("unused") HashMap.Entry<Integer, Double> entry0 : fridge.getIngredients().entrySet()) {
+				booleans.add(0);
+			}
+			for(HashMap.Entry<Integer, Double> entry : fridge.getIngredients().entrySet()) {
+				for (Ingredient j : results) {
+					if ((j.getIngredientId() == (long) entry.getKey()) && (j.getQuantite() <= entry.getValue())) {
+						booleans.set(compteur, 1);
+						break;
+					}
+				}
+				compteur += 1;
+			}
+			int ok = 1;
+			for(Integer b : booleans) {
+				if (b == 0) {
+					ok = 0;
+					break;
+				}
+			}
+			if (ok == 1) {
+				newRecipes.add(r);
+			}
+		}
+		
+		return newRecipes;
+		
+	}
+	
+	@Override
+	public List<Recipe> getByVegetarien() {
+		log.info("retrieve all recipes that are vegetarien");
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Recipe> criteria = builder.createQuery(Recipe.class);
+		criteria.from(Recipe.class);
+		List<Recipe> allRecipes = em.createQuery(criteria).getResultList();
+		List<Recipe> newRecipes = new ArrayList<Recipe>();
+		for (Recipe r : allRecipes) {
+			TypedQuery<Ingredient> query = em.createQuery("SELECT i FROM Ingredient i WHERE i.recipeId = :recipeId ", Ingredient.class);
+			query.setParameter("recipeId", r.getId());
+			List<Ingredient> results = query.getResultList();
+			boolean veg = true;
+			for (Ingredient i : results) {
+				if (i.getVegetarien() == 0) {
+					veg = false;
+				}
+			}
+			
+			if (veg == true) {
+				newRecipes.add(r);
+			}
+		
+		}
+		
+		return newRecipes;
+		
+	}
+	
+	@Override
+	public List<Recipe> getByVegan() {
+		log.info("retrieve all recipes that are vegan");
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Recipe> criteria = builder.createQuery(Recipe.class);
+		criteria.from(Recipe.class);
+		List<Recipe> allRecipes = em.createQuery(criteria).getResultList();
+		List<Recipe> newRecipes = new ArrayList<Recipe>();
+		for (Recipe r : allRecipes) {
+			TypedQuery<Ingredient> query = em.createQuery("SELECT i FROM Ingredient i WHERE i.recipeId = :recipeId ", Ingredient.class);
+			query.setParameter("recipeId", r.getId());
+			List<Ingredient> results = query.getResultList();
+			boolean veg = true;
+			for (Ingredient i : results) {
+				if (i.getVegan() == 0) {
+					veg = false;
+				}
+			}
+			
+			if (veg == true) {
+				newRecipes.add(r);
+			}
+		
+		}
+		
+		return newRecipes;
+		
+	}
+	
+	@Override
+	public List<Recipe> getCreatedRecipes(String userId) {
+		log.info("retrieve all recipes created by a user");
+		TypedQuery<Recipe> query = em.createQuery("SELECT r FROM Recipe r WHERE r.userId = :userId ", Recipe.class);
+		query.setParameter("userId", userId);
+		List<Recipe> results = query.getResultList();
+		return results;
+	}
+	
 
 }

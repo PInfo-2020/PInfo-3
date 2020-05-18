@@ -31,25 +31,25 @@ public class ListsRestServiceIT {
 
 	@Test
 	public void testModIngredientCart() {
-		ItemCart itemCart = new ItemCart(3,3,4);
+		ItemCart itemCart = new ItemCart("3",3,4);
 		with().contentType(ContentType.JSON).body(itemCart).when().request("POST", "/addtocart").then().statusCode(204);
 	}
 	
 	@Test
 	public void testModIngredientFridge() {
-		ItemFridge itemFridge = new ItemFridge(3,3,4);
+		ItemFridge itemFridge = new ItemFridge("3",3,4);
 		with().contentType(ContentType.JSON).body(itemFridge).when().request("POST", "/addtofridge").then().statusCode(204);
 	}
 	
 	@Test
 	public void testRemoveIngredientCart() {
-		ItemCart itemCart = new ItemCart(3,3,4);
+		ItemCart itemCart = new ItemCart("3",3,4);
 		with().contentType(ContentType.JSON).body(itemCart).when().request("DELETE", "/removefromcart").then().statusCode(204);
 	}
 	
 	@Test
 	public void testRemoveIngredientFridge() {
-		ItemFridge itemFridge = new ItemFridge(3,3,4);
+		ItemFridge itemFridge = new ItemFridge("3",3,4);
 		with().contentType(ContentType.JSON).body(itemFridge).when().request("DELETE", "/removefromfridge").then().statusCode(204);
 	}
 	

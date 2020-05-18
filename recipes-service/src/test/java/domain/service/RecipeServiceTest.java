@@ -113,26 +113,26 @@ public class RecipeServiceTest {
 	@Test
 	void testGetAllGrades() {
 		recipeServiceImpl.create(getRandomRecipe(),(long) 0);
-		List<Grade> grades = recipeServiceImpl.getAllGrades((long) 0);
+		List<Grade> grades = recipeServiceImpl.getAllGrades("0");
 		int size = grades.size();
 		long sizeL = (long) recipeServiceImpl.countGrade();
 		long nbRecipes = (long) recipeServiceImpl.count();
-		Grade grade = new Grade((long) 1, (long) 0, 5);
-		Grade grade2 = new Grade((long) 1, (long) 0, 5);
+		Grade grade = new Grade((long) 1, "0", 5);
+		Grade grade2 = new Grade((long) 1, "0", 5);
 		
 		recipeServiceImpl.addGrade(grade, sizeL + 1, nbRecipes, grades);
 		recipeServiceImpl.addGrade(grade2, sizeL + 2, nbRecipes, grades);
 		
-		assertEquals(size + 2, recipeServiceImpl.getAllGrades((long) 0).size());
+		assertEquals(size + 2, recipeServiceImpl.getAllGrades("0").size());
 	}
 	
 	@Test
 	void testAddGrade() {
 		recipeServiceImpl.create(getRandomRecipe(),(long) 0);
-		List<Grade> grades = recipeServiceImpl.getAllGrades((long) 0);
+		List<Grade> grades = recipeServiceImpl.getAllGrades("0");
 		long sizeL = (long) recipeServiceImpl.countGrade();
 		long nbRecipes = (long) recipeServiceImpl.count();
-		Grade grade  = new Grade((long) 1, (long) 0, 5);
+		Grade grade  = new Grade((long) 1, "0", 5);
 		
 		recipeServiceImpl.addGrade(grade, sizeL + 1, nbRecipes, grades);
 		
@@ -142,11 +142,11 @@ public class RecipeServiceTest {
 	@Test
 	void testGetGrade() {
 		recipeServiceImpl.create(getRandomRecipe(),(long) 0);
-		List<Grade> grades = recipeServiceImpl.getAllGrades((long) 0);
+		List<Grade> grades = recipeServiceImpl.getAllGrades("0");
 		long sizeL = (long) recipeServiceImpl.countGrade();
 		long nbRecipes = (long) recipeServiceImpl.count();
-		Grade grade = new Grade((long) 1, (long) 0, 5);
-		Grade grade2 = new Grade((long) 1, (long) 0, 4);
+		Grade grade = new Grade((long) 1, "0", 5);
+		Grade grade2 = new Grade((long) 1, "0", 4);
 		
 		recipeServiceImpl.addGrade(grade, sizeL + 1, nbRecipes, grades);
 		recipeServiceImpl.addGrade(grade2, sizeL + 2, nbRecipes, grades);
@@ -160,8 +160,8 @@ public class RecipeServiceTest {
 		List<Ingredient> ingredients = recipeServiceImpl.getAllIngredients((long) 1);
 		int size = ingredients.size();
 		long sizeL = (long) recipeServiceImpl.countIngredient();
-		Ingredient ingredient = new Ingredient((long) 1, 8.5);
-		Ingredient ingredient2 = new Ingredient((long) 2, 3.2);
+		Ingredient ingredient = new Ingredient((long) 1, 8.5,0,0);
+		Ingredient ingredient2 = new Ingredient((long) 2, 3.2,0,0);
 		
 		recipeServiceImpl.createIngredient(ingredient, (long) 1, sizeL + 1);
 		recipeServiceImpl.createIngredient(ingredient2, (long) 1, sizeL + 2);
@@ -173,7 +173,7 @@ public class RecipeServiceTest {
 	void testCreateIngredient() {
 		recipeServiceImpl.create(getRandomRecipe(),(long) 0);
 		long sizeL = (long) recipeServiceImpl.countIngredient();
-		Ingredient ingredient = new Ingredient((long) 1, 8.5);
+		Ingredient ingredient = new Ingredient((long) 1, 8.5,0,0);
 		
 		recipeServiceImpl.createIngredient(ingredient, (long) 1, sizeL + 1);
 		
@@ -194,13 +194,13 @@ public class RecipeServiceTest {
 		recipeServiceImpl.create(recipe3, sizeL + 3);
 		recipeServiceImpl.create(recipe4, sizeL + 4);
 		
-		List<Grade> grades = recipeServiceImpl.getAllGrades((long) 0);
+		List<Grade> grades = recipeServiceImpl.getAllGrades("0");
 		long sizeL2 = (long) recipeServiceImpl.countGrade();
 		long nbRecipes = (long) recipeServiceImpl.count();
-		Grade grade  = new Grade((long) 1, (long) 0, 5);
-		Grade grade2  = new Grade((long) 2, (long) 0, 2);
-		Grade grade3  = new Grade((long) 3, (long) 0, 4);
-		Grade grade4  = new Grade((long) 4, (long) 0, 6);
+		Grade grade  = new Grade((long) 1, "0", 5);
+		Grade grade2  = new Grade((long) 2, "0", 2);
+		Grade grade3  = new Grade((long) 3, "0", 4);
+		Grade grade4  = new Grade((long) 4, "0", 6);
 		
 		recipeServiceImpl.addGrade(grade, sizeL2 + 1, nbRecipes, grades);
 		recipeServiceImpl.addGrade(grade2, sizeL2 + 2, nbRecipes, grades);
@@ -217,30 +217,30 @@ public class RecipeServiceTest {
 	void testGetUserGrade() {
 		List<Recipe> recipes = recipeServiceImpl.getAll();
 		long sizeL = (long) recipes.size();
-		Recipe recipe = new Recipe("n", "d", "i", 10, 1, (long) 2);
-		Recipe recipe2 = new Recipe("n2", "d2", "i2", 10, 1, (long) 2);
-		Recipe recipe3 = new Recipe("n3", "d3", "i3", 10, 1, (long) 3);
+		Recipe recipe = new Recipe("n", "d", "i", 10, 1, "2");
+		Recipe recipe2 = new Recipe("n2", "d2", "i2", 10, 1, "2");
+		Recipe recipe3 = new Recipe("n3", "d3", "i3", 10, 1, "3");
 		
 		recipeServiceImpl.create(recipe, sizeL + 1);
 		recipeServiceImpl.create(recipe2, sizeL + 2);
 		recipeServiceImpl.create(recipe3, sizeL + 3);
 		
-		List<Grade> grades = recipeServiceImpl.getAllGrades((long) 0);
+		List<Grade> grades = recipeServiceImpl.getAllGrades("0");
 		long sizeL2 = (long) recipeServiceImpl.countGrade();
 		long nbRecipes = (long) recipeServiceImpl.count();
-		Grade grade = new Grade((long) 1, (long) 0, 5);
-		Grade grade2 = new Grade((long) 2, (long) 0, 2);
+		Grade grade = new Grade((long) 1, "0", 5);
+		Grade grade2 = new Grade((long) 2, "0", 2);
 		
 		recipeServiceImpl.addGrade(grade, sizeL2 + 1, nbRecipes, grades);
 		recipeServiceImpl.addGrade(grade2, sizeL2 + 2, nbRecipes, grades);
 		
-		assertEquals(3.5, recipeServiceImpl.getUserGrade((long) 2));
+		assertEquals(3.5, recipeServiceImpl.getUserGrade("2"));
 	}
 	
 	private Recipe getRandomRecipe() {
 		Recipe recipe = new Recipe(UUID.randomUUID().toString(), UUID.randomUUID().toString(),
 				UUID.randomUUID().toString(), ThreadLocalRandom.current().nextInt(0, 500), ThreadLocalRandom.current().nextInt(0, 500),
-				(long)ThreadLocalRandom.current().nextInt(0, 500));
+				UUID.randomUUID().toString());
 		return recipe;
 	}
 	

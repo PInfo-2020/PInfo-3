@@ -31,7 +31,7 @@ public class RecipeRestServiceIT {
 	
 	@Test
 	public void testCreate() {
-		Recipe recipe = new Recipe("nom4", "d4", "i4", 10, 1, (long) 3);
+		Recipe recipe = new Recipe("nom4", "d4", "i4", 10, 1, "3");
 		with().contentType(ContentType.JSON).body(recipe).when().request("POST", "/").then().statusCode(200);
 	}
 	
@@ -52,7 +52,7 @@ public class RecipeRestServiceIT {
 	
 	@Test
 	public void testCountIngredient() {
-		when().get("/countIngredient").then().body(containsString("2"));
+		when().get("/countIngredient").then().body(containsString("3"));
 	}
 	
 	@Test
@@ -100,13 +100,13 @@ public class RecipeRestServiceIT {
 	
 	@Test
 	public void testAddGrade() {
-		Grade grade = new Grade((long) 1, (long) 0, 5);
+		Grade grade = new Grade((long) 1, "0", 5);
 		with().contentType(ContentType.JSON).body(grade).when().request("POST", "/grade").then().statusCode(204);
 	}
 	
 	@Test
 	public void testCreateIngredient() {
-		Ingredient ingredient = new Ingredient((long) 1, 10.0);
+		Ingredient ingredient = new Ingredient((long) 1, 10.0,0,0);
 		List<Ingredient> ingredients = new ArrayList<Ingredient>();
 		ingredients.add(ingredient);
 		with().contentType(ContentType.JSON).body(ingredients).when().request("POST", "/1/addingredients").then().statusCode(204);

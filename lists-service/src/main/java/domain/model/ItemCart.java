@@ -19,7 +19,7 @@ public class ItemCart implements Serializable{
 	
 	public ItemCart() {}
 	
-	public ItemCart(@NotNull int userID,@NotNull int ingredientID,@NotNull double quantity) {
+	public ItemCart(@NotNull String userID,@NotNull int ingredientID,@NotNull double quantity) {
 		super();
 		this.userID = userID;
 		this.ingredientID = ingredientID;
@@ -34,7 +34,7 @@ public class ItemCart implements Serializable{
 	
 	@Id
 	@Column(name="userID", nullable=false)
-	private int userID;
+	private String userID;
 	
 	@Id
 	@Column(name="ingredientID", nullable=false)
@@ -43,11 +43,11 @@ public class ItemCart implements Serializable{
 	@Column(name="quantity", nullable=false)
 	private double quantity;
 
-	public int getUserID() {
+	public String getUserID() {
 		return userID;
 	}
 
-	public void setUserID(int userID) {
+	public void setUserID(String userID) {
 		this.userID = userID;
 	}
 

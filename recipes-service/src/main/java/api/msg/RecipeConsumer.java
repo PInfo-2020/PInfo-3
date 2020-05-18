@@ -1,6 +1,6 @@
 package api.msg;
 
-import java.util.HashMap;
+
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -10,6 +10,7 @@ import org.aerogear.kafka.cdi.annotation.Consumer;
 import org.aerogear.kafka.cdi.annotation.KafkaConfig;
 
 import api.rest.RecipeRestService;
+import domain.model.Fridge;
 import domain.model.Recipe;
 import domain.service.RecipeServiceImpl;
 import lombok.extern.java.Log;
@@ -17,7 +18,6 @@ import lombok.extern.java.Log;
 @ApplicationScoped
 @KafkaConfig(bootstrapServers = "#{thorntail.kafka-configuration.host}:#{thorntail.kafka-configuration.port}")
 @Log
-
 public class RecipeConsumer {
 	
 	@Inject
@@ -26,13 +26,17 @@ public class RecipeConsumer {
 	@Inject
 	RecipeServiceImpl impl;
 	
-	@Consumer(topics = "fridgeReq", groupId = "pinfo-micro-services")
-	public void consumeIngredients(HashMap<Integer, Double> ingredients) {
-		log.info("Consumer got following ingredients : " + ingredients);
+	
+	@Consumer(topics = "itemReq", groupId = "ch.unige")
+	public void consumeIngredients(Fridge fridge) {
+		log.info("Consumer got the fridge");
 		
-		rest.setRecipes(impl.getAll());
+		List<Recipe> recipes = impl.getRecipesByFridge(fridge);
+		
+		rest.setRecipes(recipes);
 		rest.setTest(true);
 		
 	}
+	
 
 }
