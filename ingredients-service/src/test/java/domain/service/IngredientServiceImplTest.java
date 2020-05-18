@@ -141,8 +141,8 @@ public class IngredientServiceImplTest {
 		ingredient.setId(r.nextInt(200));
 		ingredient.setName(UUID.randomUUID().toString());
 		ingredient.setUnit(UUID.randomUUID().toString());
-		ingredient.setVegetarian(r.nextBoolean());
-		ingredient.setVegan(r.nextBoolean());
+		ingredient.setVegetarian(1);
+		ingredient.setVegan(0);
 		return ingredient;
 	}
 	

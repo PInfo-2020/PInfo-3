@@ -18,6 +18,7 @@ import domain.model.Comment;
 import domain.model.Grade;
 import domain.model.Ingredient;
 import domain.model.Recipe;
+import domain.model.Score;
 import domain.service.RecipeService;
 
 @ApplicationScoped
@@ -109,6 +110,11 @@ public class RecipeRestService {
 	public void addGrade(Grade grade) {
 		List<Grade> grades = recipeService.getAllGrades(grade.getUserId());
 		recipeService.addGrade(grade, recipeService.countGrade()+1, recipeService.count(), grades);
+		Recipe recipe = recipeService.get(grade.getRecipeId());
+		double score = recipeService.getUserGrade(recipe.getUserId());
+		Score s = new Score(recipe.getUserId(), score);
+		recipeProducer.sendScore(s);
+		
 	}
 	
 	@GET // Return all of the grades from a user

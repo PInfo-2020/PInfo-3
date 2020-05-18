@@ -32,16 +32,16 @@ public class Ingredient implements Serializable {
 	
 	@Column(name = "vegetarian")
 	@NotNull
-	private boolean vegetarian;
+	private int vegetarian;
 	
 	@Column(name = "vegan")
 	@NotNull
-	private boolean vegan;
+	private int vegan;
 	
 	public Ingredient() {}
 	
 	
-	public Ingredient(int id, String name, String unit, boolean vegetarian, boolean vegan) {
+	public Ingredient(int id, String name, String unit, int vegetarian, int vegan) {
 		this.id = id;
 		this.name = name;
 		this.unit = unit;
@@ -73,19 +73,19 @@ public class Ingredient implements Serializable {
 		this.unit = unit;
 	}
 
-	public boolean getVegetarian() {
+	public int getVegetarian() {
 		return vegetarian;
 	}
 	
-	public void setVegetarian(boolean vegetarian) {
+	public void setVegetarian(int vegetarian) {
 		this.vegetarian = vegetarian;
 	}
 	
-	public boolean getVegan() {
+	public int getVegan() {
 		return vegan;
 	}
 	
-	public void setVegan(boolean vegan) {
+	public void setVegan(int vegan) {
 		this.vegan = vegan;
 	}
 	
