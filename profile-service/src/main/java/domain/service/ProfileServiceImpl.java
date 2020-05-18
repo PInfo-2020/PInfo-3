@@ -81,9 +81,7 @@ public class ProfileServiceImpl implements ProfileService {
 		Root<Profile> root = cq.from(Profile.class);
 		cq.select(root);
 		Predicate p1 = cb.equal(root.get("usernameID"), p.getUsernameID());
-		Predicate p2 = cb.equal(root.get("username"), p.getUsername());
-		Predicate pFinal = cb.and(p1,p2);
-		cq.where(pFinal);
+		cq.where(p1);
 		if (em.createQuery(cq).getResultList().size() == 1) {
 			//if already in db do nothing
 			return 0;

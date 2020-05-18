@@ -1,6 +1,7 @@
-/*package domain.service;
+package domain.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,47 +38,74 @@ class ProfileServiceImplTest {
 	// Run with Junit only
 
 	@Spy
-	@PersistenceContext(unitName = "ProfilesPU")
+	@PersistenceContext(unitName = "ProfilesPUTest")
 	EntityManager em;
 
 	@InjectMocks
 	private ProfileServiceImpl psi;
+	
+	@Test
+	public void getDataUsers() {
+		int size = psi.getDataUsers().size();
+		Profile pr = new Profile("521","Heidi",3);
+		psi.addNewUser(pr);
+		assertEquals(size+1,psi.getDataUsers().size());
+		
+		
+	}
 
 	@Test
-	void getDataUsers() {
-		List<Profile> profiles = psi.getDataUsers();
-		int nbrOfRowBefore = profiles.size();
-		int nbrOfRowAfter = 0;
-		//Add new profiles in the db
-		Profile p = new Profile("8","Sannji",5);
-		psi.addNewUser(p);
-		nbrOfRowAfter = profiles.size();
-		assertEquals(nbrOfRowBefore +1, nbrOfRowAfter);
-		//Verify that a row has efficiently been added
-	}
-	
-
-	
-//	@Test
-/*	void  getDataOneUser() {
-		//based on the usernameID
-		List<Profile> profile =  psi.getDataUsers();
-		int nbrOfRowBefore = profile.size();
-		int nbrofRowAfter = 0;
+	public void getDataOneUser() {
+		Profile pr = new Profile("777","Kays",6);
+		psi.addNewUser(pr);
+		assertNotNull(psi.getDataOneUser("777"));
+		ArrayList<Profile> p = psi.getDataOneUser("777");
+		assertEquals("777",p.get(0).getUsernameID());
 		
 	}
 	
 	@Test
 	void getAllPlannedRecipesFromOneUser() {
+		Profile p = new Profile("212","Leila",5);
+		psi.addNewUser(p);
+		PlannedRecipe pr = new PlannedRecipe(18,"212",321);
+		psi.addNewPlannedRecipe(pr);
+		ArrayList<PlannedRecipe> prs = psi.getAllPlannedRecipesFromOneUser("212");
+		assertEquals(321,prs.get(0).getRecipeID());
 		
 	}
 	
 	@Test
 	void addNewPlannedRecipe() {
+		int size = psi.getAllPlannedRecipes().size();
+		PlannedRecipe pr = new PlannedRecipe(369,"1",255);
+		psi.addNewPlannedRecipe(pr);
+		assertEquals(size +1, psi.getAllPlannedRecipes().size());		
+	}
+	
+	@Test
+	void addNewUser(){
+		int size = psi.getDataUsers().size();
+		Profile p = new Profile("007","Maya",6);
+		psi.addNewUser(p);
+		assertEquals(size +1,psi.getDataUsers().size());
+	}
+
+	@Test
+	void getAllPlannedRecipes() {
+		int size = psi.getAllPlannedRecipes().size();
+		PlannedRecipe pr = new PlannedRecipe(25,"RVP",363);
+		psi.addNewPlannedRecipe(pr);
+		assertEquals(size +1, psi.getAllPlannedRecipes().size());
+	}
+
+/*	void removeOneUser(Profile p) {
 		
 	}
 	
-	
+	void removeOnePlannedRecipe(PlannedRecipe pr) {
+		
+	}*/
 	
 /*	@Test
 	void testGetAll() {
@@ -145,5 +173,5 @@ class ProfileServiceImplTest {
 		c.setRegistration(r);
 
 		return c;
-	}
-}*/
+	}*/
+}
