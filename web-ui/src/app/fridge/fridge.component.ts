@@ -48,9 +48,17 @@ export class FridgeComponent implements OnInit {
         blockToAdd.className = "row mb-1 text-center";
         blockToAdd.id = idRow;
         blockToAdd.innerHTML = `
-          Nom:<div class="col-4 border m-auto" id= ${idIng}>${ingredient}</div>
+        
+          Nom:<div class="col-2 border border-w m-auto" id= ${idIng}>${ingredient}</div>
+      
           Quantité:<div class="col-4 border m-auto" id= ${idQuantity}>${quantity}</div>
-          <!-- <button type="button" class="btn btn-secondary mr-1 button-w" onclick="(function(){let id: any = document.getElementById("poulet-row"); id.remove();})()">X</button> -->
+          
+          <button type="button" class="btn btn-light" (click)="plus()">+</button>
+      
+          <button type="button" class="btn btn-light" (click)="minus()">-</button>
+
+          <button type="button" class="btn btn-light" ">x</button>
+        
           `;
 
         let blockContainer = document.getElementById("div1");
