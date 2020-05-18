@@ -7,21 +7,6 @@
 
 <div class="full">
   <div class="row mb-5">
-    <!-- <div class="col-2">
-      <div class="form-check ml-5">
-        <input class="form-check-input" type="checkbox" value="" id="vegetarian">
-        <label class="form-check-label" for="vegetarian">
-          Vegetarian
-        </label>
-      </div>
-      <div class="form-check ml-5 mt-3">
-        <input class="form-check-input" type="checkbox" value="" id="vegan">
-        <label class="form-check-label" for="vegan">
-          Vegan
-        </label>
-      </div>
-    </div> -->
-
     <div class="col-10">
       <div class="row">
         <div class="col-2">
@@ -47,13 +32,14 @@
       <div class="col border border-w" id="div1">
         <div class="row mb-5">
           <div class="col-4">
-            <input type="text" class="form-control" id="ingredient" placeholder="Research ingredient">
+            <input list="ingredients-choices" type="text" class="form-control" id="ingredient" placeholder="Research ingredient">
+            <datalist id="ingredients-choices"></datalist>
           </div>
           <div class="col-2">
-            <input type="text" class="form-control" id="quantity" placeholder="Quantity">
+            <input type="text" class="form-control" id="quantity" placeholder="Quantity" (keypress)="handleKeyPress($event)">
           </div>
           <div class="col-2">
-            <input type="text" class="form-control" id="unit" disabled>
+            <input type="text" class="form-control" id="unit" placeholder="Unit" disabled>
           </div>
           <div class="col-2">
             <button type="button" class="btn btn-secondary mr-1 button-w" (click)="plus()">+</button>
@@ -70,7 +56,7 @@
       <div class="col border border-w" id="div2">
         <div class="row">
           <div class="col-8">
-            <textarea class="form-control" id="descriptionInstruction" rows="6" placeholder="Instruction"></textarea>
+            <textarea class="form-control" id="instruction" rows="6" placeholder="Instruction"></textarea>
           </div>
           <div class="col-3">
             <button type="button" class="btn btn-secondary mr-1" (click)="addBlock2()">Add</button>
