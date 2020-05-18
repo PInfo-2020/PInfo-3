@@ -8,36 +8,25 @@
     <p class="h1 text-center display-4 font-weight-ligh mt-5"> My Fridge </p>
 </div>
 
-  <form class="col-lg-8 ml-auto mt-5">
-    <div class="form-row">
-      <div class="col-1.5">
-        <input type="text" class="form-control" placeholder="Research ingredient">
-      </div>
-      <div class="col-1">
-        <input type="text" class="form-control" placeholder="Quantity">
-      </div>
-      <div class="col-1">
-        <input type="text" class="form-control" placeholder="Unit">
-      </div>
-      <button type="button" class="btn btn-light" (click)="onAdd()">Add</button>
-      <button type="button" class="btn btn-light">Add new ingredient</button>
-    </div>
-  </form>
-
-  <!-- <form>
-    <div class="form-row">
-      <div class="col-1.5">
-        <input type="text" class="form-control">
-        <p> {{getIngredient()}}</p> 
-      </div>
-      <div class="col-1">
-        <input type="text" class="form-control">
-      </div>
-      <div class="col-1">
-        <input type="text" class="form-control">
+  <div class="d-flex flex-row">
+    <div class="row mt-5 row-w d-inline-block ml-auto mr-auto">
+      <div class="col border border-w" id="div1">
+        <div class="row mb-5 mx-auto mt-2">
+          <div class="col-2.5">
+            <input type="text" class="form-control" id="ingredient" placeholder="Research ingredient">
+          </div>
+          <div class="col-2">
+            <input type="text" class="form-control" id="quantity" placeholder="Quantity">
+          </div>
+          <div class="col-1">
+            <input type="text" class="form-control" id="unit" placeholder="Unit">
+          </div>
+          <button type="button" class="btn btn-light" (click)="plus()">+</button>
+          <button type="button" class="btn btn-light" (click)="minus()">-</button>
+    
+          <button type="button" class="btn btn-light" (click)="addBlock1()">Add</button>
+          <button type="button" class="btn btn-light">Add new ingredient</button>
+        </div>
+        </div>
       </div>
     </div>
-  </form> -->
-<h4>{{ingredient}}</h4>
-  
-<input type="text" class="form-control" [(ngModel)]="ingredient"> 
