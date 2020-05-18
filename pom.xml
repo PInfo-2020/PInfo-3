@@ -32,7 +32,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<skip-docker-build>true</skip-docker-build>
 		<skip-docker-compose>false</skip-docker-compose>
-		<dockerHost>tcp://192.168.99.100:2376</dockerHost>
+		<dockerHost>tcp://localhost:2375</dockerHost>
 	</properties>
 
 	<modules>
@@ -283,7 +283,7 @@
 				</os>
 			</activation>
 			<properties>
-				<dockerHost>tcp://192.168.99.100:2376</dockerHost>
+				<dockerHost>tcp://localhost:2375</dockerHost>
 			</properties>
 		</profile>
 		<profile>
