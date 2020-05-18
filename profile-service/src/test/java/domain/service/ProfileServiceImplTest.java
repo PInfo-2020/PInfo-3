@@ -1,6 +1,7 @@
 package domain.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,25 +15,99 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
-import domain.model.Address;
-import domain.model.Counterparty;
-import domain.model.Registration;
-import domain.model.STATUS;
+
+import domain.model.PlannedRecipe;
+import domain.model.PlannedRecipeID;
+import domain.model.Profile;
 import eu.drus.jpa.unit.api.JpaUnit;
 
 @ExtendWith(JpaUnit.class)
 @ExtendWith(MockitoExtension.class)
-class CounterpartyServiceImplTest {
+class ProfileServiceImplTest {
+	//Testes unitaires sans docker blabla
+	// Run with Junit only
 
 	@Spy
-	@PersistenceContext(unitName = "CounterpartyPUTest")
+	@PersistenceContext(unitName = "ProfilesPUTest")
 	EntityManager em;
 
 	@InjectMocks
-	private CounterpartyServiceImpl counterpartyServiceImpl;
+	private ProfileServiceImpl psi;
+	
+	@Test
+	public void getDataUsers() {
+		int size = psi.getDataUsers().size();
+		Profile pr = new Profile("521","Heidi",3);
+		psi.addNewUser(pr);
+		assertEquals(size+1,psi.getDataUsers().size());
+		
+		
+	}
 
 	@Test
+	public void getDataOneUser() {
+		Profile pr = new Profile("777","Kays",6);
+		psi.addNewUser(pr);
+		assertNotNull(psi.getDataOneUser("777"));
+		ArrayList<Profile> p = psi.getDataOneUser("777");
+		assertEquals("777",p.get(0).getUsernameID());
+		
+	}
+	
+	@Test
+	void getAllPlannedRecipesFromOneUser() {
+		Profile p = new Profile("212","Leila",5);
+		psi.addNewUser(p);
+		PlannedRecipe pr = new PlannedRecipe(18,"212",321);
+		psi.addNewPlannedRecipe(pr);
+		ArrayList<PlannedRecipe> prs = psi.getAllPlannedRecipesFromOneUser("212");
+		assertEquals(321,prs.get(0).getRecipeID());
+		
+	}
+	
+	@Test
+	void addNewPlannedRecipe() {
+		int size = psi.getAllPlannedRecipes().size();
+		PlannedRecipe pr = new PlannedRecipe(369,"1",255);
+		psi.addNewPlannedRecipe(pr);
+		assertEquals(size +1, psi.getAllPlannedRecipes().size());		
+	}
+	
+	@Test
+	void addNewUser(){
+		int size = psi.getDataUsers().size();
+		Profile p = new Profile("007","Maya",6);
+		psi.addNewUser(p);
+		assertEquals(size +1,psi.getDataUsers().size());
+	}
+
+	@Test
+	void getAllPlannedRecipes() {
+		int size = psi.getAllPlannedRecipes().size();
+		PlannedRecipe pr = new PlannedRecipe(25,"RVP",363);
+		psi.addNewPlannedRecipe(pr);
+		assertEquals(size +1, psi.getAllPlannedRecipes().size());
+	}
+
+/*	void removeOneUser(Profile p) {
+		
+	}
+	
+	void removeOnePlannedRecipe(PlannedRecipe pr) {
+		
+	}*/
+	
+/*	@Test
 	void testGetAll() {
 		int size = initDataStore();
 		assertEquals(size, counterpartyServiceImpl.getAll().size());
@@ -75,6 +150,7 @@ class CounterpartyServiceImplTest {
 		return size + counterparties.size();
 	}
 
+
 	private Counterparty getRandomCounterparty() {
 		Counterparty c = new Counterparty();
 		c.setLei(UUID.randomUUID().toString());
@@ -97,5 +173,5 @@ class CounterpartyServiceImplTest {
 		c.setRegistration(r);
 
 		return c;
-	}
+	}*/
 }
