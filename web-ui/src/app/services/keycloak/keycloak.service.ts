@@ -73,6 +73,10 @@ export class KeycloakService {
     getKeycloakAuth() {
         return KeycloakService.auth.authz;
     }
+
+    getKeycloakId() {
+         return KeycloakService.auth.authz.subject;
+    }
     logout(): void {
         KeycloakService.auth.authz.logout({ redirectUri: document.baseURI }).success(() => {
             KeycloakService.auth.loggedIn = false;
