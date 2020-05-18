@@ -16,4 +16,20 @@ export class DynamicEnvironment {
     return window.config && window.config.keycloak;
   }
 
+  public get ingredientsService() {
+    return window.config && window.config.ingredientsService;
+  }
+
+  public get listsService() {
+    return window.config && window.config.listsService;
+  }
+
+  public get profilesService() {
+    return window.config && window.config.profilesService;
+  }
+
+  public get recipeService() {
+    return window.config && window.config.recipeService;
+  }
+
 }
