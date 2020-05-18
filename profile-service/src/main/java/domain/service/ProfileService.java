@@ -12,7 +12,7 @@ public interface ProfileService {
 	
 	public ArrayList<PlannedRecipe> getAllPlannedRecipesFromOneUser(String usernameID);
 	
-	public int addNewPlannedRecipe(PlannedRecipe pr);
+	public void addNewPlannedRecipe(PlannedRecipe pr);
 	
 	public int addNewUser(Profile p);
 

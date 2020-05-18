@@ -24,9 +24,9 @@ import lombok.Data;
 public class PlannedRecipe implements Serializable {
 	
 	public PlannedRecipe() {}
-	public PlannedRecipe(@NotNull String usernameID, @NotNull int recipeID) {
+	public PlannedRecipe(@NotNull int rowID,@NotNull String usernameID, @NotNull int recipeID) {
 		super();
-		this.rowID	= rowID;
+		this.rowID = rowID;
 		this.usernameID = usernameID;
 		this.recipeID = recipeID;
 	}
@@ -34,7 +34,7 @@ public class PlannedRecipe implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	//@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="rowID", unique=true)
 	private int rowID;
 	

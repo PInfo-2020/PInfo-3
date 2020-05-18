@@ -56,7 +56,7 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 	
 	@Override
-	public int addNewPlannedRecipe(PlannedRecipe pr) {
+	public void addNewPlannedRecipe(PlannedRecipe pr) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<PlannedRecipe> cq = cb.createQuery(PlannedRecipe.class);
 		Root<PlannedRecipe> root = cq.from(PlannedRecipe.class);
@@ -67,11 +67,10 @@ public class ProfileServiceImpl implements ProfileService {
 		cq.where(pFinal);
 		if (em.createQuery(cq).getResultList().size() == 1) {
 			//if already in db do nothing
-			return 0;
 		} else {
 			//otherwise add it
+			pr.setRowID(32);
 			em.persist(pr);
-			return 1;
 		}
 	}
 

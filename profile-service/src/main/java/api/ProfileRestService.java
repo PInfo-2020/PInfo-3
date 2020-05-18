@@ -56,11 +56,11 @@ public class ProfileRestService {
 	}
 		
 	@POST
-	@Path("{usernameID}/{recipeID}/addNewPlannedRecipe")
+	@Path("{usernameID}/{recipeID}/{rowID}/addNewPlannedRecipe")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public int addNewPlannedRecipe(@PathParam("rowID") int rowID,@PathParam("usernameID") String usernameID,@PathParam("recipeID") int recipeID) {
-		PlannedRecipe pr = new PlannedRecipe(usernameID,recipeID);
-		return ps.addNewPlannedRecipe(pr);
+	public void addNewPlannedRecipe(@PathParam("rowID") int rowID, @PathParam("usernameID") String usernameID, @PathParam("recipeID") int recipeID) {
+		PlannedRecipe pr = new PlannedRecipe(rowID,usernameID,recipeID);
+		ps.addNewPlannedRecipe(pr);
 	}
 	
 	@POST
@@ -71,18 +71,18 @@ public class ProfileRestService {
 		return ps.addNewUser(p);		
 	}
 	
-	@DELETE // Remove an item to cart of a user
-	@Path("/removeOneUser/")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void removeOneUser(Profile p) {
-		ps.removeOneUser(p);
-	}
-	
-	@DELETE // Remove an item to fridge of a user
-	@Path("/removefromplannedrecipe")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void removeOnePlannedRecipe(PlannedRecipe pr) {
-		ps.removeOnePlannedRecipe(pr);
-	}
+//	@DELETE // Remove an item to cart of a user
+//	@Path("/removeOneUser")
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	public void removeOneUser(Profile p) {
+//		ps.removeOneUser(p);
+//	}
+//	
+//	@DELETE // Remove an item to fridge of a user
+//	@Path("/removefromplannedrecipe")
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	public void removeOnePlannedRecipe(PlannedRecipe pr) {
+//		ps.removeOnePlannedRecipe(pr);
+//	}
 
 }

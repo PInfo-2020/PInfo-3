@@ -1,60 +1,74 @@
-/*package api;
-
+package api;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.containsString;
-
-import java.util.List;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.containsString;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import domain.model.PlannedRecipe;
-import domain.model.Profile;
+
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import domain.model.*;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+
+
 public class ProfileRestServiceIT {
-	//Testes d'integration avec notre ami docker
-	//need mvn clean install
-	
+
 	@BeforeAll
 	public static void setup() {
-		RestAssured.baseURI = "http://192.168.99.100:28080/";
+		RestAssured.baseURI = "http://localhost:28080/profiles";
 		RestAssured.port = 8080;
 	}
 
 	@Test
 	public void testGetDataUsers() {
-		when().get("profiles").then().body(containsString("1"));
+		when().get("/all").then().body(containsString("Roxy"));
+	}
 
+	@Test
+	public void testGetDataOneUser() {
+		when().get("/2").then().body(containsString("Eli"));
 	}
 	
 	@Test
-	public void testGetDataOneUser() {
-		//when().get("2").then().body();
-		
-
+	public void testGetAllPlannedRecipes() {
+		when().get("/plannedrecipes").then().body(containsString("6"));
 	}
 	
 	@Test
 	public void testGetAllPlannedRecipesFromOneUser() {
-		when().get("plannedrecipes/2").then().body(containsString(""));
+		when().get("plannedrecipes/1").then().body(containsString("1"));
 	}
 	
 	@Test
 	public void testAddNewPlannedRecipe() {
-		PlannedRecipe pr = new PlannedRecipe(9,"77",32);
-		with().contentType(ContentType.JSON).body(pr).when().request("POST","plannedrecipes/2").then().statusCode(200);
-		
+	    PlannedRecipe pr = new PlannedRecipe(57,"1", 32);
+	   with().contentType(ContentType.JSON).body(pr).when().request("POST", "/1/32/addNewPlannedRecipe").then().statusCode(200);
+	   when().get("/all").then().body(containsString("32"));
 	}
 	
 	@Test
 	public void testAddNewUser() {
-		Profile p = new Profile("77","Ilyas",6);
-		with().contentType(ContentType.JSON).body(p).when().request("POST","addNewUser/77/Ilyas").then().statusCode(200);
-		
+	   Profile p = new Profile("77","Martine",5);
+	   with().contentType(ContentType.JSON).body(p).when().request("POST", "/77/Martine/addNewUser").then().statusCode(200);
+	   when().get("/all").then().body(containsString("77"));
 	}
-
-
-}*/
+	
+	@Test
+	public void testRemoveOneUser() {
+		with().contentType(ContentType.JSON).when().request("DELETE", "/removeOneUser").then().statusCode(200);
+	}
+	
+	@Test
+	public void testRemoveFromPlannedRecipe() {
+		with().contentType(ContentType.JSON).when().request("DELETE", "/removefromplannedrecipe").then().statusCode(200);
+	}
+}
