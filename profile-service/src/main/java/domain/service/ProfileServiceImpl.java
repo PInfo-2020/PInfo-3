@@ -34,14 +34,14 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 	
 	@Override
-	public ArrayList<Profile> getDataOneUser(String usernameID){
+	public Profile getDataOneUser(String usernameID){
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Profile> cq = cb.createQuery(Profile.class);
 		Root<Profile> root = cq.from(Profile.class);
 		cq.select(root);
 		Predicate p1 = cb.equal(root.get("usernameID"), usernameID);
 		cq.where(p1);
-		return (ArrayList<Profile>) em.createQuery(cq).getResultList();
+		return  em.createQuery(cq).getSingleResult();
 	}
     
 	@Override
@@ -117,6 +117,25 @@ public class ProfileServiceImpl implements ProfileService {
 		pr = em.find(PlannedRecipe.class, pk);
 		em.remove(pr);
 		
+	}
+
+	@Override
+	public void updateScore(Score s) {
+		//s.getUsernameID();
+		//profile(usernameID,username,score);
+		//changer getDataOneUser() to return profile
+		Profile p = this.getDataOneUser(s.getUsernameID());
+	
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Score> cq = cb.createQuery(Score.class);
+		Root<Score> root = cq.from(Score.class);
+		cq.select(root);
+		Predicate p1 = cb.equal(root.get("usernameID"), s.getUsernameID());
+		cq.where(p1);
+		if (em.createQuery(cq).getResultList().size() == 1) {
+			p.setScore(s.getScore());
+			em.merge(p);
+		}
 	}
 	
 

@@ -15,3 +15,6 @@ thorntail:
         driver-class-name: org.postgresql.Driver
         xa-datasource-class-name: org.postgresql.xa.PGXADataSource
         driver-module-name: org.postgresql
+  kafka-configuration:
+    host: localhost
+    port: 9092

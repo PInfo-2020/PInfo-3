@@ -37,7 +37,7 @@ public class ProfileRestService {
 	@Path("/{usernameID}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Get data by given usernameID")
-	public ArrayList<Profile> getDataOneUser(@PathParam("usernameID") String usernameID){
+	public Profile getDataOneUser(@PathParam("usernameID") String usernameID){
 		return ps.getDataOneUser(usernameID);
 	}
 	

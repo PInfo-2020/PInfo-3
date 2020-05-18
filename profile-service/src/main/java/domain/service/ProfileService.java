@@ -8,7 +8,7 @@ public interface ProfileService {
 	
 	public List<Profile> getDataUsers();
 
-	public ArrayList<Profile> getDataOneUser(String usernameID);
+	public Profile getDataOneUser(String usernameID);
 	
 	public ArrayList<PlannedRecipe> getAllPlannedRecipesFromOneUser(String usernameID);
 	
@@ -21,5 +21,7 @@ public interface ProfileService {
 	public void removeOneUser(Profile p);
 	
 	public void removeOnePlannedRecipe(PlannedRecipe pr);
+	
+	public void updateScore(Score s);
 
 }
