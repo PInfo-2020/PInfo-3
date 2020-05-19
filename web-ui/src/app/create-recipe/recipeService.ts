@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Ingredient } from './ingredient';
+import { Recipe } from './recipe';
+import { IngredientRecipe } from './ingredientRecipe'
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -8,7 +9,7 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class IngredientService {
+export class RecipeService {
   constructor(private http: HttpClient) { }
 
   httpOptions = {
@@ -17,8 +18,16 @@ export class IngredientService {
        }),
    };
 
-  getIngredients(): Observable<Ingredient[]> {
-    return this.http.get<Ingredient[]>(environment.ingredientsService.url)
+  sendRecipe(recipe: Recipe): Observable<Number> {
+    return this.http.post<Number>(environment.recipeService.url, recipe)
+      .pipe(
+                retry(1),
+                catchError(this.handleError),
+            );
+  }
+
+  sendIngredientsRecipe(ingredientsRecipe: Array<IngredientRecipe>, id: number) {
+    return this.http.post(environment.recipeService.url + "/"+id+"/addingredients", ingredientsRecipe)
       .pipe(
                 retry(1),
                 catchError(this.handleError),

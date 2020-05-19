@@ -3,7 +3,10 @@ import { KeycloakService } from '../services/keycloak/keycloak.service';
 import { KeycloakInstance } from 'keycloak-js';
 import * as $ from 'jquery';
 import { IngredientService } from './ingredientService';
+import { RecipeService } from './recipeService';
 import { Ingredient } from './ingredient';
+import { Recipe } from './recipe';
+import { IngredientRecipe } from './ingredientRecipe';
 
 @Component({
   selector: 'app-create-recipe',
@@ -12,14 +15,21 @@ import { Ingredient } from './ingredient';
 })
 export class CreateRecipeComponent implements OnInit, AfterViewInit {
   ingredientsDB: Array<Ingredient> = [];
+
   counterInstruction: number = 1;
+
   quantityElem: any;
   ingredientElem: any;
   instructionElem: any;
+  nameElem: any;
+  descriptionElem: any;
+  timeElem: any;
+  peopleElem: any;
+
 
   public keycloakAuth: KeycloakInstance;
 
-  constructor(public keycloak: KeycloakService, public ingredientService: IngredientService){}
+  constructor(public keycloak: KeycloakService, private ingredientService: IngredientService, private recipeService: RecipeService){}
 
   ngOnInit(): void {
     this.keycloakAuth = this.keycloak.getKeycloakAuth();
@@ -32,6 +42,10 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
     this.quantityElem = document.getElementById("quantity");
     this.ingredientElem = document.getElementById("ingredient");
     this.instructionElem = document.getElementById("instruction");
+    this.nameElem = document.getElementById("name");
+    this.descriptionElem = document.getElementById("description");
+    this.timeElem = document.getElementById("time");
+    this.peopleElem = document.getElementById("people");
 
     let ingredientDataElem = document.getElementById("ingredients-choices");
 
@@ -110,4 +124,42 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
         e.preventDefault();
     }
   }
+
+  sendData() {
+    let userID = "1";
+    let nameVal = this.nameElem.value;
+    let descriptionVal = this.descriptionElem.value;
+    let timeVal = this.timeElem.value;
+    let peopleVal = this.peopleElem.value;
+    let instructionVal = "";
+
+    let instructionChilds = document.getElementById("div2").children;
+    for (let i = 1; i < instructionChilds.length; i++){
+      instructionVal = instructionVal.concat(instructionChilds[i].children[1].innerHTML, "///");
+    }
+
+    let recipe = new Recipe(nameVal, descriptionVal, instructionVal, timeVal, peopleVal, userID);
+    this.recipeService.sendRecipe(recipe)
+      .subscribe((data: number) => {
+        this.sendIngredients(data);
+      });
+  }
+
+  sendIngredients(recipeID){
+    let ingredientsRecipe = []
+    let ingredientsChilds = document.getElementById("div1").children;
+    for (let i = 1; i < ingredientsChilds.length; i++){
+      let ingredientRecipeName = ingredientsChilds[i].children[1].innerHTML;
+      let ingredientRecipeQuantity = Number(ingredientsChilds[i].children[3].innerHTML);
+      let ingredientRecipe = this.ingredientsDB.find(i => i.name === ingredientRecipeName);
+      let ingredientRecipeId = ingredientRecipe.id;
+      let ingredientRecipeVegetarian = ingredientRecipe.vegetarian;
+      let ingredientRecipeVegan = ingredientRecipe.vegan;
+
+      ingredientsRecipe.push(new IngredientRecipe(ingredientRecipeId, ingredientRecipeQuantity, ingredientRecipeVegetarian, ingredientRecipeVegan))
+    }
+    this.recipeService.sendIngredientsRecipe(ingredientsRecipe, recipeID)
+      .subscribe();
+  }
+
 }
