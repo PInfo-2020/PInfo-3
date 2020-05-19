@@ -127,8 +127,8 @@ public class ProfileServiceImpl implements ProfileService {
 		Profile p = this.getDataOneUser(s.getUsernameID());
 	
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Score> cq = cb.createQuery(Score.class);
-		Root<Score> root = cq.from(Score.class);
+		CriteriaQuery<Profile> cq = cb.createQuery(Profile.class);
+		Root<Profile> root = cq.from(Profile.class);
 		cq.select(root);
 		Predicate p1 = cb.equal(root.get("usernameID"), s.getUsernameID());
 		cq.where(p1);
