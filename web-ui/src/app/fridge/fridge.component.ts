@@ -3,7 +3,8 @@ import { HIGH_CONTRAST_MODE_ACTIVE_CSS_CLASS } from '@angular/cdk/a11y/high-cont
 import {KeycloakService} from '../services/keycloak/keycloak.service';
 import {KeycloakInstance} from 'keycloak-js';
 import * as $ from 'jquery';
-import { Ingredient } from './ingredient.component';
+import { IngredientService } from './ingredientService';
+import { Ingredient } from './ingredient';
 
 @Component({
   selector: 'app-fridge',
@@ -12,60 +13,86 @@ import { Ingredient } from './ingredient.component';
 })
 export class FridgeComponent implements OnInit {
   
+  ingredientsDB: Array<Ingredient> = [];
+  quantityElem: any;
+  ingredientElem: any;
+
   public keycloakAuth: KeycloakInstance;
-  constructor(public keycloak: KeycloakService){}
-  
+
+  constructor(public keycloak: KeycloakService, public ingredientService: IngredientService){}
+
   ngOnInit(): void {
     this.keycloakAuth = this.keycloak.getKeycloakAuth();
-    if(this.keycloak.isLoggedIn() === false){
-      this.keycloak.login();
+    if (this.keycloak.isLoggedIn() === false) {
+        this.keycloak.login();
     }
+  }
+
+  ngAfterViewInit(){
+    this.quantityElem = document.getElementById("quantity");
+    this.ingredientElem = document.getElementById("ingredient");
+
+    let ingredientDataElem = document.getElementById("ingredients-choices");
+
+    this.ingredientService.getIngredients()
+      .subscribe((data: Ingredient[]) => {
+        this.ingredientsDB = data;
+
+        this.ingredientsDB.forEach(function(item){
+          var option = document.createElement("option");
+          option.value = item.name;
+          ingredientDataElem.appendChild(option);
+        });
+      });
   }
 
   plus(){
-    let quantity: any = document.getElementById("quantity");
-    quantity.value++;
+    this.quantityElem.value++;
   }
 
   minus(){
-    let quantity: any = document.getElementById("quantity");
-    if (quantity.value > 0) {
-      quantity.value--;
+    if (this.quantityElem.value > 0) {
+      this.quantityElem.value--;
     }
   }
 
-  ingredients: Array<Ingredient> = [];
   addBlock1() {
-    let ingredient: any = (document.getElementById("ingredient") as HTMLInputElement).value;
-    let quantity: any = (document.getElementById("quantity") as HTMLInputElement).value;
+    let ingredientVal = this.ingredientElem.value;
+    let quantityVal = this.quantityElem.value;
+    let ingredientsName = []
+    this.ingredientsDB.forEach(function(item){
+      ingredientsName.push(item.name);
+    });
 
-    if (ingredient && quantity) {
-      let idIng = "ingredient-".concat(ingredient);
+    if (ingredientsName.includes(ingredientVal) && (quantityVal>0)) {
+      let idIng = "ingredient-".concat(ingredientVal);
       if (!document.getElementById(idIng)) {
-        let idQuantity = ingredient.concat("-quantity");
         let blockToAdd = document.createElement("div");
-        let idRow = ingredient.concat("-row");
         blockToAdd.className = "row mb-1 text-center";
-        blockToAdd.id = idRow;
         blockToAdd.innerHTML = `
-        
-          Nom:<div class="col-2 border border-w m-auto" id= ${idIng}>${ingredient}</div>
-      
-          Quantité:<div class="col-4 border m-auto" id= ${idQuantity}>${quantity}</div>
-          
-          <button type="button" class="btn btn-light" (click)="plus()">+</button>
-      
-          <button type="button" class="btn btn-light" (click)="minus()">-</button>
-
-          <button type="button" class="btn btn-light" ">x</button>
-        
+          <span class="m-auto">Name:</span><span class="col-4 border m-auto" id= ${idIng}>${ingredientVal}</span>
+          <span class="m-auto">Quantity:</span><span class="col-4 border m-auto">${quantityVal}</span>
+          <button type="button" class="btn btn-secondary mr-1 button-w" onclick="plus()">+</button>
+          <button type="button" class="btn btn-secondary mr-1 button-w" onclick="minus()">-</button>
+          <button type="button" class="btn btn-secondary mr-1 button-w" onclick="this.parentNode.remove();">x</button>
           `;
 
         let blockContainer = document.getElementById("div1");
         blockContainer.appendChild(blockToAdd);
-        this.ingredients.push(new Ingredient(ingredient, quantity))
-        console.log(this.ingredients);
       }
+    }
+  }
+
+
+  handleKeyPress(e) {
+    var code = (e.which) ? e.which : e.keyCode;
+    let quantityVal = this.quantityElem.value.split('');
+    let countDot = quantityVal.filter((v) => (v === '.')).length;
+    if (code == 46 && countDot == 0){
+      return true;
+    }
+    if (code > 31 && (code < 48 || code > 57)) {
+        e.preventDefault();
     }
   }
 }
