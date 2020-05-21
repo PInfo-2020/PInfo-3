@@ -3,6 +3,7 @@ import { KeycloakService } from '../services/keycloak/keycloak.service';
 import { KeycloakInstance } from 'keycloak-js';
 import { HttpClient } from "@angular/common/http";
 import { environment } from '../../environments/environment';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,10 @@ export class HomeComponent implements OnInit {
 
   public keycloakAuth: KeycloakInstance;
   private data:any = []
+  private urlTop:string = `${environment.recipeService.url}/top`
+  private urlVegan:string = `${environment.recipeService.url}/vegetarien`
+  private urlVeg:string = `${environment.recipeService.url}/vegetarien`
+  private urlFrigo:string = `${environment.recipeService.url}/user/1/fridge/recipe`/*fix me! with the right id!*/ 
 
   constructor(public keycloak: KeycloakService, private http: HttpClient) { }
 
@@ -27,21 +32,78 @@ export class HomeComponent implements OnInit {
           console.log("her2")
       }*/
 
-      console.log("in here")
-      const url = environment.recipeService.url + "/top"
-      console.log("after")
-      this.http.get(url).subscribe((res)=>{
-        this.data = res
-        console.log(this.data)
-        this.displayBestRecipes(this.data)
-  
-      })
 
+      //only have one checkbox picked 
+      $('.sev_check').click(function() {
+        $('.sev_check').not(this).prop('checked', false);
+      });
 
   }
 
-  displayBestRecipes(data){
+  retrieveAndDisplayRecipes(url: string){
+    console.log("in here")
+    this.http.get(url).subscribe((res)=>{
+      this.data = res
+      console.log(this.data)
+      this.placeRecipes(this.data)
+    })
+  }
+
+  check1(){
+    const url = `${environment.recipeService.url}/top`
+    console.log("in here")
+    this.http.get(url).subscribe((res)=>{
+      this.data = res
+      console.log(this.data)
+      this.placeRecipes(this.data)
+    })
+  }
+
+  top(){
+    console.log(event);
+    console.log("in here")
+    this.http.get(this.urlTop).subscribe((res)=>{
+      this.data = res
+      console.log(this.data)
+      this.placeRecipes(this.data)
+    })
+ }
+
+ vegan(){
+  console.log(event);
+  console.log("in here")
+  this.http.get(this.urlVegan).subscribe((res)=>{
+    this.data = res
+    console.log(this.data)
+    this.placeRecipes(this.data)
+  })
+}
+
+vege(){
+  console.log(event);
+  console.log("in here")
+  this.http.get(this.urlVeg).subscribe((res)=>{
+    this.data = res
+    console.log(this.data)
+    this.placeRecipes(this.data)
+  })
+}
+
+frigo(){
+  console.log(event);
+  console.log("in here")
+  this.http.get(this.urlFrigo).subscribe((res)=>{
+    this.data = res
+    console.log(this.data)
+    this.placeRecipes(this.data)
+  })
+}
+
+  placeRecipes(data){
     var mainContainer = document.getElementById("myData");
+    while (mainContainer.firstChild) {
+      mainContainer.firstChild.remove();
+    }
     for (var i = 0; i < data.length; i++) {
       //creating the card of one recipe
       var cardRecipe = document.createElement("div");
@@ -75,15 +137,13 @@ export class HomeComponent implements OnInit {
 
     }
   }
-  getTopRecipes(){
-    console.log("in here")
-    const url = environment.recipeService.url + "/top"
-    this.http.get(url).subscribe((res)=>{
-      this.data = res
-      console.log(this.data)
-    })
-  }
+  
  }
+
+
+
+
+
 
  
 

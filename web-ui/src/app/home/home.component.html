@@ -43,25 +43,21 @@
 			  <div class="card" style="width: 21rem;margin-bottom:5px;">
 				<div class="card-body">
 					<!--group of checkboxes-->
-					<div class="form-check">
-						<label class="form-check-label">
-						  <input type="checkbox" class="form-check-input active" value="" checked>Top Recipes
-						</label>
+					<div class="checkbox">
+						<label>
+						  <input type="checkbox"   (change)="top()" class="sev_check" id="TopRecipesBox" name="TopRecipes" />Top Recipes</label>
 					  </div>
-					  <div class="form-check">
-						<label class="form-check-label">
-						  <input type="checkbox" class="form-check-input" value="">Vegan
-						</label>
+					  <div class="checkbox">
+						<label>
+						  <input type="checkbox" (change)="vegan()" class="sev_check" id="VeganBox" name="Vegan" />Vegan</label>
 					  </div>
-					  <div class="form-check">
-						<label class="form-check-label">
-						  <input type="checkbox" class="form-check-input" value="">Vegeterian
-						</label>
+					  <div class="checkbox">
+						<label>
+						  <input type="checkbox" (change)="vege()" class="sev_check" id="VegetarienBox" name="Vegetarien" />Vegetarien</label>
 					  </div>
-					  <div class="form-check">
-						<label class="form-check-label">
-						  <input type="checkbox" class="form-check-input" value="">Only ingredients in my fridge
-						</label>
+					  <div class="checkbox">
+						<label>
+						  <input type="checkbox" (change)="frigo()" class="sev_check" id="FrigoBox" name="Frigo" />Only ingredients in my fridge</label>
 					  </div>
 				</div>
 			  </div>
