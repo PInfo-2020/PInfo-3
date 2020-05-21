@@ -25,6 +25,7 @@ export function init_config(appLoadService: AppInitService, keycloak: KeycloakSe
    return () =>  appLoadService.init().then( () => {
      console.info(window.config);
      keycloak.init();
+     console.log("done");
      },
      );
   }
