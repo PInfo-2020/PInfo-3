@@ -1,9 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { HIGH_CONTRAST_MODE_ACTIVE_CSS_CLASS } from '@angular/cdk/a11y/high-contrast-mode/high-contrast-mode-detector';
-import {KeycloakService} from '../services/keycloak/keycloak.service';
-import {KeycloakInstance} from 'keycloak-js';
+// import {KeycloakService} from '../services/keycloak/keycloak.service';
+// import {KeycloakInstance} from 'keycloak-js';
 import * as $ from 'jquery';
-import { Ingredient } from './ingredient.component';
+import { IngredientService } from './ingredientService';
+import { Ingredient } from './ingredient';
+import { Fridge } from './fridge';
+import { IngredientFridge } from './ingredientFridge'
+import { FridgeService } from './fridgeService';
+import { environment } from '../../environments/environment';
+import { HttpClient } from "@angular/common/http";
+
 
 @Component({
   selector: 'app-fridge',
@@ -11,62 +18,150 @@ import { Ingredient } from './ingredient.component';
   styleUrls: ['./fridge.component.css']
 })
 export class FridgeComponent implements OnInit {
-  
-  public keycloakAuth: KeycloakInstance;
-  constructor(public keycloak: KeycloakService){}
-  
+
+  ingredientsDB: Array<Ingredient> = [];
+  quantityElem: any;
+  ingredientElem: any;
+  urlFridge:string = `${environment.listsService.url}/fridge/1`;
+  dataFridge:any = []
+
+  // public keycloakAuth: KeycloakInstance;
+
+  // constructor(public keycloak: KeycloakService, public ingredientService: IngredientService){}
+  constructor(public ingredientService: IngredientService, private http: HttpClient){}
+
   ngOnInit(): void {
-    this.keycloakAuth = this.keycloak.getKeycloakAuth();
-    if(this.keycloak.isLoggedIn() === false){
-      this.keycloak.login();
-    }
+    // this.keycloakAuth = this.keycloak.getKeycloakAuth();
+    // if (this.keycloak.isLoggedIn() === false) {
+    //     this.keycloak.login();
+    // }
+  }
+
+  ngAfterViewInit(){
+    this.quantityElem = document.getElementById("quantity");
+    this.ingredientElem = document.getElementById("ingredient");
+
+    let ingredientDataElem = document.getElementById("ingredients-choices");
+
+    this.ingredientService.getIngredients()
+      .subscribe((data: Ingredient[]) => {
+        this.ingredientsDB = data;
+
+        this.ingredientsDB.forEach(function(item){
+          var option = document.createElement("option");
+          option.value = item.name;
+          ingredientDataElem.appendChild(option);
+        });
+      });
   }
 
   plus(){
-    let quantity: any = document.getElementById("quantity");
-    quantity.value++;
+    this.quantityElem.value++;
   }
 
   minus(){
-    let quantity: any = document.getElementById("quantity");
-    if (quantity.value > 0) {
-      quantity.value--;
+    if (this.quantityElem.value > 0) {
+      this.quantityElem.value--;
     }
   }
 
-  ingredients: Array<Ingredient> = [];
+  addFridge(dataFridge){
+    var mainContainer = document.getElementById("myData")
+    while (mainContainer.firstChild) {
+      mainContainer.firstChild.remove();
+    }
+    for (var i=0; i<dataFridge.length; i++){
+      var contrain = document.createElement("div");
+      var contrainFridge = document.createElement("div");
+      contrainFridge.className = "frigo";
+      var ingre = document.createElement("h5");
+      ingre.innerHTML = "Ingredient " + (dataFridge[i].ingredientID) + " Quantity " + (dataFridge[i].quantity);
+      // var quan = document.createElement("h5");
+      // ingre.innerHTML = "Quantity " + (dataFridge[i].quantity);
+
+      contrainFridge.appendChild(ingre);
+      // contrainFridge.appendChild(quan);
+      contrain.appendChild(contrainFridge)
+      mainContainer.appendChild(contrain);
+    }
+  }
+
   addBlock1() {
-    let ingredient: any = (document.getElementById("ingredient") as HTMLInputElement).value;
-    let quantity: any = (document.getElementById("quantity") as HTMLInputElement).value;
+    let ingredientVal = this.ingredientElem.value;
+    let quantityVal = this.quantityElem.value;
+    let ingredientsName = []
+    this.ingredientsDB.forEach(function(item){
+      ingredientsName.push(item.name);
+    });
 
-    if (ingredient && quantity) {
-      let idIng = "ingredient-".concat(ingredient);
+    if (ingredientsName.includes(ingredientVal) && (quantityVal>0)) {
+      let idIng = "ingredient-".concat(ingredientVal);
       if (!document.getElementById(idIng)) {
-        let idQuantity = ingredient.concat("-quantity");
         let blockToAdd = document.createElement("div");
-        let idRow = ingredient.concat("-row");
         blockToAdd.className = "row mb-1 text-center";
-        blockToAdd.id = idRow;
         blockToAdd.innerHTML = `
-        
-          Nom:<div class="col-2 border border-w m-auto" id= ${idIng}>${ingredient}</div>
-      
-          Quantité:<div class="col-4 border m-auto" id= ${idQuantity}>${quantity}</div>
-          
-          <button type="button" class="btn btn-light" (click)="plus()">+</button>
-      
-          <button type="button" class="btn btn-light" (click)="minus()">-</button>
-
-          <button type="button" class="btn btn-light" ">x</button>
-        
+          <span class="m-auto">Name:</span><span class="col-4 border m-auto" id= ${idIng}>${ingredientVal}</span>
+          <span class="m-auto">Quantity:</span><span class="col-4 border m-auto">${quantityVal}</span>
+          <button type="button" class="btn btn-secondary mr-1 button-w" onclick="this.parentNode.remove();">x</button>
           `;
 
         let blockContainer = document.getElementById("div1");
         blockContainer.appendChild(blockToAdd);
-        this.ingredients.push(new Ingredient(ingredient, quantity))
-        console.log(this.ingredients);
       }
     }
   }
+
+
+  handleKeyPress(e) {
+    var code = (e.which) ? e.which : e.keyCode;
+    let quantityVal = this.quantityElem.value.split('');
+    let countDot = quantityVal.filter((v) => (v === '.')).length;
+    if (code == 46 && countDot == 0){
+      return true;
+    }
+    if (code > 31 && (code < 48 || code > 57)) {
+        e.preventDefault();
+    }
+  }
+
+  getFridge(){
+    this.http.get(this.urlFridge).subscribe((res)=>{
+      this.dataFridge = res
+      console.log(this.dataFridge)
+      this.addFridge(this.dataFridge)
+    })
+  }
+
+  // sendData() {
+  //   let userID = "1";
+  //   let ingredientID = [];
+  //   let quantity = 1;
+  //   let instructionChilds = document.getElementById("div2").children;
+    
+
+  //   let fridge = new Fridge(userID, ingredientID, quantity);
+  //   this.fridgeService.sendRecipe(fridge)
+  //     .subscribe((data: number) => {
+  //       this.sendIngredients(data);
+  //     });
+  // }
+
+
+  // sendIngredients(recipeID){
+  //   let ingredientsRecipe = []
+  //   let ingredientsChilds = document.getElementById("div1").children;
+  //   for (let i = 1; i < ingredientsChilds.length; i++){
+  //     let ingredientRecipeName = ingredientsChilds[i].children[1].innerHTML;
+  //     let ingredientRecipeQuantity = Number(ingredientsChilds[i].children[3].innerHTML);
+  //     let ingredientRecipe = this.ingredientsDB.find(i => i.name === ingredientRecipeName);
+  //     let ingredientRecipeId = ingredientRecipe.id;
+  //     let ingredientRecipeVegetarian = ingredientRecipe.vegetarian;
+  //     let ingredientRecipeVegan = ingredientRecipe.vegan;
+
+  //     ingredientsRecipe.push(new IngredientRecipe(ingredientRecipeId, ingredientRecipeQuantity, ingredientRecipeVegetarian, ingredientRecipeVegan))
+  //   }
+  //   this.recipeService.sendIngredientsRecipe(ingredientsRecipe, recipeID)
+  //     .subscribe();
+  // }
 }
 

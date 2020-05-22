@@ -26,11 +26,11 @@ export class HomeComponent implements OnInit {
       this.keycloakAuth = this.keycloak.getKeycloakAuth();
       console.log("her3")
       console.log("her8", this.keycloak)
-      /*if (this.keycloak.isLoggedIn() === false) {
+      if (this.keycloak.isLoggedIn() === false) {
         console.log("her1")
           this.keycloak.login();
           console.log("her2")
-      }*/
+      }
 
 
       //only have one checkbox picked 
