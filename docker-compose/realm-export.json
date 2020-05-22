@@ -352,33 +352,174 @@
       "Google Authenticator"
     ],
   "users" : [ {
-     "id" : "8e80618c-2572-4651-be91-731527251034",
-     "createdTimestamp" : 1589554078595,
-     "username" : "penguin",
-     "enabled" : true,
-     "totp" : false,
-     "emailVerified" : false,
-     "credentials" : [ {
-       "type" : "password",
+    "id" : "2d119cee-5521-4850-96d0-cccebe1614ec",
+    "createdTimestamp" : 1590002312420,
+    "username" : "benjamin",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "/dL5FdqK1CJsG4j6lphO0W9kJLsZQ0lz2QwmttB2CdysqoR4Y26gATaJ2Fa7RfDP3bC5AYsmA9Dt3zJco0ewaA==",
+      "salt" : "reMpHuu6YqZAvUnKPKfMEw==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1590002325049,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ "UPDATE_PASSWORD" ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "c2b98917-4057-4486-943c-f25a315a6e2d",
+    "createdTimestamp" : 1590002275226,
+    "username" : "luka",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "IkjNxn/nu3gByU+GsOmrnUJBu9qdu3ee0ztedxq+7zqJnBkP4sBQHOlYjys94gh4BQtEVFn0V415uypkaiXegA==",
+      "salt" : "OCGCju/zI7RRDUEI3t7bSw==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1590002283154,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ "UPDATE_PASSWORD" ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "9ada320a-7245-4e68-a9bc-03baeec8bbb1",
+    "createdTimestamp" : 1590002193483,
+    "username" : "nathan",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "nat",
+    "lastName" : "cohen",
+    "email" : "nathperry@gmail.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "RKhGcPmpRmBLTikoYDGHgoWZ8CDOZEWeul+5dlWY9hLtgI8NgoE1qe9fGAiefitWM8xa8qLyce9gCNs4ifBtnw==",
+      "salt" : "ftIDF6LEIMtngxLgzHcGMg==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1590002213404,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ "UPDATE_PASSWORD" ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "8e80618c-2572-4651-be91-731527251034",
+    "createdTimestamp" : 1589554078595,
+    "username" : "penguin",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "type" : "password",
       "hashedSaltedValue" : "TW2rlocakF3QIllppdn1mLAYxk5P1a69SQSpGoDsVGIuooitA5ZMjZEPR8z/t2f1DrVmRdyJOdLm188KcNLgOA==",
       "salt" : "rKKQ++Ur1XVnImK4ZxxYNw==",
-       "hashIterations" : 27500,
-     "counter" : 0,
+      "hashIterations" : 27500,
+      "counter" : 0,
       "algorithm" : "pbkdf2-sha256",
-       "digits" : 0,
+      "digits" : 0,
       "period" : 0,
       "createdDate" : 1589554573404,
-     "config" : { }
-      } ],
-      "disableableCredentialTypes" : [ "password" ],
-      "requiredActions" : [ ],
-     "realmRoles" : [ "offline_access", "uma_authorization" ],
-     "clientRoles" : {
-       "account" : [ "manage-account", "view-profile" ]
-      },
-      "notBefore" : 0,
-     "groups" : [ ]
-   } ],
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "b23e572e-d167-456d-9d31-05f505f4d1c9",
+    "createdTimestamp" : 1590002245447,
+    "username" : "roxane",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "roxane",
+    "lastName" : "burri",
+    "email" : "roxane@gmail.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "zs4P9ThtujSTCsgV1how0aJPJMF24eE2sIMxI+Xcr5ZCL869DDfznMbF4eRxMH8L37Nf7MyuN6YGvk77D4AUGw==",
+      "salt" : "I8QMtjn7Zla379cMore6Jg==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1590002258260,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ "UPDATE_PASSWORD" ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "ad7dfd1d-de79-418a-a63f-c91b562f70ee",
+    "createdTimestamp" : 1590002290853,
+    "username" : "salma",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "uF4VQOmddYY0q7CfnITUJgGedFtlfjKkMVlYo9hSFOO6C0Qfedoe6SQC4ubpG8UDAVgitLy9JF8ju3DN2eWTRw==",
+      "salt" : "aqkuCJAVhtQXXaeMsmw7vA==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1590002300022,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ "UPDATE_PASSWORD" ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ],
     "scopeMappings": [
       {
         "clientScope": "offline_access",

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import {ExtraOptions, Routes, RouterModule } from '@angular/router';
+import { FormsModule }   from '@angular/forms';
 
 import {HomeComponent} from './home/home.component';
 //import {LoginComponent} from './login/login.component';
@@ -96,7 +97,7 @@ const config: ExtraOptions = {
 };
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), FormsModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
