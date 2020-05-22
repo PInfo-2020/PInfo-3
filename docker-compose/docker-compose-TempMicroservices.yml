@@ -179,27 +179,27 @@ services:
 #################################################################################################
 
 
-#  recipes-database:
-#    image: postgres:10
-#    container_name: recipes-database
-#    hostname: recipes-database
-#    networks:
-#     - backend-network
-#    environment:
-#      POSTGRES_USER: rec
-#      POSTGRES_PASSWORD: rec
-#      POSTGRES_DB: rec
-#    healthcheck:
-#      test: ["CMD", "pg_isready", "-U", "rec", "-d", "rec"]
-#      interval: 30s
-#      timeout: 30s
-#      retries: 3
-#    volumes:
-#      - pgdata-rec:/var/lib/postgresql/data
-#      - ./test-data/recipes.sql:/docker-entrypoint-initdb.d/init.sql
-#    restart: on-failure
-#    stdin_open: true
-#    tty: true
+  recipes-database:
+    image: postgres:10
+    container_name: recipes-database
+    hostname: recipes-database
+    networks:
+     - backend-network
+    environment:
+      POSTGRES_USER: rec
+      POSTGRES_PASSWORD: rec
+      POSTGRES_DB: rec
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "rec", "-d", "rec"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - pgdata-rec:/var/lib/postgresql/data
+      - ./test-data/recipes_test_data.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: on-failure
+    stdin_open: true
+    tty: true
 
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
   recipes-service:
@@ -207,10 +207,10 @@ services:
     image: diges/recipes-service:latest
     hostname: recipes-service
     environment:
- #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_CONNECTION_DASH_URL: "jdbc:postgresql://recipes-database:5432/recipes"
- #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_DRIVER_DASH_NAME: 'postgresql'   
- #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_USER_DASH_NAME: 'rec'
- #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_PASSWORD: 'rec'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_CONNECTION_DASH_URL: "jdbc:postgresql://recipes-database:5432/recipe"
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_DRIVER_DASH_NAME: 'postgresql'   
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_USER_DASH_NAME: 'rec'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_PASSWORD: 'rec'
       THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
       THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
     networks:
