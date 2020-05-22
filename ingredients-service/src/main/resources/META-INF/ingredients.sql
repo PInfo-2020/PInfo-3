@@ -297,10 +297,10 @@ INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextv
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Soy sauce', 'g', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Sweet and sour sauce', 'g', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Honey', 'g', 1, 0);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Wine vinegar', 'g', 1, 1);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Balsamic vinegar', 'g', 1, 1);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Olive oil', 'g', 1, 1);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Truffle oil', 'g', 1, 1);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Sesame oil', 'g', 1, 1);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Wine vinegar', 'l', 1, 1);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Balsamic vinegar', 'l', 1, 1);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Olive oil', 'l', 1, 1);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Truffle oil', 'l', 1, 1);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Sesame oil', 'l', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Sugar', 'g', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Salt', 'g', 1, 1);
