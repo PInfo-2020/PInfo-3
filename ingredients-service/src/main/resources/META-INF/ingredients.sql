@@ -232,7 +232,7 @@ INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextv
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Beef liver', 'kg', 0, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Beef tongue', 'kg', 0, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Bone soup', 'kg', 0, 0);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Buffalo, Bison', 'kg', 0, 0);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Buffalo', 'kg', 0, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Calf liver', 'kg', 0, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Caribou', 'kg', 0, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Goat', 'kg', 0, 0);
@@ -246,7 +246,7 @@ INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextv
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Opossum', 'kg', 0, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Organ Meats', 'kg', 0, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Pork', 'kg', 0, 0);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Pork, Bacon', 'kg', 0, 0);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Bacon', 'kg', 0, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Rabbit', 'kg', 0, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Snake', 'kg', 0, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Squirrel', 'kg', 0, 0);

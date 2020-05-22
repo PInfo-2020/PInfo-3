@@ -21,7 +21,7 @@ import {
 } from '@nebular/auth';
 
 const routes: Routes = [
-  
+
 	{
 		path: '',
 		component: HomeComponent
@@ -43,19 +43,19 @@ const routes: Routes = [
 		component: CreateRecipeComponent
 	},
 	{
-		path: 'recipe',
+		path: 'recipe/:id',
 		component: RecipeComponent
 	},
 	{
-		path: 'fridge',
+		path: 'fridge/:id',
 		component: FridgeComponent
 	},
 	{
-		path: 'profile',
+		path: 'profile/:id',
 		component: ProfileComponent
 	},
 	{
-		path: 'shoppingList',
+		path: 'shoppingList/:id',
 		component: ShoppingListComponent
 	},
 	{
@@ -88,8 +88,8 @@ const routes: Routes = [
       },
     ],
   },
-	
-	
+
+
 ];
 
 const config: ExtraOptions = {
