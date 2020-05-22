@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
     providedIn: 'root',
   })
 
-export class RecipeService {
+export class FridgeService {
     constructor(private http: HttpClient) { }
   
     httpOptions = {
