@@ -4,6 +4,7 @@
 --        id bigint not null,
 --        primary key (id)
 --);
+--CREATE USER rec WITH PASSWORD 'rec';
 INSERT INTO Recipe (id, name, description, instructions, minutes, personnes, userId) values (1, 'Salade aux fruits', 'Vous aimez les fruits ? Alors venez !', 'i1', 10, 1, '3');
 INSERT INTO Recipe (id, name, description, instructions, minutes, personnes, userId) values (2, 'Poulet au curry', 'La recette thaïlandaise originale', 'i2', 10, 1, '3');
 INSERT INTO Recipe (id, name, description, instructions, minutes, personnes, userId) values (3, 'Poulet au curry', 'Une recette asiatique absolument délicieuse', 'i3', 10, 1, '3');

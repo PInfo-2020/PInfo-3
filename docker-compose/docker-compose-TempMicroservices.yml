@@ -65,23 +65,23 @@ services:
 #    tty: true
 
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
-  list-service:
-    container_name: lists-service  
-    image: diges/lists-service:latest
-    hostname: lists-service
-    environment:
+#  list-service:
+#    container_name: lists-service  
+#    image: diges/lists-service:latest
+#    hostname: lists-service
+#    environment:
  #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_CONNECTION_DASH_URL: "jdbc:postgresql://lists-database:5432/lists"
  #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_DRIVER_DASH_NAME: 'postgresql'   
  #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_USER_DASH_NAME: 'lis'
  #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_PASSWORD: 'lis'
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
-    networks:
-      - backend-network 
-    ports:
-      - "12085:28080"
-    depends_on:
-       - kafka
+ #     THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
+ #     THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
+ #   networks:
+ #     - backend-network 
+ #   ports:
+ #     - "12085:28080"
+ #   depends_on:
+ #      - kafka
 #################################################################################################
 #												#
 #################################################################################################
@@ -110,23 +110,23 @@ services:
 #    tty: true
 
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
-  ingredients-service:
-    container_name: ingredients-service  
-    image: diges/ingredients-service:latest
-    hostname: ingredients-service
-    environment:
+#  ingredients-service:
+#    container_name: ingredients-service  
+#    image: diges/ingredients-service:latest
+#    hostname: ingredients-service
+#    environment:
  #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_CONNECTION_DASH_URL: "jdbc:postgresql://ingredients-database:5432/ingredients"
  #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_DRIVER_DASH_NAME: 'postgresql'   
  #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_USER_DASH_NAME: 'ing'
  #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_PASSWORD: 'ing'
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
-    networks:
-      - backend-network 
-    ports:
-      - "12084:28080"
-    depends_on:
-       - kafka
+ #     THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
+ #     THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
+ #   networks:
+ #     - backend-network 
+ #   ports:
+ #     - "12084:28080"
+ #   depends_on:
+ #      - kafka
 
 #################################################################################################
 #												#
@@ -207,7 +207,7 @@ services:
     image: diges/recipes-service:latest
     hostname: recipes-service
     environment:
-      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_CONNECTION_DASH_URL: "jdbc:postgresql://recipes-database:5432/recipe"
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_CONNECTION_DASH_URL: "jdbc:postgresql://recipes-database:5432/rec"
       THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_DRIVER_DASH_NAME: 'postgresql'   
       THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_USER_DASH_NAME: 'rec'
       THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_RECIPES_PASSWORD: 'rec'
@@ -219,6 +219,7 @@ services:
       - "12082:28080"
     depends_on:
        - kafka
+       - recipes-database
 
 volumes:
    pgdata-rec:
