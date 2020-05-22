@@ -26,7 +26,7 @@ public class RecipeRestServiceIT {
 
 	@Test
 	public void testGetAll() {
-		when().get("/").then().body(containsString("nom1"));
+		when().get("/").then().body(containsString("Salade aux fruits"));
 	}
 	
 	@Test
@@ -37,12 +37,12 @@ public class RecipeRestServiceIT {
 	
 	@Test
 	public void testGet() {
-		when().get("/1").then().body(containsString("nom1"));
+		when().get("/1").then().body(containsString("Salade aux fruits"));
 	}
 	
 	@Test
 	public void testGetByName() {
-		when().get("/name/nom3").then().body(containsString("nom3"));
+		when().get("/name/curry").then().body(containsString("Poulet au curry"));
 	}
 	
 	@Test
@@ -89,7 +89,7 @@ public class RecipeRestServiceIT {
 	
 	@Test
 	public void testGetBestRecipes() {
-		when().get("/top").then().body(containsString("nom1"));
+		when().get("/top").then().body(containsString("Salade aux fruits"));
 	}
 	
 	@Test
