@@ -32,10 +32,10 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
   constructor(public keycloak: KeycloakService, private ingredientService: IngredientService, private recipeService: RecipeService){}
 
   ngOnInit(): void {
-    this.keycloakAuth = this.keycloak.getKeycloakAuth();
-    if (this.keycloak.isLoggedIn() === false) {
-        this.keycloak.login();
-    }
+    // this.keycloakAuth = this.keycloak.getKeycloakAuth();
+    // if (this.keycloak.isLoggedIn() === false) {
+    //     this.keycloak.login();
+    // }
   }
 
   ngAfterViewInit() {
@@ -115,8 +115,8 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
 
   handleKeyPress(e) {
     var code = (e.which) ? e.which : e.keyCode;
-    let quantityVal = this.quantityElem.value.split('');
-    let countDot = quantityVal.filter((v) => (v === '.')).length;
+    let val = e.target.value.split('');
+    let countDot = val.filter((v) => (v === '.')).length;
     if (code == 46 && countDot == 0){
       return true;
     }
