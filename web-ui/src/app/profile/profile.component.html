@@ -1,1 +1,49 @@
-<p>profile works!</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <div class="w-25">
+    <a class="navbar-brand w-25" routerLink="/home" routerLinkActive="active"><img class="w-100" src="../assets/img/DigeSteve.PNG"/></a>
+  </div>
+    <a class='text-dark mr-5 ml-auto' routerLink="/profile" routerLinkActive="active">Profile</a>
+</nav>
+
+<div class="allForm">
+  <div>
+      <p class="h1 ml-5">Profile</p>
+  </div>
+
+  <div class="row mb-5">
+    <div class="col-6">
+      <img src="../../assets/img/profil.png" class="rounded ml-auto d-block">
+    </div>
+    <div class="col-3">
+      <div class="row">
+        <span>Username: </span><span id="username"></span>
+      </div>
+      <div class="row">
+        <span>Password: </span><span id="password"></span>
+      </div>
+      <div class="row">
+        <span>Email: </span><span id="email"></span>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="row mb-5">
+        <span>My rating: </span><span id="rating"></span>
+      </div>
+      <div class="row mb-2">
+        <a routerLink="/fridge"><button class="btn btn-primary">Go to my fridge</button></a>
+      </div>
+      <div class="row">
+          <a routerLink="/home"><button class="btn btn-primary">Go to my shopping list</button></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row w-75 m-auto mt-5">
+    <div class="col" id="recipeToMake">
+      <span class="h5">Recipes to make</span>
+    </div>
+    <div class="col" id="myRecipe">
+      <span class="h5">My Recipes</span>
+    </div>
+  </div>
+</div>

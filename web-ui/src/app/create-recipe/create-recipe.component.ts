@@ -2,7 +2,6 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { KeycloakService } from '../services/keycloak/keycloak.service';
 import { KeycloakInstance } from 'keycloak-js';
 import { Router } from '@angular/router';
-import * as $ from 'jquery';
 import { IngredientService } from './ingredientService';
 import { RecipeService } from './recipeService';
 import { Ingredient } from './ingredient';

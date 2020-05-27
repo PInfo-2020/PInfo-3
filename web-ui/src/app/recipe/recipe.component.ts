@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./recipe.component.css']
 })
 export class RecipeComponent implements OnInit, AfterViewInit {
-
   recipeDB: Recipe;
   ingredientsDB: Array<String> = [];
   ingredientsRecipeDB: Array<IngredientRecipe> = [];
@@ -41,7 +40,6 @@ export class RecipeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
     this.nameElem = document.getElementById("name");
     this.peopleElem = document.getElementById("people");
     this.timeElem = document.getElementById("time");
@@ -60,10 +58,10 @@ export class RecipeComponent implements OnInit, AfterViewInit {
     this.recipeService.getRecipe(id)
       .subscribe((data: Recipe) => {
         that.recipeDB = data;
-        console.log(id);
       	that.call1(id);
       	that.call2();
-      	that.call3();
+        that.call3(id);
+      	that.call4();
       });
 
   }
@@ -87,14 +85,22 @@ export class RecipeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  call3() {
+  call3(id) {
+    let that = this;
+    this.recipeService.getGrade(id)
+      .subscribe((data: Number) => {
+        that.gradeElem.value = data;
+      });
+  }
+
+  call4() {
     let that = this;
     console.log(that.recipeDB.name);
     this.nameElem.value = that.recipeDB.name;
     this.peopleElem.value = that.recipeDB.personnes;
     this.timeElem.value = that.recipeDB.minutes;
     this.descriptionElem.value = that.recipeDB.description;
-    // this.instructionElem.value = that.recipeDB.instructions;
+    let instructions = that.recipeDB.instructions.split("///");
   }
 
   add_shop_list() {

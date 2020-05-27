@@ -18,8 +18,16 @@ export class RecipeService {
        }),
    };
 
-   getRecipe(id: Number): Observable<Recipe> {
+  getRecipe(id: Number): Observable<Recipe> {
      return this.http.get<Recipe>(environment.recipeService.url + "/" + id)
+       .pipe(
+                 retry(1),
+                 catchError(this.handleError),
+             );
+  }
+
+  getGrade(id: Number): Observable<Number> {
+     return this.http.get<Number>(environment.recipeService.url + "/" + id + "/grade")
        .pipe(
                  retry(1),
                  catchError(this.handleError),
