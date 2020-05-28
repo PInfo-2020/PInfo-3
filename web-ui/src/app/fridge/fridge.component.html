@@ -15,33 +15,26 @@
     <div class="col border border-w mt-2" id="div1">
       <div class="row mb-5 mt-3 ml-auto">
         <div class="col-2.5">
-          <input list="ingredients-choices" type="text" class="form-control" id="ingredient" placeholder="Research ingredient">
+          <input list="ingredients-choices" type="text" class="form-control" id="ingredient" placeholder="Research ingredient" (input)="addUnit($event)">
           <datalist id="ingredients-choices"></datalist>
         </div>
         <div class="col-2">
           <input type="text" class="form-control" id="quantity" placeholder="Quantity" (keypress)="handleKeyPress($event)">
         </div>
-        <div class="col-1">
+        <div class="col-2">
           <input type="text" class="form-control" id="unit" placeholder="Unit" disabled>
         </div>
         <button type="button" class="btn btn-light" (click)="plus()">+</button>
         <button type="button" class="btn btn-light" (click)="minus()">-</button>
+
         <button type="button" class="btn btn-light" (click)="addBlock1()">Add</button>
-        <button type="button" class="btn btn-light">Add new ingredient</button>
       </div>
     </div>
   </div>
 </div>
   
 <div class="text-center">
-  <button type="button" class="btn btn-light mt-40" >Finish</button>
-</div>
-
-<div class="card" style="height: 10rem;width: 21rem;margin-bottom:5px;">
-  <div class="card-body">
-    <div class="row" style="width:150px;margin:10px">
-    </div>
-  </div>
+  <button type="button" class="btn btn-light mt-40" (click)="sendData()" >Finish</button>
 </div>
 
 <div>

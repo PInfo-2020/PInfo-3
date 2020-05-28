@@ -18,11 +18,21 @@ export class FridgeService {
              'Content-Type': 'application/json',
          }),
      };
-sendIngredientsFridge(ingredientsFridge: Array<IngredientFridge>, id: number){
-    return this.http.post(environment.listsService.url + "/addtofridge", ingredientsFridge)
+
+
+sendIngredientsFridge(fridge: Fridge){
+    return this.http.post(environment.listsService.url + "/addtofridge", fridge)
         .pipe(
             retry(1),
             catchError(this.handleError)
+        );
+}
+
+deleteIngredientFridge(ingredientFridge: Array<IngredientFridge>){
+    return this.http.post(environment.listsService.url + "/removefromfridge", ingredientFridge)
+        .pipe(
+            retry(1),
+            catchError(this.handleError),
         );
 }
      
