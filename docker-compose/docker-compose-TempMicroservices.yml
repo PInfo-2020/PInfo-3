@@ -86,47 +86,47 @@ services:
 #												#
 #################################################################################################
 
-
-#  ingredients-database:
-#    image: postgres:10
-#    container_name: ingredients-database
-#    hostname: ingredients-database
-#    networks:
-#     - backend-network
-#    environment:
-#      POSTGRES_USER: ing
-#      POSTGRES_PASSWORD: ing
-#      POSTGRES_DB: ing
-#    healthcheck:
-#      test: ["CMD", "pg_isready", "-U", "ing", "-d", "ing"]
-#      interval: 30s
-#      timeout: 30s
-#      retries: 3
-#    volumes:
-#      - pgdata-ing:/var/lib/postgresql/data
-#      - ./test-data/ingredients.sql:/docker-entrypoint-initdb.d/init.sql
-#    restart: on-failure
-#    stdin_open: true
-#    tty: true
+  ingredients-database:
+    image: postgres:10
+    container_name: ingredients-database
+    hostname: ingredients-database
+    networks:
+     - backend-network
+    environment:
+      POSTGRES_USER: ing
+      POSTGRES_PASSWORD: ing
+      POSTGRES_DB: ing
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "ing", "-d", "ing"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - pgdata-ing:/var/lib/postgresql/data
+      - ./test-data/ingredients.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: on-failure
+    stdin_open: true
+    tty: true
 
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
-#  ingredients-service:
-#    container_name: ingredients-service  
-#    image: diges/ingredients-service:latest
-#    hostname: ingredients-service
-#    environment:
- #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_CONNECTION_DASH_URL: "jdbc:postgresql://ingredients-database:5432/ingredients"
- #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_DRIVER_DASH_NAME: 'postgresql'   
- #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_USER_DASH_NAME: 'ing'
- #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_PASSWORD: 'ing'
- #     THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
- #     THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
- #   networks:
- #     - backend-network 
- #   ports:
- #     - "12084:28080"
- #   depends_on:
- #      - kafka
+  ingredients-service:
+    container_name: ingredients-service  
+    image: diges/ingredients-service:latest
+    hostname: ingredients-service
+    environment:
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_CONNECTION_DASH_URL: "jdbc:postgresql://ingredients-database:5432/ing"
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_DRIVER_DASH_NAME: 'postgresql'   
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_USER_DASH_NAME: 'ing'
+      THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_PASSWORD: 'ing'
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
+      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
+    networks:
+      - backend-network 
+    ports:
+      - "12084:28080"
+    depends_on:
+       - kafka
+       - ingredients-database
 
 #################################################################################################
 #												#
