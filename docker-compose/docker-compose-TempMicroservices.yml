@@ -87,7 +87,7 @@ services:
 #################################################################################################
 
   ingredients-database:
-    image: postgres:10
+    image: post
     container_name: ingredients-database
     hostname: ingredients-database
     networks:
@@ -103,7 +103,7 @@ services:
       retries: 3
     volumes:
       - pgdata-ing:/var/lib/postgresql/data
-      - ./test-data/ingredients.sql:/docker-entrypoint-initdb.d/init.sql
+     # - ./ingredients.sql:/docker-entrypoint-initdb.d/init.sql
     restart: on-failure
     stdin_open: true
     tty: true
@@ -180,7 +180,7 @@ services:
 
 
   recipes-database:
-    image: postgres:10
+    image: rece
     container_name: recipes-database
     hostname: recipes-database
     networks:
@@ -196,7 +196,7 @@ services:
       retries: 3
     volumes:
       - pgdata-rec:/var/lib/postgresql/data
-      - ./test-data/recipes_test_data.sql:/docker-entrypoint-initdb.d/init.sql
+      #- ./test-data/recipes_test_data.sql:/docker-entrypoint-initdb.d/init.sql
     restart: on-failure
     stdin_open: true
     tty: true
