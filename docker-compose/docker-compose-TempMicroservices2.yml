@@ -65,23 +65,23 @@ services:
 #    tty: true
 
   #The counterparty service provides counterparty data, it is also the single version of truth for these data
-  list-service:
-    container_name: lists-service  
-    image: diges/lists-service:latest
-    hostname: lists-service
-    environment:
+#  list-service:
+#    container_name: lists-service  
+#    image: diges/lists-service:latest
+#    hostname: lists-service
+#    environment:
  #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_CONNECTION_DASH_URL: "jdbc:postgresql://lists-database:5432/lists"
  #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_DRIVER_DASH_NAME: 'postgresql'   
  #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_USER_DASH_NAME: 'lis'
  #     THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_LISTS_PASSWORD: 'lis'
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
-      THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
-    networks:
-      - backend-network 
-    ports:
-      - "12085:28080"
-    depends_on:
-       - kafka
+ #     THORNTAIL_KAFKA_DASH_CONFIGURATION_HOST: "kafka"
+ #     THORNTAIL_KAFKA_DASH_CONFIGURATION_PORT: "9092"
+ #   networks:
+ #     - backend-network 
+ #   ports:
+ #     - "12085:28080"
+ #   depends_on:
+ #      - kafka
 #################################################################################################
 #												#
 #################################################################################################
