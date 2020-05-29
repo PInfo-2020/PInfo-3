@@ -21,22 +21,22 @@ public class IngredientRestServiceIT {
 
 	@Test
 	public void testGetAll() {
-		when().get("/").then().body(containsString("sugar"));
+		when().get("/").then().body(containsString("Apple"));
 	}
 
 	@Test
 	public void testGetById() {
-		when().get("/id/3").then().body(containsString("chicken"));
+		when().get("/id/3").then().body(containsString("Apple"));
 	}
 	
 	@Test
 	public void testGetByName() {
-		when().get("/name/avocado").then().body(containsString("unit"));
+		when().get("/name/Apple").then().body(containsString("Apple"));
 	}
 	
 	@Test
 	public void testGetUnitByName() {
-		when().get("/unit/tomato").then().body(containsString("kg"));
+		when().get("/unit/Apple").then().body(containsString("kg"));
 	}
 	
 	@Test

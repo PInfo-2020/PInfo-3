@@ -1,27 +1,31 @@
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
   <div class="w-25">
-    <a class="navbar-brand w-50" routerLink="/home" routerLinkActive="active"><img class="w-100" src="../assets/img/DigeSteve.PNG"/></a>
+    <a class="navbar-brand w-25" routerLink="/home" routerLinkActive="active"><img class="w-100" src="../assets/img/DigeSteve.PNG"/></a>
   </div>
-    <a class='ml-auto text-dark mr-5' routerLink="/profile" routerLinkActive="active">Profile</a>
+    <a class='text-dark mr-5 ml-auto' routerLink="/profile" routerLinkActive="active">Profile</a>
 </nav>
 
-<div class="full">
+<div class="allForm">
+  <div>
+      <p class="h1 ml-5 text-white">Create Recipe</p>
+  </div>
+
   <div class="row mb-5">
-    <div class="col-10">
+    <div class="m-auto">
       <div class="row">
-        <div class="col-2">
-          <input type="text" class="form-control" placeholder="Name of the recipe">
+        <div class="col-4">
+          <input id="name" type="text" class="form-control" placeholder="Name of the recipe">
         </div>
-        <div class="col-2">
-          <input type="text" class="form-control" placeholder="Number of people">
+        <div class="col-4">
+          <input id="people" type="text" class="form-control" placeholder="Number of people" (keypress)="handleKeyPress($event)">
         </div>
-        <div class="col-2">
-          <input type="text" class="form-control" placeholder="Duration (min)">
+        <div class="col-4">
+          <input id="time" type="text" class="form-control" placeholder="Duration (min)" (keypress)="handleKeyPress($event)">
         </div>
       </div>
       <div class="row mt-3">
-        <div class="col-4">
-          <textarea class="form-control" id="descriptionRecette" placeholder="Description" rows="4"></textarea>
+        <div class="col-8">
+          <textarea id="description" class="form-control" placeholder="Description" rows="4"></textarea>
         </div>
       </div>
     </div>
@@ -30,9 +34,9 @@
   <div class="d-flex flex-row">
     <div class="row mt-5 ml-5 mr-2 row-w d-inline-block">
       <div class="col border border-w" id="div1">
-        <div class="row mb-5">
+        <div class="row row-marg mt-3">
           <div class="col-4">
-            <input list="ingredients-choices" type="text" class="form-control" id="ingredient" placeholder="Research ingredient">
+            <input list="ingredients-choices" type="text" class="form-control" id="ingredient" placeholder="Research ingredient" (input)="addUnit($event)">
             <datalist id="ingredients-choices"></datalist>
           </div>
           <div class="col-2">
@@ -54,11 +58,11 @@
 
     <div class="row mt-5 mr-5 ml-2 row-w d-inline-block">
       <div class="col border border-w" id="div2">
-        <div class="row">
-          <div class="col-8">
-            <textarea class="form-control" id="instruction" rows="6" placeholder="Instruction"></textarea>
+        <div class="row row-marg2 mt-3">
+          <div class="col-8 col-marg">
+            <textarea class="form-control" id="instruction" rows="3" placeholder="Instruction"></textarea>
           </div>
-          <div class="col-3">
+          <div class="col-2">
             <button type="button" class="btn btn-secondary mr-1" (click)="addBlock2()">Add</button>
           </div>
         </div>
@@ -66,7 +70,7 @@
     </div>
   </div>
 
-  <div>
-    <button type="submit" class="btn btn-primary">Finish</button>
+  <div class="mt-3 ml-5">
+    <button type="button" class="btn btn-success posFinish" (click)="sendData()">Finish</button>
   </div>
 </div>

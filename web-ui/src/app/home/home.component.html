@@ -2,18 +2,91 @@
     <div class="w-25">
       <a class="navbar-brand w-50" routerLink="/home" routerLinkActive="active"><img class="w-100" src="../assets/img/DigeSteve.PNG"/></a>
     </div>
-      <a class='ml-auto text-dark mr-5' routerLink="/profile" routerLinkActive="active">Profile</a>
+      <a class='ml-auto text-dark ml-100' routerLink="/profile" routerLinkActive="active"><img class="w-25" src="../assets/img/profil.png" /></a>
 </nav>
-<h2>Welcome home ! Choose a link !</h2>
 
-<a class='ml-auto text-dark mr-5' routerLink="/profile" routerLinkActive="active">Profile</a>
-<a class='ml-auto text-dark mr-5' routerLink="/fridge" routerLinkActive="active">Fridge</a>
-<a class='ml-auto text-dark mr-5' routerLink="/login" routerLinkActive="active">Login</a>
-<a class='ml-auto text-dark mr-5' routerLink="/aboutUs" routerLinkActive="active">About us</a>
-<a class='ml-auto text-dark mr-5' routerLink="/createRecipe" routerLinkActive="active">Create recipe</a>
-<a class='ml-auto text-dark mr-5' routerLink="/recipe" routerLinkActive="active">Recipe</a>
-<a class='ml-auto text-dark mr-5' routerLink="/shoppingList" routerLinkActive="active">Shopping list</a>
+<div style="text-align:center" >
+	<h1>
+	  Welcome!
+	</h1>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class='ml-auto text-dark mr-5' routerLink="/aboutUs" routerLinkActive="active">About us</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+
+<div class="container-fluid">
+	<div class="row">
+
+		<!--first column-->
+		<div class="col-3" style="background-color: orange">
+			<!--first card in first column-->
+			<div class="card" style="width: 21rem;margin-bottom:5px;margin-top:5px;">
+				<div class="card-body">
+					<div class="row" style="width:150px;margin:10px">
+						<a class="btn btn-outline-danger" routerLink="/fridge" role="button">My Fridge</a>
+					</div>
+					<div class="row" style="width:150px;margin:10px">
+						<a class="btn btn-outline-danger" routerLink="/shoppingList" role="button">My Shopping Cart</a>
+					</div>
+
+				</div>
+			</div>
+			<!--second card in first column-->
+			  <div class="card" style="width: 21rem;margin-bottom:5px;">
+				<div class="card-body">
+					<!--group of checkboxes-->
+					<div class="checkbox">
+						<label>
+						  <input type="checkbox"   (change)="top()" class="sev_check" id="TopRecipesBox" name="TopRecipes" />Top Recipes</label>
+					  </div>
+					  <div class="checkbox">
+						<label>
+						  <input type="checkbox" (change)="vegan()" class="sev_check" id="VeganBox" name="Vegan" />Vegan</label>
+					  </div>
+					  <div class="checkbox">
+						<label>
+						  <input type="checkbox" (change)="vege()" class="sev_check" id="VegetarienBox" name="Vegetarien" />Vegetarien</label>
+					  </div>
+					  <div class="checkbox">
+						<label>
+						  <input type="checkbox" (change)="frigo()" class="sev_check" id="FrigoBox" name="Frigo" />Only ingredients in my fridge</label>
+					  </div>
+				</div>
+			  </div>
+
+			<div class="card" style="height: 10rem;width: 21rem;margin-bottom:5px;">
+				<div class="card-body">
+			 	 	<div class="row" style="width:150px;margin:10px">
+						<a class="btn btn-outline-danger" routerLink="/createRecipe" role="button">Create Recipe</a>
+            <a class="btn btn-outline-danger" routerLink="/recipe/3" role="button">Recipe</a>
+					</div>
+				</div>
+			</div>
 
 
 
 
+
+		</div>
+
+		<!--second column-->
+		<div class="col-7" >
+			<div id="myData"></div>
+		</div>
+
+		<!--third column-->
+		<div class="col-1" style="background-color: orange" >
+			<div class="panel-heading">Best Cook</div>
+		</div>
+
+
+	</div>
+</div>

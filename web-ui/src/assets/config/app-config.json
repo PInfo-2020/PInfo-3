@@ -10,6 +10,9 @@
         "onLoad": "login-required",
         "responseMode": "fragment"
     },
+    "angular": {
+        "url": "http://localhost:4200"
+    },
     "ingredientsService": {
         "url": "http://localhost:12084/ingredients"
     },

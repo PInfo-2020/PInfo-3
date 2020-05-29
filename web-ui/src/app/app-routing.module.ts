@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import {ExtraOptions, Routes, RouterModule } from '@angular/router';
+import { FormsModule }   from '@angular/forms';
 
 import {HomeComponent} from './home/home.component';
 //import {LoginComponent} from './login/login.component';
@@ -20,7 +21,7 @@ import {
 } from '@nebular/auth';
 
 const routes: Routes = [
-  
+
 	{
 		path: '',
 		component: HomeComponent
@@ -42,19 +43,19 @@ const routes: Routes = [
 		component: CreateRecipeComponent
 	},
 	{
-		path: 'recipe',
+		path: 'recipe/:id',
 		component: RecipeComponent
 	},
 	{
-		path: 'fridge',
+		path: 'fridge/:id',
 		component: FridgeComponent
 	},
 	{
-		path: 'profile',
+		path: 'profile/:id',
 		component: ProfileComponent
 	},
 	{
-		path: 'shoppingList',
+		path: 'shoppingList/:id',
 		component: ShoppingListComponent
 	},
 	{
@@ -87,8 +88,8 @@ const routes: Routes = [
       },
     ],
   },
-	
-	
+
+
 ];
 
 const config: ExtraOptions = {
@@ -96,7 +97,7 @@ const config: ExtraOptions = {
 };
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), FormsModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

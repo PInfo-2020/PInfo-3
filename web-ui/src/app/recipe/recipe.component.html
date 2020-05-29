@@ -1,1 +1,78 @@
-<p>recipe works!</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <div class="w-25">
+    <a class="navbar-brand w-25" routerLink="/home" routerLinkActive="active"><img class="w-100" src="../assets/img/DigeSteve.PNG"/></a>
+  </div>
+    <a class='text-dark mr-5 ml-auto' routerLink="/profile" routerLinkActive="active">Profile</a>
+</nav>
+
+<form class="h-75">
+  <div class="row mb-5">
+    <div class="col-10">
+      <div class="row">
+        <div class="col-2">
+          <input type="text" class="form-control" id="name" placeholder="Name of the Recipe">
+        </div>
+        <div class="col-2">
+          <input type="text" class="form-control" id="people" placeholder="Number of people">
+        </div>
+        <div class="col-2">
+          <input type="text" class="form-control" id="time" placeholder="Duration">
+        </div>
+        <div class="col-2">
+          <input type="text" class="form-control" id="grade" placeholder="Grade">
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-6">
+          <textarea class="form-control" id="description" placeholder="Description" rows="8"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5 ml-5 mr-2 row-w d-inline-block">
+    <div class="col border border-w">
+      <div class="row mb-5">
+        <div class="col-2">
+          <input type="text" class="form-control" id="ingredient" placeholder="Name of Ingredients">
+        </div>
+        <div class="col-2">
+          <input type="text" class="form-control" id="quantity" placeholder="Quantity">
+        </div>
+        <div>
+  		  <button type="submit" class="btn btn-primary">Add to Shopping List</button>
+		</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5 mr-5 ml-2 row-w d-inline-block">
+    <div class="col border border-w">
+      <div class="row">
+        <div class="col-2">
+          <textarea class="form-control" id="instruction" placeholder="Instructions" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <button type="submit" class="btn btn-primary mr-1" (click)="give_grade()">Give grade</button>
+  </div>
+  <div class="col-2">
+    <input type="text" class="form-control" id="new_grade" placeholder="Grade">
+  </div>
+  <div>
+    <button type="submit" class="btn btn-primary mr-1" (click)="add_comment()">Add Comment</button>
+  </div>
+  <div class="col-2">
+    <input type="text" class="form-control" id="comment" placeholder="Comment">
+  </div>
+  <div>
+    <button type="submit" class="btn btn-primary mr-1" (click)="cook()">Cook</button>
+  </div>
+
+  <div id="div1">
+  </div>
+
+</form>

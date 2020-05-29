@@ -32,4 +32,8 @@ export class DynamicEnvironment {
     return window.config && window.config.recipeService;
   }
 
+  public get angular() {
+    return window.config && window.config.angular;
+  }
+
 }

@@ -22,9 +22,11 @@ public class ProfileConsumer {
 
 	@Consumer(topics = "scoreReq", groupId = "ch.unige")
 	public void consumeScore(Score s) {
-		//log.info("Consumer got score from recipe service");
+		log.info("Consumer got score from recipe service");
 	
 		ps.updateScore(s);
+		
+		log.info("TEST");
 		
 	}
 	

@@ -1,7 +1,7 @@
-export interface Ingredient{
+export interface Ingredient {
   id: number,
 	name: string,
 	unit: string,
-	vegetarian: boolean,
-	vegan: boolean,
+	vegetarian: number,
+	vegan: number,
 }

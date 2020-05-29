@@ -191,7 +191,7 @@ public class RecipeRestService {
 	}
 	
 	@GET // Find all recipes that are vegan
-	@Path("/vegetarien")
+	@Path("/vegan")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Recipe> getByVegan() {
 		return recipeService.getByVegan();

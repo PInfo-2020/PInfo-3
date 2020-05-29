@@ -18,14 +18,19 @@ export class KeycloakService {
             // 'public-client': true,
         });
         KeycloakService.auth.loggedIn = false;
+        console.log("problem1");
         return new Promise((resolve, reject) => {
             keycloakAuth.init({ onLoad: 'check-sso', checkLoginIframe: false })
                 .success(() => {
+                    console.log("problem2")
                     KeycloakService.auth.loggedIn = false;
+                    console.log("problem3")
                     KeycloakService.auth.authz = keycloakAuth;
+                    console.log("problem4")
                     resolve();
                 })
                 .error(() => {
+                    console.log("problem5")
                     reject();
                 });
         });

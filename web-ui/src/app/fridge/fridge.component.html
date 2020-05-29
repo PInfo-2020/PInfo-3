@@ -4,29 +4,40 @@
     </div>
       <a class='ml-auto text-dark mr-5' routerLink="/profile" routerLinkActive="active">Profile</a>
 </nav>
+
 <div>
-    <p class="h1 text-center display-4 font-weight-ligh mt-5"> My Fridge </p>
+  <p class="h1 text-center display-4 font-weight-ligh mt-5"> My Fridge </p>
+  <button type="button" (click)="getFridge()" class="btn btn-light">fridge</button>
 </div>
 
-  <div class="d-flex flex-row">
-    <div class="row mt-5 row-w d-inline-block ml-auto mr-auto">
-      <div class="col border border-w mt-2" id="div1">
-        <div class="row mb-5 mt-3 ml-auto">
-          <div class="col-2.5">
-            <input type="text" class="form-control" id="ingredient" placeholder="Research ingredient">
-          </div>
-          <div class="col-2">
-            <input type="text" class="form-control" id="quantity" placeholder="Quantity">
-          </div>
-          <div class="col-1">
-            <input type="text" class="form-control" id="unit" placeholder="Unit">
-          </div>
-          <button type="button" class="btn btn-light" (click)="plus()">+</button>
-          <button type="button" class="btn btn-light" (click)="minus()">-</button>
-    
-          <button type="button" class="btn btn-light" (click)="addBlock1()">Add</button>
-          <button type="button" class="btn btn-light">Add new ingredient</button>
+<div class="d-flex flex-row">
+  <div class="row mt-5 row-w d-inline-block ml-auto mr-auto">
+    <div class="col border border-w mt-2" id="div1">
+      <div class="row mb-5 mt-3 ml-auto">
+        <div class="col-2.5">
+          <input list="ingredients-choices" type="text" class="form-control" id="ingredient" placeholder="Research ingredient" (input)="addUnit($event)">
+          <datalist id="ingredients-choices"></datalist>
         </div>
+        <div class="col-2">
+          <input type="text" class="form-control" id="quantity" placeholder="Quantity" (keypress)="handleKeyPress($event)">
         </div>
+        <div class="col-2">
+          <input type="text" class="form-control" id="unit" placeholder="Unit" disabled>
+        </div>
+        <button type="button" class="btn btn-light" (click)="plus()">+</button>
+        <button type="button" class="btn btn-light" (click)="minus()">-</button>
+
+        <button type="button" class="btn btn-light" (click)="addBlock1()">Add</button>
       </div>
     </div>
+  </div>
+</div>
+  
+<div class="text-center">
+  <button type="button" class="btn btn-light mt-40" (click)="sendData()" >Finish</button>
+</div>
+
+<div>
+  <div id="myData"></div>
+</div>
+

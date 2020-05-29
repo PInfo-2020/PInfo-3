@@ -36,5 +36,5 @@ export class IngredientService {
         }
         console.error(errorMessage);
         return throwError(errorMessage);
-    }
+  }
 }
