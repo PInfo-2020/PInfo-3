@@ -2,6 +2,7 @@ package api;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -36,7 +37,7 @@ public class ProfileRestService {
 	@GET
 	@Path("/{usernameID}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Get data by given usernameID")
+	@ApiOperation(value = "Get data by a given usernameID")
 	public Profile getDataOneUser(@PathParam("usernameID") String usernameID){
 		return ps.getDataOneUser(usernameID);
 	}
@@ -56,10 +57,10 @@ public class ProfileRestService {
 	}
 		
 	@POST
-	@Path("{usernameID}/{recipeID}/{rowID}/addNewPlannedRecipe")
+	@Path("{usernameID}/{recipeID}/addNewPlannedRecipe")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void addNewPlannedRecipe(@PathParam("rowID") int rowID, @PathParam("usernameID") String usernameID, @PathParam("recipeID") int recipeID) {
-		PlannedRecipe pr = new PlannedRecipe(rowID,usernameID,recipeID);
+	public void addNewPlannedRecipe(@PathParam("usernameID") String usernameID, @PathParam("recipeID") int recipeID) {
+		PlannedRecipe pr = new PlannedRecipe((ps.getAllPlannedRecipes().size())+1,usernameID,recipeID);
 		ps.addNewPlannedRecipe(pr);
 	}
 	
@@ -71,18 +72,19 @@ public class ProfileRestService {
 		return ps.addNewUser(p);		
 	}
 	
-//	@DELETE // Remove an item to cart of a user
-//	@Path("/removeOneUser")
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public void removeOneUser(Profile p) {
-//		ps.removeOneUser(p);
-//	}
-//	
-//	@DELETE // Remove an item to fridge of a user
-//	@Path("/removefromplannedrecipe")
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public void removeOnePlannedRecipe(PlannedRecipe pr) {
-//		ps.removeOnePlannedRecipe(pr);
-//	}
+	@GET
+	@Path("getBestCooker")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Profile> getBestCooker() {
+		return  ps.getBestCooker();
+	}
+	
+	
+	@DELETE
+	@Path("/removefromplannedrecipe/{recipeID}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void removeOnePlannedRecipe(@PathParam("recipeID") int recipeID) {
+		ps.removeOnePlannedRecipe(recipeID);
+	}
 
 }

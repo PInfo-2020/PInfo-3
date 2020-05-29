@@ -10,7 +10,13 @@ INSERT INTO profile (usernameID,username,score) VALUES ('2','Eli',6);
 INSERT INTO profile (usernameID,username,score) VALUES ('3','Yassine',5);
 INSERT INTO profile (usernameID,username,score) VALUES ('4','Mouslim',6);
 INSERT INTO profile (usernameID,username,score) VALUES ('5','Ilyas',5);
-INSERT INTO profile (usernameID,username,score) VALUES ('6','Amine',6);
+INSERT INTO profile (usernameID,username,score) VALUES ('6','Amine',1);
+INSERT INTO profile (usernameID,username,score) VALUES ('7','Sarra',5);
+INSERT INTO profile (usernameID,username,score) VALUES ('8','Luka',3);
+INSERT INTO profile (usernameID,username,score) VALUES ('9','Benjamin',2.5);
+INSERT INTO profile (usernameID,username,score) VALUES ('10','Nathan',1);
+INSERT INTO profile (usernameID,username,score) VALUES ('11','Noah',5.5);
+INSERT INTO profile (usernameID,username,score) VALUES ('12','Anas',0);
 
 
 

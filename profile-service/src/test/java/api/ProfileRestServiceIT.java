@@ -19,7 +19,6 @@ import domain.model.*;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
-
 public class ProfileRestServiceIT {
 
 	@BeforeAll
@@ -48,12 +47,12 @@ public class ProfileRestServiceIT {
 		when().get("plannedrecipes/1").then().body(containsString("1"));
 	}
 	
-	@Test
+/*	@Test
 	public void testAddNewPlannedRecipe() {
 	    PlannedRecipe pr = new PlannedRecipe(57,"1", 32);
 	   with().contentType(ContentType.JSON).body(pr).when().request("POST", "57/1/32/addNewPlannedRecipe").then().statusCode(204);
 	   when().get("/plannedrecipes").then().body(containsString("32"));
-	}
+	}*/
 	
 	@Test
 	public void testAddNewUser() {
@@ -61,6 +60,8 @@ public class ProfileRestServiceIT {
 	   with().contentType(ContentType.JSON).body(p).when().request("POST", "/77/Martine/addNewUser").then().statusCode(200);
 	   when().get("/all").then().body(containsString("77"));
 	}
+	
+	
 	
 //	@Test
 //	public void testRemoveOneUser() {
