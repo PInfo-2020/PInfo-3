@@ -4,6 +4,45 @@
 --        id bigint not null,
 --        primary key (id)
 --);
+drop table Recipe if exists;
+create table Recipe (
+		id bigint not null,
+        name varchar(31) not null,
+        description varchar(255) not null,
+        instructions varchar(255) not null,
+        minutes bigint not null,
+        personnes bigint not null,
+        userId varchar(255) not null,
+        primary key (id)
+);
+
+drop table Ingredient if exists;
+create table Ingredient (
+		id bigint not null,
+		recipeId bigint not null,
+		ingredientId bigint not null,
+		quantite FLOAT(53) not null,
+        vegetarien bigint not null,
+        vegan bigint not null,
+        primary key (id)
+);
+
+drop table Comment if exists;
+create table Comment (
+		id bigint not null,
+		recipeId bigint not null,
+		commentRecipe varchar(255) not null,
+        primary key (id)
+);
+
+drop table Grade if exists;
+create table Grade (
+		id bigint not null,
+		recipeId bigint not null,
+		userId varchar(255) not null,
+		gradeRecipe bigint not null,
+        primary key (id)
+);
 INSERT INTO Recipe (id, name, description, instructions, minutes, personnes, userId) values (1, 'Salade aux fruits', 'Vous aimez les fruits ? Alors venez !', 'i1', 10, 1, '3');
 INSERT INTO Recipe (id, name, description, instructions, minutes, personnes, userId) values (2, 'Poulet au curry', 'La recette thaïlandaise originale', 'i2', 10, 1, '3');
 INSERT INTO Recipe (id, name, description, instructions, minutes, personnes, userId) values (3, 'Poulet au curry', 'Une recette asiatique absolument délicieuse', 'i3', 10, 1, '3');

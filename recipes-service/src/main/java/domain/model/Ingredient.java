@@ -79,7 +79,7 @@ public class Ingredient implements Serializable {
 		return quantite;
 	}
 
-	public void setQuantite(double quantite) {
+	public void setQuantite(float quantite) {
 		this.quantite = quantite;
 	}
 	

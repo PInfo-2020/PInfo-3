@@ -18,27 +18,25 @@ public class IngredientRestServiceIT {
 		RestAssured.baseURI = "http://localhost:28080/ingredients";
 		RestAssured.port = 8080;
 	}
+	@Test
+ 	public void testGetAll() {
+ 		when().get("/").then().body(containsString("Apple"));
+ 	}
 
-	@Test
-	public void testGetAll() {
-		when().get("/").then().body(containsString("Apple"));
-	}
+ 	@Test
+ 	public void testGetById() {
+ 		when().get("/id/3").then().body(containsString("Apple"));
+ 	}
 
-	@Test
-	public void testGetById() {
-		when().get("/id/3").then().body(containsString("Apple"));
-	}
-	
-	@Test
-	public void testGetByName() {
-		when().get("/name/Apple").then().body(containsString("Apple"));
-	}
-	
-	@Test
-	public void testGetUnitByName() {
-		when().get("/unit/Apple").then().body(containsString("kg"));
-	}
-	
+ 	@Test
+ 	public void testGetByName() {
+ 		when().get("/name/Apple").then().body(containsString("Apple"));
+ 	}
+
+ 	@Test
+ 	public void testGetUnitByName() {
+ 		when().get("/unit/Apple").then().body(containsString("kg"));
+ 	}/*
 	@Test
 	public void testCreate() {
 	   Ingredient ingredient = new Ingredient(1000, "egg", "unit", 1, 0);
@@ -55,6 +53,6 @@ public class IngredientRestServiceIT {
 	@Test
 	public void testDelete() {
 		with().contentType(ContentType.JSON).when().request("DELETE", "/delete/4").then().statusCode(200);
-	}
+	}*/
 	
 }

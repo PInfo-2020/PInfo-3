@@ -1,5 +1,15 @@
-CREATE SEQUENCE seq_id MINVALUE 1 START WITH 1 INCREMENT BY 1
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Açaí', 'kg', 1, 1);
+drop table ingredients if exists;
+create table ingredients (
+		id bigint not null,
+		name varchar(50) not null,
+		unit varchar(20) not null,
+        vegetarian bigint not null,
+        vegan bigint not null,
+        primary key (id)
+);
+drop sequence if exists seq_id;
+CREATE SEQUENCE seq_id START WITH 1 INCREMENT BY 1;
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Acai', 'kg', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Ackee', 'kg', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Apple', 'kg', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Apricot', 'kg', 1, 1);
@@ -12,7 +22,7 @@ INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextv
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Blueberry', 'kg', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Boysenberry', 'kg', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Breadfruit', 'kg', 1, 1);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Buddha\'s hand', 'kg', 1, 1);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Buddha hand', 'kg', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Cactus pear', 'kg', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Crab apple', 'kg', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Currant', 'kg', 1, 1);
@@ -274,14 +284,14 @@ INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextv
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Quail', 'kg', 0, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Squab', 'kg', 0, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Turkey', 'kg', 0, 0);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Soy milk', 'l' 1, 1);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Almond milk', 'l' 1, 1);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Skimmed milk', 'l' 1, 0);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Coconut milk', 'l' 1, 1);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Goat milk', 'l' 1, 0);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Rice milk', 'l' 1, 1);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Milk', 'l' 1, 0);
-INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Oat milk', 'l' 1, 1);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Soy milk', 'l', 1, 1);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Almond milk', 'l', 1, 1);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Skimmed milk', 'l', 1, 0);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Coconut milk', 'l', 1, 1);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Goat milk', 'l', 1, 0);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Rice milk', 'l', 1, 1);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Milk', 'l', 1, 0);
+INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Oat milk', 'l', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Sour cream', 'g', 1, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Butter', 'g', 1, 0);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (seq_id.nextval, 'Ketchup', 'g', 1, 1);
