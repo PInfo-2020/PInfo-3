@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
+import javax.persistence.SequenceGenerator;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import lombok.Data;
 
 @Data
@@ -18,6 +20,8 @@ public class Ingredient implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@SequenceGenerator(name = "seq_id", sequenceName = "seq_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")	
 	@Column(name = "id")
 	@NotNull
 	private int id;
@@ -41,8 +45,8 @@ public class Ingredient implements Serializable {
 	public Ingredient() {}
 	
 	
-	public Ingredient(int id, String name, String unit, int vegetarian, int vegan) {
-		this.id = id;
+	public Ingredient(String name, String unit, int vegetarian, int vegan) {
+		//this.id = id;
 		this.name = name;
 		this.unit = unit;
 		this.vegetarian = vegetarian;

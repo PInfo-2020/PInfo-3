@@ -31,7 +31,7 @@ public class Ingredient implements Serializable {
 	
 	@Column(name="quantite")
 	@NotNull
-	private float quantite;
+	private double quantite;
 	
 	@Column(name="vegetarien")
 	@NotNull
@@ -43,7 +43,7 @@ public class Ingredient implements Serializable {
 	
 	public Ingredient() {}
 
-	public Ingredient(@NotNull Long ingredientId, @NotNull float quantite, @NotNull int vegetarien, @NotNull int vegan) {
+	public Ingredient(@NotNull Long ingredientId, @NotNull double quantite, @NotNull int vegetarien, @NotNull int vegan) {
 		super();
 		this.ingredientId = ingredientId;
 		this.quantite = quantite;
@@ -75,7 +75,7 @@ public class Ingredient implements Serializable {
 		this.ingredientId = ingredientId;
 	}
 
-	public float getQuantite() {
+	public double getQuantite() {
 		return quantite;
 	}
 

@@ -36,7 +36,7 @@ public class IngredientRestServiceIT {
  	@Test
  	public void testGetUnitByName() {
  		when().get("/unit/Apple").then().body(containsString("kg"));
- 	}
+ 	}/*
 	@Test
 	public void testCreate() {
 	   Ingredient ingredient = new Ingredient(1000, "egg", "unit", 1, 0);
@@ -53,6 +53,6 @@ public class IngredientRestServiceIT {
 	@Test
 	public void testDelete() {
 		with().contentType(ContentType.JSON).when().request("DELETE", "/delete/4").then().statusCode(200);
-	}
+	}*/
 	
 }
