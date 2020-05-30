@@ -36,7 +36,7 @@
 	</properties>
 
 	<modules>
-<!-- 		<module>api-gateway</module> -->
+ 		<module>api-gateway</module> 
  		<module>profile-service</module> 
 		<module>recipes-service</module> 
   		<module>ingredients-service</module> 
