@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Fridge } from './fridge';
-import { IngredientFridge } from './ingredientFridge'
+import { Cart } from './cart';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -10,7 +9,7 @@ import { environment } from '../../environments/environment';
     providedIn: 'root',
   })
 
-export class FridgeService {
+export class CartService {
     constructor(private http: HttpClient) { }
   
     httpOptions = {
@@ -20,16 +19,16 @@ export class FridgeService {
      };
 
 
-sendIngredientsFridge(fridge: Fridge){
-    return this.http.post(environment.listsService.url + "/addtofridge", fridge)
+sendIngredientsCart(cart: Cart){
+    return this.http.post(environment.listsService.url + "/addtocart", cart)
         .pipe(
             retry(1),
             catchError(this.handleError)
         );
 }
 
-deleteIngredientFridge(fridge: Fridge){
-    return this.http.post(environment.listsService.url + "/removefromfridge", fridge)
+deleteIngredientCart(cart: Cart){
+    return this.http.post(environment.listsService.url + "/removefromcart", cart)
         .pipe(
             retry(1),
             catchError(this.handleError),

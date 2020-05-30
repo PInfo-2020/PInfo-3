@@ -27,13 +27,13 @@ export class FridgeComponent implements OnInit, AfterViewInit {
   quantityElem: any;
   unitElem: any;
   ingredientElem: any;
-  urlFridge:string = `${environment.listsService.url}/fridge/1`;
+  id: any;
+  urlFridge:string;
   urlIngredient:string = `${environment.ingredientsService.url}`;
 
   dataFridge:any = [];
   dataIngredient:any = [];
   ingredientID: number;
-  id: any;
 
 
   // public keycloakAuth: KeycloakInstance;
@@ -46,11 +46,12 @@ export class FridgeComponent implements OnInit, AfterViewInit {
       this.id = params['id'];        
       console.log(this.id);
     });
-    this.getFridge();
-    this.getIngredientsList();
   }
 
   ngAfterViewInit(){
+    //this.getFridge();
+    this.getIngredientsList();
+    this.urlFridge = `${environment.listsService.url}/fridge/${this.id}`;
     this.quantityElem = document.getElementById("quantity");
     this.ingredientElem = document.getElementById("ingredient");
     this.unitElem = document.getElementById("unit");
@@ -83,53 +84,77 @@ export class FridgeComponent implements OnInit, AfterViewInit {
   getFridge(){
     this.http.get(this.urlFridge).subscribe((res)=>{
       this.dataFridge = res
-      this.addFridge(this.dataFridge)
+      this.addFridge()
     })
   }
 
   getIngredientsList(){
     this.http.get(this.urlIngredient).subscribe((res)=>{
       this.dataIngredient = res
+      this.getFridge()
     })
   }
 
-  // addIngredient(dataIngredient){
-  //   console.log(dataIngredient.length);
-  //   for(var i=0; i<dataIngredient.length; i++){
-  //     console.log(this.dataIngredient[i].id);
-  //   }
-  // }
 
-
-
-  addFridge(dataFridge){
+  addFridge(){
     var mainContainer = document.getElementById("myData")
     while (mainContainer.firstChild) {
       mainContainer.firstChild.remove();
     }
-    for (var i=0; i<dataFridge.length; i++){
-      let ingredientId = dataFridge[i].ingredientID;
-      let ingredientName = "none";
+    for (let i=0; i<this.dataFridge.length; i++){
+      let ingredientId = this.dataFridge[i].ingredientID;
+      let ingredientName = " ";
+      let unitVal = " "
       for(let j=0; j<this.dataIngredient.length; j++){
         if(ingredientId == this.dataIngredient[j].id){
           ingredientName = this.dataIngredient[j].name;
+          unitVal = this.dataIngredient[j].unit;
         }
       }
 
-      var contrain = document.createElement("div");
-      var contrainFridge = document.createElement("div");
-      contrainFridge.className = "frigo";
-      var ingre = document.createElement("h5");
-      ingre.innerHTML = "Ingredient " + (ingredientName) + " Quantity " + (dataFridge[i].quantity);
-      // var quan = document.createElement("h5");
-      // ingre.innerHTML = "Quantity " + (dataFridge[i].quantity);
+      let blockToAdd = document.createElement("div");
+      blockToAdd.className = "row mb-1 text-center";
+      blockToAdd.innerHTML = `
+        <span class="m-auto border bg-white pl-2 pr-2">Name:</span><span class="col-3 border m-auto bg-white" id="ingredient">${ingredientName}</span>
+        <span class="m-auto border bg-white pl-2 pr-2">Quantity:</span><span class="col-1 border m-auto bg-white" id="quantity">${this.dataFridge[i].quantity}</span>
+        <span class="m-auto border bg-white pl-2 pr-2">Unit:</span><span class="col-1 border m-auto bg-white">${unitVal}</span>
+        <button id="${[this.dataFridge[i].ingredientID, this.dataFridge[i].quantity]}" type="button" class="btn btn-secondary mr-1 button-w">x</button>
+      `;
 
-      contrainFridge.appendChild(ingre);
-      // contrainFridge.appendChild(quan);
-      contrain.appendChild(contrainFridge)
-      mainContainer.appendChild(contrain);
+      let blockContainer = document.getElementById("div2");
+      blockContainer.appendChild(blockToAdd);
+
+      // var contrain = document.createElement("div");
+      // var contrainFridge = document.createElement("div");
+      // contrainFridge.className = "frigo";
+      // var ingre = document.createElement("h5");
+      // ingre.innerHTML = "Ingredient :" + (ingredientName) + " Quantity :" + (this.dataFridge[i].quantity) + `<button type="button" class="btn btn-secondary mr-1 button-w" onclick="this.removeIngredient(this.dataFridge[i].ingredientID, this.dataFridge[i].quantity)">x</button>`;
+
+      // // var quan = document.createElement("h5");
+      // // ingre.innerHTML = "Quantity " + (dataFridge[i].quantity);
+
+      // contrainFridge.appendChild(ingre);
+      // // contrainFridge.appendChild(quan);
+      // contrain.appendChild(contrainFridge)
+      // mainContainer.appendChild(contrain);
     }
+
+    // document.addEventListener('click', event => {
+    //   var target = event.target || event.srcElement || event.currentTarget;
+    //   var idAttr = (target as Element).id;
+    //   var value = idAttr.split(",");
+    //   this.removeIngredient(+value[0], +value[1]);
+    // });
   }
+  // removeIngredient(ingredientToDeleteID: number, quantityToDelete: number){
+  //   let userId = this.id;
+  //   console.log(ingredientToDeleteID)
+  //   console.log(quantityToDelete)
+  //   console.log(typeof this.id)
+  //   let fridge = new Fridge(userId, ingredientToDeleteID, quantityToDelete);
+  //   this.fridgeService.deleteIngredientFridge(fridge)
+  //     .subscribe();
+  // }
 
   sendData(){
     let quantityVal = document.getElementById("div1").children;
@@ -139,11 +164,9 @@ export class FridgeComponent implements OnInit, AfterViewInit {
     for(let i=0; i<ingredient.length; i++){
       let ingredientName = ingredient[i].children[1].innerHTML; 
       let ingredientQuantity = quantityVal[i].children[3].innerHTML;
-      console.log(ingredientQuantity);
 
       for(let j=0; j<this.dataIngredient.length; j++){
         if(ingredientName == this.dataIngredient[j].name){
-          console.log("SAME");
           let idIngredient = this.dataIngredient[j].id;
           let fridge = new Fridge(userId, idIngredient, ingredientQuantity);
           this.fridgeService.sendIngredientsFridge(fridge)
