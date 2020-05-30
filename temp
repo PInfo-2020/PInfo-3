@@ -1,1 +1,40 @@
-hello
+
+drop table Recipe if exists;
+create table Recipe (
+		id bigint not null,
+        name varchar(31) not null,
+        description varchar(255) not null,
+        instructions varchar(255) not null,
+        minutes bigint not null,
+        personnes bigint not null,
+        userId varchar(255) not null,
+        primary key (id)
+);
+
+drop table Ingredient if exists;
+create table Ingredient (
+		id bigint not null,
+		recipeId bigint not null,
+		ingredientId bigint not null,
+		quantite FLOAT(53) not null,
+        vegetarien bigint not null,
+        vegan bigint not null,
+        primary key (id)
+);
+
+drop table Comment if exists;
+create table Comment (
+		id bigint not null,
+		recipeId bigint not null,
+		commentRecipe varchar(255) not null,
+        primary key (id)
+);
+
+drop table Grade if exists;
+create table Grade (
+		id bigint not null,
+		recipeId bigint not null,
+		userId varchar(255) not null,
+		gradeRecipe bigint not null,
+        primary key (id)
+);

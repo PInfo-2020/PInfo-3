@@ -35,11 +35,20 @@ public class IngredientServiceImplTest {
 	private IngredientServiceImpl ingredientServiceImpl;
 
 	@Test
-	public void testGetAll() {
+    	public void testGetAll() {
+        List<Ingredient> ingredients = ingredientServiceImpl.getAll();
+        int size = ingredients.size();
+
+	Ingredient i = new Ingredient("yo", "kilo", 1, 1);
+        ingredientServiceImpl.create(i);
+
+        assertEquals(size + 1, ingredientServiceImpl.getAll().size());
+    	}
+	/*public void testGetAll() {
 		int size = initDataStore();
 		assertEquals(size, ingredientServiceImpl.getAll().size());
-	}
-	
+	}*/
+	/*
 	@Test
 	public void testGetById() {
 		initDataStore();
@@ -125,7 +134,7 @@ public class IngredientServiceImplTest {
 		ingredientServiceImpl.delete(ingredients.get(0));
 		assertFalse(ingredientServiceImpl.existByName(name));
 	}
-
+*/
 	private List<Ingredient> getIngredients() {
 		List<Ingredient> ingredients = new ArrayList<>();
 		long numberOfIngredients = Math.round((Math.random() * 10)) + 1;

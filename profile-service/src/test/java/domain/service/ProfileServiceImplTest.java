@@ -85,5 +85,35 @@ class ProfileServiceImplTest {
 		psi.addNewPlannedRecipe(pr);
 		assertEquals(size +1, psi.getAllPlannedRecipes().size());
 	}
+	
+	@Test
+	void getBestCooker() {
+		Profile p1 = new Profile("1","bb",5);
+		Profile p2 = new Profile("2","bwb",4);
+		Profile p3 = new Profile("3","beb",3);
+		Profile p4 = new Profile("4","eb",2);
+		Profile p5 = new Profile("5","bb",5);
+		Profile p6 = new Profile("6","bwb",4);
+		Profile p7 = new Profile("7","beb",3);
+		Profile p8 = new Profile("8","eb",2);
+		Profile p9 = new Profile("9","bb",5);
+		Profile p10 = new Profile("10","bwb",4);
+		Profile p11= new Profile("11","beb",3);
+		Profile p12 = new Profile("12","eb",2);
+		psi.addNewUser(p1);
+		psi.addNewUser(p2);
+		psi.addNewUser(p3);
+		psi.addNewUser(p4);
+		psi.addNewUser(p5);
+		psi.addNewUser(p6);
+		psi.addNewUser(p7);
+		psi.addNewUser(p8);
+		psi.addNewUser(p9);
+		psi.addNewUser(p10);
+		psi.addNewUser(p11);
+		psi.addNewUser(p12);
+		int size = psi.getDataUsers().size();
+		assertEquals(10, psi.getBestCooker().size());
+	}
 
 }

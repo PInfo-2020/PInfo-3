@@ -20,8 +20,14 @@ public interface ProfileService {
 
 	public void removeOneUser(Profile p);
 	
-	public void removeOnePlannedRecipe(PlannedRecipe pr);
-	
 	public void updateScore(Score s);
+
+	public void removeOnePlannedRecipe(int recipeID);
+
+	public List<Profile> getBestCooker();
+
+	void removeOnePlannedRecipe(PlannedRecipe pr);
+
+	double getGrade(String usernameID);
 
 }

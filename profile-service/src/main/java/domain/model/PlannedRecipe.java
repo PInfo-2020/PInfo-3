@@ -22,7 +22,7 @@ import lombok.Data;
 @IdClass(PlannedRecipeID.class)
 @Table(name="plannedrecipe")
 public class PlannedRecipe implements Serializable {
-	
+		
 	public PlannedRecipe() {}
 	public PlannedRecipe(@NotNull int rowID,@NotNull String usernameID, @NotNull int recipeID) {
 		super();

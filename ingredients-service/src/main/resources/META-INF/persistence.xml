@@ -28,18 +28,19 @@
 		transaction-type="JTA">
 		<jta-data-source>java:jboss/datasources/ingredients</jta-data-source>
 		<properties>
-			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.H2Dialect" />
+			<property name="hibernate.id.new_generator_mappings" value="true" />
 			<property name="hibernate.hbm2ddl.charset_name" value="UTF-8"/>	
 			<property name="hibernate.connection.CharSet" value="UTF-8"/>
 			<property name="hibernate.connection.characterEncoding" value="UTF-8"/>
 			<property name="hibernate.connection.useUnicode" value="true"/>
 		<!--<property name="hibernate.id.new_generator_mappings" value="true" />
 			<property name="hibernate.hbm2ddl.charset_name" value="UTF-8"/>	-->		
-			<property name="javax.persistence.sql-load-script-source" value="META-INF/ingredients.sql"/>
+		<!--	<property name="javax.persistence.sql-load-script-source" value="META-INF/ingredients.sql"/>-->
 		</properties>
 	</persistence-unit>
 </persistence>

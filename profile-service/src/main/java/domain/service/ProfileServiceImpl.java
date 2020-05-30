@@ -4,6 +4,9 @@ import javax.enterprise.context.ApplicationScoped;
 import lombok.extern.java.Log;
 import javax.enterprise.inject.Default;
 import javax.transaction.Transactional;
+
+import org.wildfly.swarm.config.Logging;
+
 import java.util.*;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -137,6 +140,51 @@ public class ProfileServiceImpl implements ProfileService {
 			em.merge(p);
 		}
 	}
+
+	@Override
+	public void removeOnePlannedRecipe(int recipeID) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double getGrade(String usernameID) {
+		TypedQuery<Profile> query = em.createQuery("SELECT g FROM Profile g WHERE g.usernameID = :usernameID ", Profile.class);
+		query.setParameter("usernameID", usernameID);
+		List<Profile> results = query.getResultList();
+
+		return results.get(0).getScore();
+	}
+	@Override
+	public List<Profile> getBestCooker() {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Profile> criteria = builder.createQuery(Profile.class);
+		criteria.from(Profile.class);
+		List<Profile> profiles = em.createQuery(criteria).getResultList();
+		HashMap<Profile, Double> bestProfiles = new HashMap<Profile, Double>();
+		for(Profile profile : profiles) {
+			if (bestProfiles.size() < 10) {	// return the 3 best Profiles
+				bestProfiles.put(profile, this.getGrade(profile.getUsernameID()));
+			}
+			else {
+				if (this.getGrade(profile.getUsernameID()) > Collections.min(bestProfiles.values())) {
+					for(Profile r : bestProfiles.keySet()) {
+						if (this.getGrade(r.getUsernameID()) == Collections.min(bestProfiles.values())) {
+							bestProfiles.remove(r, this.getGrade(r.getUsernameID()));
+							bestProfiles.put(profile, this.getGrade(profile.getUsernameID()));
+							break;
+						}
+					}
+				}
+			}
+		}
+		List<Profile> results = new ArrayList<Profile>();
+		for(Profile r : bestProfiles.keySet()) {
+			results.add(r);
+		}
+		return results;
+	}
+
 	
 
 		
