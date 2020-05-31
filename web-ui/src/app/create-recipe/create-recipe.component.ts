@@ -57,7 +57,7 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
         this.ingredientsDB = data;
 
         this.ingredientsDB.forEach(function(item){
-          var option = document.createElement("option");
+          let option = document.createElement("option");
           option.value = item.name;
           that.ingredientsName.push(item.name);
           ingredientDataElem.appendChild(option);

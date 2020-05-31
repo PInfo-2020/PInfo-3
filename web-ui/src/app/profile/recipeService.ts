@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Recipe } from './recipe';
-import { IngredientRecipe } from './ingredientRecipe'
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, forkJoin } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
@@ -18,20 +17,37 @@ export class RecipeService {
        }),
    };
 
-  sendRecipe(recipe: Recipe): Observable<Number> {
-    return this.http.post<Number>(environment.recipeService.url, recipe)
-      .pipe(
-                retry(1),
-                catchError(this.handleError),
-            );
+  // return recipe and it's score
+  getPlannedRecipe(id: Number): Observable<any[]> {
+    let response1 = this.http.get<Recipe>(environment.recipeService.url + "/" + id)
+    .pipe(
+              retry(1),
+              catchError(this.handleError),
+          );
+    let response2 = this.http.get<Number>(environment.recipeService.url + "/" + id + "/grade")
+    .pipe(
+              retry(1),
+              catchError(this.handleError),
+          );
+    return forkJoin([response1, response2]);
   }
 
-  sendIngredientsRecipe(ingredientsRecipe: Array<IngredientRecipe>, id: number) {
-    return this.http.post(environment.recipeService.url + "/"+id+"/addingredients", ingredientsRecipe)
-      .pipe(
-                retry(1),
-                catchError(this.handleError),
-            );
+  // return all recipes from user
+  getMyRecipe(id: Number): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(environment.recipeService.url + "/user/" + id + "/recipes")
+    .pipe(
+              retry(1),
+              catchError(this.handleError),
+          );
+  }
+
+  // return score for a recipe
+  getMyRecipeScore(id: Number): Observable<Number> {
+    return this.http.get<Number>(environment.recipeService.url + "/" + id + "/grade")
+    .pipe(
+              retry(1),
+              catchError(this.handleError),
+          );
   }
 
   handleError(error) {

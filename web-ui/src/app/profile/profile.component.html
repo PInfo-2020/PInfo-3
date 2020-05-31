@@ -7,27 +7,27 @@
 
 <div class="allForm">
   <div>
-      <p class="h1 ml-5">Profile</p>
+      <p class="h1 ml-5 text-white">Profile</p>
   </div>
 
   <div class="row mb-5">
     <div class="col-6">
-      <img src="../../assets/img/profil.png" class="rounded ml-auto d-block">
+      <img src="../assets/img/profile2.png" class="rounded ml-auto d-block" />
     </div>
-    <div class="col-3">
+    <div class="col-2 text-white">
       <div class="row">
-        <span>Username: </span><span id="username"></span>
+        <span>Username: </span><span id="username" class="ml-2"></span>
       </div>
       <div class="row">
-        <span>Password: </span><span id="password"></span>
+        <span>Password: </span><span id="password" class="ml-2"></span>
       </div>
       <div class="row">
-        <span>Email: </span><span id="email"></span>
+        <span>Email: </span><span id="email" class="ml-2"></span>
       </div>
     </div>
-    <div class="col-3">
-      <div class="row mb-5">
-        <span>My rating: </span><span id="rating"></span>
+    <div class="col-2 text-white">
+      <div class="row mb-5 font-weight-bold">
+        <span>My rating: </span><span id="rating" class="ml-2 mr-1"></span><img src="../assets/img/star.png" />
       </div>
       <div class="row mb-2">
         <a routerLink="/fridge"><button class="btn btn-primary">Go to my fridge</button></a>
@@ -38,12 +38,16 @@
     </div>
   </div>
 
-  <div class="row w-75 m-auto mt-5">
+  <div class="row w-75 m-auto mt-5 text-white">
     <div class="col" id="recipeToMake">
       <span class="h5">Recipes to make</span>
+      <div id="div1" class="w-75">
+      </div>
     </div>
     <div class="col" id="myRecipe">
       <span class="h5">My Recipes</span>
+      <div id="div2" class="w-75">
+      </div>
     </div>
   </div>
 </div>
