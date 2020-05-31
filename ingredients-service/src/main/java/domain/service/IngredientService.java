@@ -18,8 +18,6 @@ public interface IngredientService {
 	
 	public void delete(Ingredient ingredient);
 	
-	public void update(Ingredient ingredient);
-	
 	public boolean existByName(String name);
 	
 }

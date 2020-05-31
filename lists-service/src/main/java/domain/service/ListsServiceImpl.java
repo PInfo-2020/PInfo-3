@@ -2,11 +2,13 @@ package domain.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -93,6 +95,43 @@ public class ListsServiceImpl implements ListsService {
 		}
 		
 	}
+	
+	@Override
+	public void modCartForRecipeToMake(List<ItemCart> itemCarts) {
+		log.info("Modifie le Cart de l'utilisateur pour ajouter les ingrédients d'une recette en fonction du frigo");
+		TypedQuery<ItemFridge> query = em.createQuery("SELECT i FROM ItemFridge i WHERE i.userID = :userID ", ItemFridge.class);
+		query.setParameter("userID", itemCarts.get(0).getUserID());
+		List<ItemFridge> fridge = query.getResultList();
+		
+		List<ItemCart> finalItems = new ArrayList<ItemCart>();
+		
+		for(ItemCart i : itemCarts) {
+			for(ItemFridge f : fridge) {
+				if (i.getIngredientID() == f.getIngredientID()) {
+					if (i.getQuantity() > f.getQuantity()) {
+						i.setQuantity((i.getQuantity() - f.getQuantity()));
+					}
+					else {
+						i.setQuantity(0);
+					}
+				}
+			}
+		}
+		
+		for(ItemCart i : itemCarts) {
+			if (i.getQuantity() == 0) {
+				continue;
+			}
+			else {
+				finalItems.add(i);
+			}
+		}
+		
+		for (ItemCart i : finalItems) {
+			this.modIngredientCart(i);
+		}
+		
+	}
 
 	@Override
 	public void modIngredientFridge(ItemFridge itemFridge) {
@@ -128,12 +167,5 @@ public class ListsServiceImpl implements ListsService {
 		em.remove(itemFridge);
 	}
 	
-//	@Override
-//	public ArrayList<ItemCart> getAllCartTEST() {
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//		CriteriaQuery<ItemCart> cq = cb.createQuery(ItemCart.class);
-//		Root<ItemCart> root = cq.from(ItemCart.class);
-//		cq.select(root);
-//		return (ArrayList<ItemCart>) em.createQuery(cq).getResultList();
-//	}
+	
 }

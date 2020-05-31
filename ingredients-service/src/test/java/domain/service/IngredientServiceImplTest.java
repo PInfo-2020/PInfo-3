@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -35,20 +36,19 @@ public class IngredientServiceImplTest {
 	private IngredientServiceImpl ingredientServiceImpl;
 
 	@Test
-    	public void testGetAll() {
+    public void testGetAll() {
         List<Ingredient> ingredients = ingredientServiceImpl.getAll();
         int size = ingredients.size();
 
-	Ingredient i = new Ingredient("yo", "kilo", 1, 1);
+        Ingredient i = getRandomIngredient();
+        Ingredient i2 = getRandomIngredient();
         ingredientServiceImpl.create(i);
+        ingredientServiceImpl.create(i2);
 
-        assertEquals(size + 1, ingredientServiceImpl.getAll().size());
-    	}
-	/*public void testGetAll() {
-		int size = initDataStore();
-		assertEquals(size, ingredientServiceImpl.getAll().size());
-	}*/
-	/*
+        assertEquals(size + 2, ingredientServiceImpl.getAll().size());
+    }
+	
+	
 	@Test
 	public void testGetById() {
 		initDataStore();
@@ -97,7 +97,6 @@ public class IngredientServiceImplTest {
 		assertTrue(thrown.getMessage().contains("Ingredient already exists"));
 	}
 
-	
 	@Test
 	public void testDelete() {
 		Ingredient ingredient = getRandomIngredient();
@@ -105,21 +104,6 @@ public class IngredientServiceImplTest {
 		ingredientServiceImpl.delete(ingredient);
 		Ingredient i = em.find(Ingredient.class, ingredient.getId());
 		assertTrue(i == null);
-	}
-
-	@Test
-	public void testUpdate() {
-		Ingredient ing1 = getRandomIngredient();
-		ingredientServiceImpl.create(ing1);
-		Ingredient ing2 = getRandomIngredient();
-		ing2.setId(ing1.getId());
-		ingredientServiceImpl.update(ing2);
-		Ingredient i = em.find(Ingredient.class, ing1.getId());
-		assertTrue(ing1.equals(i));
-		Ingredient ingNull = null;
-		IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class,
-				() -> ingredientServiceImpl.update(ingNull), "Ingredient does not exist");
-		assertTrue(thrown.getMessage().contains("Ingredient does not exist"));
 	}
 	
 	@Test
@@ -134,7 +118,7 @@ public class IngredientServiceImplTest {
 		ingredientServiceImpl.delete(ingredients.get(0));
 		assertFalse(ingredientServiceImpl.existByName(name));
 	}
-*/
+
 	private List<Ingredient> getIngredients() {
 		List<Ingredient> ingredients = new ArrayList<>();
 		long numberOfIngredients = Math.round((Math.random() * 10)) + 1;
@@ -143,15 +127,11 @@ public class IngredientServiceImplTest {
 		}
 		return ingredients;
 	}
+	
 
 	private Ingredient getRandomIngredient() {
-		Ingredient ingredient = new Ingredient();
-		Random r = new Random();
-		ingredient.setId(r.nextInt(200));
-		ingredient.setName(UUID.randomUUID().toString());
-		ingredient.setUnit(UUID.randomUUID().toString());
-		ingredient.setVegetarian(1);
-		ingredient.setVegan(0);
+		Ingredient ingredient = new Ingredient(UUID.randomUUID().toString(), UUID.randomUUID().toString(), 
+				ThreadLocalRandom.current().nextInt(0, 2), ThreadLocalRandom.current().nextInt(0, 2));
 		return ingredient;
 	}
 	
@@ -163,5 +143,6 @@ public class IngredientServiceImplTest {
 		}
 		return size + ingredients.size();
 	}
+	
 	
 }

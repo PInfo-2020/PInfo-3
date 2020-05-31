@@ -36,23 +36,11 @@ public class IngredientRestServiceIT {
  	@Test
  	public void testGetUnitByName() {
  		when().get("/unit/Apple").then().body(containsString("kg"));
- 	}/*
-	@Test
-	public void testCreate() {
-	   Ingredient ingredient = new Ingredient(1000, "egg", "unit", 1, 0);
-	   with().contentType(ContentType.JSON).body(ingredient).when().request("POST", "/create").then().statusCode(200);
-	   when().get("/").then().body(containsString("egg"));
-	}
-	
-	@Test
-	public void testUpdate() {
-	   Ingredient ingredient = new Ingredient(1, "lemon", "unit", 1, 0);
-	   with().contentType(ContentType.JSON).body(ingredient).when().request("PUT", "/update").then().statusCode(200);
-	}
+ 	}
 	
 	@Test
 	public void testDelete() {
 		with().contentType(ContentType.JSON).when().request("DELETE", "/delete/4").then().statusCode(200);
-	}*/
+	}
 	
 }

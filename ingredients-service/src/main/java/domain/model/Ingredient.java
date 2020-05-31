@@ -46,7 +46,14 @@ public class Ingredient implements Serializable {
 	
 	
 	public Ingredient(String name, String unit, int vegetarian, int vegan) {
-		//this.id = id;
+		this.name = name;
+		this.unit = unit;
+		this.vegetarian = vegetarian;
+		this.vegan = vegan;
+	}
+	
+	public Ingredient(int id, String name, String unit, int vegetarian, int vegan) {
+		this.id = id;
 		this.name = name;
 		this.unit = unit;
 		this.vegetarian = vegetarian;

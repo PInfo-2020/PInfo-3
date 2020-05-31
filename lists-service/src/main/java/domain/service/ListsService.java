@@ -2,6 +2,7 @@ package domain.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import domain.model.ItemCart;
 import domain.model.ItemFridge;
@@ -23,8 +24,9 @@ public interface ListsService {
 	public void removeIngredientCart(ItemCart itemCart);
 	
 	public void removeIngredientFridge(ItemFridge itemFridge);
-
-//	public ArrayList<ItemCart> getAllCartTEST();
+	
+	public void modCartForRecipeToMake(List<ItemCart> itemCarts);
 
 	public HashMap<Integer, Double> getAllFridgeRecipe(String userID);
+	
 }

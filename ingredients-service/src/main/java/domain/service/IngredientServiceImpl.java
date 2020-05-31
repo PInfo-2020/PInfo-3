@@ -77,15 +77,6 @@ public class IngredientServiceImpl implements IngredientService {
 	}
 	
 	@Override
-	public void update(Ingredient ingredient) {
-		log.info("Update an ingredient");
-		if(ingredient == null) {
-			throw new IllegalArgumentException("Ingredient does not exist");
-		}
-		em.merge(ingredient);
-	}
-	
-	@Override
 	public boolean existByName(String name) {
 		log.info("Check if an ingredient exists");
 		CriteriaBuilder builder = em.getCriteriaBuilder();

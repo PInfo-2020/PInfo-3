@@ -64,4 +64,12 @@ public class ListsServiceRestService {
 	public void removeIngredientFridge(ItemFridge itemFridge) {
 		listsService.removeIngredientFridge(itemFridge);
 	}
+	
+	@POST // Add ingredients of Recipe that a user wants to do in the Cart
+	@Path("/addcartfromrecipe")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void modIngredientCart(List<ItemCart> itemCarts) {
+		listsService.modCartForRecipeToMake(itemCarts);
+	}
+	
 }

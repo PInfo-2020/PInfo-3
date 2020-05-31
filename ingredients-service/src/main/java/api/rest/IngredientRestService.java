@@ -79,16 +79,5 @@ public class IngredientRestService {
 		return Response.ok().build();
 	}
 	
-	@PUT
-	@Path("/update")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(Ingredient ingredient) {
-		try {
-			ingredientService.update(ingredient);
-		} catch(Exception e) {
-			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-		}
-		return Response.ok().build();
-	}
 
 }
