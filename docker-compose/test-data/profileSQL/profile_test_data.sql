@@ -1,16 +1,14 @@
-DROP TABLE profile if exists;
-DROP TABLE plannedrecipe if exists;
 CREATE TABLE profile(
 	usernameID VARCHAR(50) not null,
 	username VARCHAR(50) not null,
 	score FLOAT(53) not null
 );
 		
-CREATE TABLE plannedrecipe(
+ CREATE TABLE plannedrecipe(
            rowID BIGINT not null,
            usernameID VARCHAR(50) not null,
            recipeID BIGINT not null
-);
+  );
 INSERT INTO plannedrecipe (rowID,usernameID,recipeID) VALUES (1,'1',001);
 INSERT INTO plannedrecipe (rowID,usernameID,recipeID) VALUES (2,'2',001);
 INSERT INTO plannedrecipe (rowID,usernameID,recipeID) VALUES (3,'1',002);

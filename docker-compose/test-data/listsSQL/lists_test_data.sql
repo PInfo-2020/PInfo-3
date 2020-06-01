@@ -1,5 +1,4 @@
-DROP TABLE ITEMCART if exists;
-DROP TABLE ITEMFRIDGE if exists;
+
 CREATE TABLE ITEMCART(
 	userID VARCHAR(50) not null,
 	ingredientID BIGINT not null,

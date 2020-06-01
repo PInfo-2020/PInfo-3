@@ -240,7 +240,7 @@
 				</executions>
 			</plugin>
 
-			<!-- <plugin>
+			 <plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>sql-maven-plugin</artifactId>
 				<version>1.5</version>
@@ -253,7 +253,7 @@
 				</dependencies>
 				<configuration>
 					<driver>org.h2.Driver</driver>
-					<url>jdbc:h2:${java.io.tmpdir}/target/ListsDB;AUTO_SERVER=TRUE</url>
+					<url>jdbc:h2:${java.io.tmpdir}/target/listsDB;AUTO_SERVER=TRUE</url>
 					<username>sa</username>
 					<password>sa</password>
 					<autocommit>true</autocommit>
@@ -268,12 +268,12 @@
 						</goals>
 						<configuration>
 							<srcFiles>
-								<srcFile>${project.basedir}/src/main/resources/META-INF/itemCart_test_data.sql</srcFile>
+								<srcFile>${project.basedir}/src/main/resources/META-INF/test_data.sql</srcFile>
 							</srcFiles>
 						</configuration>
 					</execution>
 				</executions>
-			</plugin> -->
+			</plugin> 
 		</plugins>
 	</build>
 </project>
