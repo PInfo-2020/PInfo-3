@@ -21,7 +21,7 @@ cache:
 
 before_install:
 #- mvn test
-- mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dmaven.test.skip=true -Ppackage-docker-image
+- mvn clean install  -Ppackage-docker-image
 - mvn sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3 -Dsonar.organization=pinfo-2020 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
 
 install:
