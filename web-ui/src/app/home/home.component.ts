@@ -19,6 +19,8 @@ export class HomeComponent implements OnInit {
   private urlVeg:string = `${environment.recipeService.url}/vegetarien`
   private urlFrigo:string = `${environment.recipeService.url}/user/1/fridge/recipe`/*fix me! with the right id!*/
 
+  userID: string = this.keycloak.getKeycloakId();
+
   constructor(public keycloak: KeycloakService, private http: HttpClient) { }
 
    ngOnInit() {
@@ -26,7 +28,6 @@ export class HomeComponent implements OnInit {
       if (this.keycloak.isLoggedIn() === false) {
           this.keycloak.login();
       }
-      console.log(this.keycloak.getUsername());
 
 
       //only have one checkbox picked

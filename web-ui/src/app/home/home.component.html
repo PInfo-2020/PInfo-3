@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light">
-    <div class="w-25">
-      <a class="navbar-brand w-50" routerLink="/home" routerLinkActive="active"><img class="w-100" src="../assets/img/DigeSteve.PNG"/></a>
-    </div>
-      <a class='ml-auto text-dark ml-100' routerLink="/profile" routerLinkActive="active"><img class="w-25" src="../assets/img/profil.png" /></a>
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <div class="w-25">
+    <a class="navbar-brand w-25" routerLink="/home" routerLinkActive="active"><img class="w-100" src="../assets/img/DigeSteve.PNG"/></a>
+  </div>
+    <a class='text-dark mr-5 ml-auto' [routerLink]="['/profile/', keycloak.getKeycloakId()]" routerLinkActive="active">Profile</a>
 </nav>
 
 <div style="text-align:center" >
@@ -31,10 +31,10 @@
 			<div class="card" style="width: 21rem;margin-bottom:5px;margin-top:5px;">
 				<div class="card-body">
 					<div class="row" style="width:150px;margin:10px">
-						<a class="btn btn-outline-danger" routerLink="/fridge/1" role="button">My Fridge</a>
+						<a class="btn btn-outline-danger" [routerLink]="['/fridge/', keycloak.getKeycloakId()]" role="button">My Fridge</a>
 					</div>
 					<div class="row" style="width:150px;margin:10px">
-						<a class="btn btn-outline-danger" routerLink="/shoppingList/1" role="button">My Shopping Cart</a>
+						<a class="btn btn-outline-danger" [routerLink]="['/shoppingList/', keycloak.getKeycloakId()]" role="button">My Shopping Cart</a>
 					</div>
 
 				</div>
@@ -65,8 +65,8 @@
 			<div class="card" style="height: 10rem;width: 21rem;margin-bottom:5px;">
 				<div class="card-body">
 			 	 	<div class="row" style="width:150px;margin:10px">
-						<a class="btn btn-outline-danger" routerLink="/createRecipe" role="button">Create Recipe</a>
-            <a class="btn btn-outline-danger" routerLink="/recipe/3" role="button">Recipe</a>
+						<a class="btn btn-outline-danger" routerLink="/createRecipe/" role="button">Create Recipe</a>
+            <a class="btn btn-outline-danger" [routerLink]="['/recipe/', keycloak.getKeycloakId()]" role="button">Recipe</a>
 					</div>
 				</div>
 			</div>

@@ -2,7 +2,7 @@
   <div class="w-25">
     <a class="navbar-brand w-25" routerLink="/home" routerLinkActive="active"><img class="w-100" src="../assets/img/DigeSteve.PNG"/></a>
   </div>
-    <a class='text-dark mr-5 ml-auto' routerLink="/profile/1" routerLinkActive="active">Profile</a>
+    <a class='text-dark mr-5 ml-auto' [routerLink]="['/profile/', keycloak.getKeycloakId()]" routerLinkActive="active">Profile</a>
 </nav>
 
 <div class="allForm">

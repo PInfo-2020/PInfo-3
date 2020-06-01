@@ -18,7 +18,7 @@ export class ProfileService {
        }),
    };
 
-  getUser(id: Number): Observable<User> {
+  getUser(id: String): Observable<User> {
     return this.http.get<User>(environment.profilesService.url + "/" + id)
       .pipe(
                 retry(1),
@@ -26,7 +26,7 @@ export class ProfileService {
             );
   }
 
-  getPlannedRecipe(id: Number): Observable<PlannedRecipe[]> {
+  getPlannedRecipe(id: String): Observable<PlannedRecipe[]> {
     return this.http.get<PlannedRecipe[]>(environment.profilesService.url + "/plannedrecipes/" + id)
       .pipe(
                 retry(1),

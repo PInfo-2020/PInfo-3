@@ -19,6 +19,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   plannedRecipeDB: Array<PlannedRecipe> = [];
   recipeDB: Array<Recipe> = [];
 
+  userID: string = this.keycloak.getKeycloakId();
+
   usernameElem: any;
   emailElem: any;
   passwordElem: any;
@@ -44,17 +46,12 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.ratingElem = document.getElementById("rating");
 
     let ingredientDataElem = document.getElementById("ingredients-choices");
-    let that = this;
 
-    let url = this.router.url;
-    let split = url.split("profile/");
-    let id = Number(split[1]);
-
-    this.profileService.getUser(id)
+    this.profileService.getUser(this.userID)
       .subscribe((data: User) => {
         this.userDB = data;
-        this.callPlannedRecipe(id);
-        this.callMyRecipe(3);
+        this.callPlannedRecipe();
+        this.callMyRecipe();
         this.setUser();
       });
   }
@@ -64,16 +61,16 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.ratingElem.innerHTML = this.userDB.score;
   }
 
-  callPlannedRecipe(id){
-    this.profileService.getPlannedRecipe(id)
+  callPlannedRecipe(){
+    this.profileService.getPlannedRecipe(this.userID)
       .subscribe((data: PlannedRecipe[]) => {
         this.plannedRecipeDB = data;
         this.callPlannedRecipeScore();
       });
   }
 
-  callMyRecipe(id){
-    this.recipeService.getMyRecipe(id)
+  callMyRecipe(){
+    this.recipeService.getMyRecipe(this.userID)
       .subscribe((data: Recipe[]) => {
         this.recipeDB = data;
         console.log(this.recipeDB);

@@ -18,6 +18,8 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
   ingredientsName: Array<String> = [];
   counterInstruction: number = 1;
 
+  userID: string = this.keycloak.getKeycloakId();
+
   quantityElem: any;
   ingredientElem: any;
   instructionElem: any;
@@ -162,7 +164,6 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
 
   sendData() {
     if (this.checkData()) {
-      let userID = "1";
       let nameVal = this.nameElem.value;
       let descriptionVal = this.descriptionElem.value;
       let timeVal = this.timeElem.value;
@@ -174,7 +175,8 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
         instructionVal = instructionVal.concat(instructionChilds[i].children[1].innerHTML, "///");
       }
 
-      let recipe = new Recipe(nameVal, descriptionVal, instructionVal, timeVal, peopleVal, userID);
+      console.log(this.userID);
+      let recipe = new Recipe(nameVal, descriptionVal, instructionVal, timeVal, peopleVal, this.userID);
       this.recipeService.sendRecipe(recipe)
         .subscribe((data: number) => {
           this.sendIngredients(data);

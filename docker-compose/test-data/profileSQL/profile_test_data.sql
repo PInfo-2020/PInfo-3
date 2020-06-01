@@ -3,7 +3,7 @@ CREATE TABLE profile(
 	username VARCHAR(50) not null,
 	score FLOAT(53) not null
 );
-		
+
  CREATE TABLE plannedrecipe(
            rowID BIGINT not null,
            usernameID VARCHAR(50) not null,
@@ -24,10 +24,6 @@ INSERT INTO profile (usernameID,username,score) VALUES ('6','Amine',1);
 INSERT INTO profile (usernameID,username,score) VALUES ('7','Sarra',5);
 INSERT INTO profile (usernameID,username,score) VALUES ('8','Luka',3);
 INSERT INTO profile (usernameID,username,score) VALUES ('9','Benjamin',2.5);
-INSERT INTO profile (usernameID,username,score) VALUES ('10','Nathan',1);
+INSERT INTO profile (usernameID,username,score) VALUES ('9ada320a-7245-4e68-a9bc-03baeec8bbb1','Nathan',1);
 INSERT INTO profile (usernameID,username,score) VALUES ('11','Noah',5.5);
 INSERT INTO profile (usernameID,username,score) VALUES ('12','Anas',0);
-
-
-
-	

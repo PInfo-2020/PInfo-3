@@ -33,7 +33,7 @@ export class RecipeService {
   }
 
   // return all recipes from user
-  getMyRecipe(id: Number): Observable<Recipe[]> {
+  getMyRecipe(id: String): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(environment.recipeService.url + "/user/" + id + "/recipes")
     .pipe(
               retry(1),
