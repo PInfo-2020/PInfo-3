@@ -17,23 +17,19 @@ export class HomeComponent implements OnInit {
   private urlTop:string = `${environment.recipeService.url}/top`
   private urlVegan:string = `${environment.recipeService.url}/vegetarien`
   private urlVeg:string = `${environment.recipeService.url}/vegetarien`
-  private urlFrigo:string = `${environment.recipeService.url}/user/1/fridge/recipe`/*fix me! with the right id!*/ 
+  private urlFrigo:string = `${environment.recipeService.url}/user/1/fridge/recipe`/*fix me! with the right id!*/
 
   constructor(public keycloak: KeycloakService, private http: HttpClient) { }
 
-  ngOnInit(): void {
-      console.log("her4")
+   ngOnInit() {
       this.keycloakAuth = this.keycloak.getKeycloakAuth();
-      console.log("her3")
-      console.log("her8", this.keycloak)
       if (this.keycloak.isLoggedIn() === false) {
-        console.log("her1")
           this.keycloak.login();
-          console.log("her2")
       }
+      console.log(this.keycloak.getUsername());
 
 
-      //only have one checkbox picked 
+      //only have one checkbox picked
       $('.sev_check').click(function() {
         $('.sev_check').not(this).prop('checked', false);
       });
@@ -130,22 +126,12 @@ frigo(){
       cardBody.appendChild(cardTitle);
       cardBody.appendChild(cardText);
       cardBody.appendChild(cardLink);
-     
+
 
       cardRecipe.appendChild(cardBody);
       mainContainer.appendChild(cardRecipe);
 
     }
   }
-  
+
  }
-
-
-
-
-
-
- 
-
-
-

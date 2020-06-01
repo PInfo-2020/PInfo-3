@@ -33,10 +33,10 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
   constructor(public keycloak: KeycloakService, private ingredientService: IngredientService, private recipeService: RecipeService, private router: Router){}
 
   ngOnInit(): void {
-    // this.keycloakAuth = this.keycloak.getKeycloakAuth();
-    // if (this.keycloak.isLoggedIn() === false) {
-    //     this.keycloak.login();
-    // }
+    this.keycloakAuth = this.keycloak.getKeycloakAuth();
+    if (this.keycloak.isLoggedIn() === false) {
+        this.keycloak.login();
+    }
   }
 
   ngAfterViewInit() {

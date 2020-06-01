@@ -22,10 +22,11 @@ import { KeycloakInterceptorService } from './services/keycloak/keycloak.interce
 declare var window: any;
 
 export function init_config(appLoadService: AppInitService, keycloak: KeycloakService) {
-   return () =>  appLoadService.init().then( () => {
+   return () =>  appLoadService.init().then( async () => {
+     console.log("Starting project...");
      console.info(window.config);
-     keycloak.init();
-     console.log("done");
+     await keycloak.init();
+     console.log("Finished initialisation")
      },
      );
   }
@@ -59,7 +60,7 @@ export function init_config(appLoadService: AppInitService, keycloak: KeycloakSe
       deps: [AppInitService, KeycloakService],
       multi: true,
     },
-    
+
 
     {
       provide: HTTP_INTERCEPTORS,

@@ -31,10 +31,10 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   constructor(public keycloak: KeycloakService, private profileService: ProfileService, private recipeService: RecipeService, private router: Router){}
 
   ngOnInit(): void {
-    // this.keycloakAuth = this.keycloak.getKeycloakAuth();
-    // if (this.keycloak.isLoggedIn() === false) {
-    //     this.keycloak.login();
-    // }
+    this.keycloakAuth = this.keycloak.getKeycloakAuth();
+    if (this.keycloak.isLoggedIn() === false) {
+        this.keycloak.login();
+    }
   }
 
   ngAfterViewInit() {
