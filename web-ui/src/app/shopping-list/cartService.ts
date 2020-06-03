@@ -27,13 +27,30 @@ sendIngredientsCart(cart: Cart){
         );
 }
 
-deleteIngredientCart(cart: Cart){
-    return this.http.post(environment.listsService.url + "/removefromcart", cart)
+// deleteIngredientCart(cart: Cart){
+//     return this.http.delete(environment.listsService.url + "/removefromcart", cart)
+//         .pipe(
+//             retry(1),
+//             catchError(this.handleError),
+//         );
+// }
+
+sendIngredientsFromCartToFridge(itemCart: Array<Cart>){
+    return this.http.post(environment.listsService.url + "/addcartfromrecipe", itemCart)
         .pipe(
             retry(1),
-            catchError(this.handleError),
+            catchError(this.handleError)
         );
 }
+
+sendIngredientsFridge(cart: Cart){
+    return this.http.post(environment.listsService.url + "/addtofridge", cart)
+        .pipe(
+            retry(1),
+            catchError(this.handleError)
+        );
+}
+
      
 handleError(error) {
     let errorMessage = '';

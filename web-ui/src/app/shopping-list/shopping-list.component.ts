@@ -211,6 +211,25 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
     return true;
   }
 
+  addCartToFridge(){
+    this.http.get(this.urlShopping).subscribe((res)=>{
+      this.dataCart = res
+    })
+    console.log(this.dataCart)
+
+    for(let i=0; i<this.dataCart.length; i++){
+      let cart = new Cart(this.id, this.dataCart[i].ingredientID, this.dataCart[i].quantity);
+      this.cartService.sendIngredientsFridge(cart)
+        .subscribe();
+    }
+
+    // for(let i=0; i<this.dataCart.length; i++){
+    //   let cart = new Cart(this.id, this.dataCart[i].ingredientID, this.dataCart[i].quantity);
+    //   this.cartService.deleteIngredientCart(cart)
+    //     .subscribe();
+    // }
+  }
+
   handleKeyPress(e) {
     var code = (e.which) ? e.which : e.keyCode;
     let quantityVal = this.quantityElem.value.split('');

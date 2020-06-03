@@ -28,13 +28,13 @@ sendIngredientsFridge(fridge: Fridge){
         );
 }
 
-deleteIngredientFridge(fridge: Fridge){
-    return this.http.post(environment.listsService.url + "/removefromfridge", fridge)
-        .pipe(
-            retry(1),
-            catchError(this.handleError),
-        );
-}
+// deleteIngredientFridge(fridge: Fridge){
+//     return this.http.delete(environment.listsService.url + "/removefromfridge")
+//         .pipe(
+//             retry(1),
+//             catchError(this.handleError),
+//         );
+// }
      
 handleError(error) {
     let errorMessage = '';
