@@ -43,14 +43,12 @@ public class ListsRestServiceIT {
 	
 	@Test
 	public void testRemoveIngredientCart() {
-		ItemCart itemCart = new ItemCart("3",3,4);
-		with().contentType(ContentType.JSON).body(itemCart).when().request("DELETE", "/removefromcart").then().statusCode(204);
+		when().request("DELETE", "/removefromcart/3/3").then().statusCode(204);
 	}
 	
 	@Test
 	public void testRemoveIngredientFridge() {
-		ItemFridge itemFridge = new ItemFridge("3",3,4);
-		with().contentType(ContentType.JSON).body(itemFridge).when().request("DELETE", "/removefromfridge").then().statusCode(204);
+		when().request("DELETE", "/removefromfridge/3/3").then().statusCode(204);
 	}
 	
 }
