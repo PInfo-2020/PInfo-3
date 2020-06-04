@@ -119,7 +119,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
         <span class="m-auto border bg-white pl-2 pr-2">Name:</span><span class="col-3 border m-auto bg-white" id="ingredient">${ingredientName}</span>
         <span class="m-auto border bg-white pl-2 pr-2">Quantity:</span><span class="col-1 border m-auto bg-white" id="quantity">${this.dataCart[i].quantity}</span>
         <span class="m-auto border bg-white pl-2 pr-2">Unit:</span><span class="col-1 border m-auto bg-white">${unitVal}</span>
-        <button id="${[this.dataCart[i].ingredientID, this.dataCart[i].quantity]}" type="button" class="btn btn-secondary mr-1 button-w">x</button>
+        <button id="${[this.dataCart[i].ingredientID, this.dataCart[i].quantity]}" type="button" class="btn btn-secondary mr-1 button-w" (click)="removeIngredient(this.dataCart[i].ingredientID);">x</button>
       `;
 
       let blockContainer = document.getElementById("div2");
@@ -144,18 +144,13 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
     //   var target = event.target || event.srcElement || event.currentTarget;
     //   var idAttr = (target as Element).id;
     //   var value = idAttr.split(",");
-    //   this.removeIngredient(+value[0], +value[1]);
+    //   this.removeIngredient(+value[0]);
     // });
   }
-  // removeIngredient(ingredientToDeleteID: number, quantityToDelete: number){
-  //   let userId = this.id;
-  //   console.log(ingredientToDeleteID)
-  //   console.log(quantityToDelete)
-  //   console.log(typeof this.id)
-  //   let fridge = new Fridge(userId, ingredientToDeleteID, quantityToDelete);
-  //   this.fridgeService.deleteIngredientFridge(fridge)
-  //     .subscribe();
-  // }
+  removeIngredient(ingredientToDeleteID: number){
+    this.cartService.deleteIngredientCart(this.id, ingredientToDeleteID)
+      .subscribe();
+  }
 
   sendData(){
     let quantityVal = document.getElementById("div1").children;
@@ -222,17 +217,10 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
       this.cartService.sendIngredientsFridge(cart)
         .subscribe();
     }
-    let cart = new Cart(this.id, this.dataCart[1].ingredientID, this.dataCart[1].quantity);
-      this.cartService.deleteIngredientCart(cart)
-        .subscribe();
-    console.log(cart)
-    
-    // for(let i=0; i<this.dataCart.length; i++){
-    //   let cart = new Cart(this.id, this.dataCart[i].ingredientID, this.dataCart[i].quantity);
-    //   console.log(cart)
-    //   this.cartService.deleteIngredientCart(cart)
-    //     .subscribe();
-    // }
+    for(let i=0; i<this.dataCart.length; i++){
+      console.log(this.dataCart[i].ingredientID)
+      this.removeIngredient(this.dataCart[i].ingredientID)
+    }
   }
 
   handleKeyPress(e) {

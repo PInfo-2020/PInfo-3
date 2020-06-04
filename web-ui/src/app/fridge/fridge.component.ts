@@ -118,7 +118,7 @@ export class FridgeComponent implements OnInit, AfterViewInit {
         <span class="m-auto border bg-white pl-2 pr-2">Name:</span><span class="col-3 border m-auto bg-white" id="ingredient">${ingredientName}</span>
         <span class="m-auto border bg-white pl-2 pr-2">Quantity:</span><span class="col-1 border m-auto bg-white" id="quantity">${this.dataFridge[i].quantity}</span>
         <span class="m-auto border bg-white pl-2 pr-2">Unit:</span><span class="col-1 border m-auto bg-white">${unitVal}</span>
-        <button id="${[this.dataFridge[i].ingredientID, this.dataFridge[i].quantity]}" type="button" class="btn btn-secondary mr-1 button-w">x</button>
+        <button id="${[this.dataFridge[i].ingredientID, this.dataFridge[i].quantity]}" type="button" class="btn btn-secondary mr-1 button-w" (click)="this.removeIngrdient(this.dataFridge[i].ingredientID);">x</button>
       `;
 
       let blockContainer = document.getElementById("div2");
@@ -143,18 +143,13 @@ export class FridgeComponent implements OnInit, AfterViewInit {
     //   var target = event.target || event.srcElement || event.currentTarget;
     //   var idAttr = (target as Element).id;
     //   var value = idAttr.split(",");
-    //   this.removeIngredient(+value[0], +value[1]);
+    //   this.removeIngredient(+value[0]);
     // });
   }
-  // removeIngredient(ingredientToDeleteID: number, quantityToDelete: number){
-  //   let userId = this.id;
-  //   console.log(ingredientToDeleteID)
-  //   console.log(quantityToDelete)
-  //   console.log(typeof this.id)
-  //   let fridge = new Fridge(userId, ingredientToDeleteID, quantityToDelete);
-  //   this.fridgeService.deleteIngredientFridge(fridge)
-  //     .subscribe();
-  // }
+  removeIngredient(ingredientToDeleteID: number){
+    this.fridgeService.deleteIngredientFridge(this.id, ingredientToDeleteID)
+      .subscribe();
+  }
 
   sendData(){
     let quantityVal = document.getElementById("div1").children;
