@@ -52,16 +52,18 @@ public class ListsServiceRestService {
 	}
 	
 	@DELETE // Remove an item to cart of a user
-	@Path("/removefromcart")
+	@Path("/removefromcart/{userID}/{ingID}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void removeIngredientCart(ItemCart itemCart) {
+	public void removeIngredientCart(@PathParam("userID") String userID, @PathParam("ingID") int ingredientID) {
+		ItemCart itemCart = new ItemCart(userID, ingredientID, 1.0);
 		listsService.removeIngredientCart(itemCart);
 	}
 	
 	@DELETE // Remove an item to fridge of a user
-	@Path("/removefromfridge")
+	@Path("/removefromfridge/{userID}/{ingID}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void removeIngredientFridge(ItemFridge itemFridge) {
+	public void removeIngredientFridge(@PathParam("userID") String userID, @PathParam("ingID") int ingredientID) {
+		ItemFridge itemFridge = new ItemFridge(userID, ingredientID, 1.0);
 		listsService.removeIngredientFridge(itemFridge);
 	}
 	
