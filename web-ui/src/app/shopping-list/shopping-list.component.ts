@@ -222,9 +222,14 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
       this.cartService.sendIngredientsFridge(cart)
         .subscribe();
     }
-
+    let cart = new Cart(this.id, this.dataCart[1].ingredientID, this.dataCart[1].quantity);
+      this.cartService.deleteIngredientCart(cart)
+        .subscribe();
+    console.log(cart)
+    
     // for(let i=0; i<this.dataCart.length; i++){
     //   let cart = new Cart(this.id, this.dataCart[i].ingredientID, this.dataCart[i].quantity);
+    //   console.log(cart)
     //   this.cartService.deleteIngredientCart(cart)
     //     .subscribe();
     // }

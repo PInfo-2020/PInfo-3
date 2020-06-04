@@ -27,13 +27,13 @@ sendIngredientsCart(cart: Cart){
         );
 }
 
-// deleteIngredientCart(cart: Cart){
-//     return this.http.delete(environment.listsService.url + "/removefromcart", cart)
-//         .pipe(
-//             retry(1),
-//             catchError(this.handleError),
-//         );
-// }
+deleteIngredientCart(cart: Cart): Observable<{}>{
+    return this.http.delete(environment.listsService.url + "/removefromcart", cart)
+        .pipe(
+            retry(1),
+            catchError(this.handleError),
+        );
+}
 
 sendIngredientsFromCartToFridge(itemCart: Array<Cart>){
     return this.http.post(environment.listsService.url + "/addcartfromrecipe", itemCart)
