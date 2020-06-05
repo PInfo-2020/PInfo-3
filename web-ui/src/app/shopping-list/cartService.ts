@@ -28,7 +28,7 @@ sendIngredientsCart(cart: Cart){
 }
 
 deleteIngredientCart(id: any, ingredientId: number){
-    return this.http.delete(environment.listsService.url + "/removefromcart" + "/" + id + "/" + ingredientId, this.httpOptions)
+    return this.http.delete(environment.listsService.url + "/removefromcart" + "/" + id + "/" + ingredientId)
         .pipe(
             retry(1),
             catchError(this.handleError),

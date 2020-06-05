@@ -1,6 +1,6 @@
 import { HIGH_CONTRAST_MODE_ACTIVE_CSS_CLASS } from '@angular/cdk/a11y/high-contrast-mode/high-contrast-mode-detector';
-// import {KeycloakService} from '../services/keycloak/keycloak.service';
-// import {KeycloakInstance} from 'keycloak-js';
+import {KeycloakService} from '../services/keycloak/keycloak.service';
+import {KeycloakInstance} from 'keycloak-js';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 import * as $ from 'jquery';
@@ -36,16 +36,20 @@ export class FridgeComponent implements OnInit, AfterViewInit {
   ingredientID: number;
 
 
-  // public keycloakAuth: KeycloakInstance;
+  public keycloakAuth: KeycloakInstance;
 
   // constructor(public keycloak: KeycloakService, public ingredientService: IngredientService){}
-  constructor(public ingredientService: IngredientService, private http: HttpClient, private fridgeService : FridgeService, private router: Router, private route: ActivatedRoute){}
+  constructor(public keycloak: KeycloakService, public ingredientService: IngredientService, private http: HttpClient, private fridgeService : FridgeService, private router: Router, private route: ActivatedRoute){}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id'];        
       console.log(this.id);
     });
+    this.keycloakAuth = this.keycloak.getKeycloakAuth();
+    if (this.keycloak.isLoggedIn() === false) {
+        this.keycloak.login();
+    }
   }
 
   ngAfterViewInit(){
@@ -196,6 +200,7 @@ export class FridgeComponent implements OnInit, AfterViewInit {
         blockContainer.appendChild(blockToAdd);
       }
     }
+    this.sendData()
   }
 
   addUnit(e){
