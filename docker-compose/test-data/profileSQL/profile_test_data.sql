@@ -20,4 +20,4 @@ INSERT INTO profile (usernameID,username,score) VALUES ('ad7dfd1d-de79-418a-a63f
 INSERT INTO profile (usernameID,username,score) VALUES ('c2b98917-4057-4486-943c-f25a315a6e2d','Luka',0);
 INSERT INTO profile (usernameID,username,score) VALUES ('2d119cee-5521-4850-96d0-cccebe1614ec','Benjamin',0);
 INSERT INTO profile (usernameID,username,score) VALUES ('9ada320a-7245-4e68-a9bc-03baeec8bbb1','Nathan',0);
-INSERT INTO profile (usernameID,username,score) VALUES ('1','Elham',0);
+INSERT INTO profile (usernameID,username,score) VALUES ('d9f96efd-68ca-40e1-8a52-642f9cc482c1','Elham',0);
