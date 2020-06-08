@@ -1,3 +1,4 @@
+CREATE USER rec WITH PASSWORD 'rec';
 --drop table Recipe if exists;
 --create table Recipe (
 --        name varchar(31) not null,

@@ -1,4 +1,4 @@
-
+CREATE USER lis WITH PASSWORD 'lis';
 CREATE TABLE ITEMCART(
 	userID VARCHAR(50) not null,
 	ingredientID BIGINT not null,

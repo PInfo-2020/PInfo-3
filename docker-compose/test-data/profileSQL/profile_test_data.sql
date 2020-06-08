@@ -1,3 +1,4 @@
+CREATE USER pro WITH PASSWORD 'pro';
 CREATE TABLE profile(
 	usernameID VARCHAR(50) not null,
 	username VARCHAR(50) not null,

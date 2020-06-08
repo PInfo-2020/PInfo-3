@@ -1,4 +1,5 @@
 --drop table ingredients if exists;
+CREATE USER ing WITH PASSWORD 'ing';
 create table ingredients (
 		id bigint not null,
 		name varchar(50) not null,
