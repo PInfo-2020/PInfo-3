@@ -59,13 +59,13 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /counterparties/count #fix me!
+              path: /profiles/all #fix me!
               port: http
             initialDelaySeconds: 60
             periodSeconds: 20                            
           readinessProbe:
             httpGet:
-              path: /counterparties/count #fix me!
+              path: /profiles/all #fix me!
               port: http
             initialDelaySeconds: 60
             periodSeconds: 20                            

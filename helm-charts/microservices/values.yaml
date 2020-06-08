@@ -32,6 +32,8 @@ profile-db:
       persistence:
          enabled: false
       postgresqlDatabase: profile
+  initdbScriptsConfigMap:
+    profile-scripts
   livenessProbe:
      initialDelaySeconds: 120
   readinessProbe:
@@ -48,6 +50,8 @@ ingredients-db:
       persistence:
          enabled: false
       postgresqlDatabase: ingredients
+  initdbScriptsConfigMap:
+    ingred-scripts
   livenessProbe:
      initialDelaySeconds: 120
   readinessProbe:
@@ -64,6 +68,8 @@ recipes-db:
       persistence:
          enabled: false
       postgresqlDatabase: recipes
+  initdbScriptsConfigMap:
+    rec-scripts
   livenessProbe:
      initialDelaySeconds: 120
   readinessProbe:
@@ -80,6 +86,8 @@ lists-db:
       persistence:
          enabled: false
       postgresqlDatabase: lists
+  initdbScriptsConfigMap:
+    lists-scripts
   livenessProbe:
      initialDelaySeconds: 120
   readinessProbe:

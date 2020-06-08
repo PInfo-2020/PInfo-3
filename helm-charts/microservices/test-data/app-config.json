@@ -6,20 +6,23 @@
         "url": "http://pinfo3.unige.ch/auth",
         "realm": "apigw",
         "clientId": "web-sso",
-        "checkLoginIframe": true,
+        "checkLoginIframe": "true",
         "onLoad": "login-required",
         "responseMode": "fragment"
     },
+    "angular": {
+        "url": "http://pinfo3.unige.ch"
+    },
     "ingredientsService": {
-        "url": "http://pinfo3.unige.ch/api/v1/ingredients"
+        "url": "http://pinfo3.unige.ch/ingredients"
     },
     "listsService": {
-        "url": "http://pinfo3.unige.ch/api/v1/lists"
+        "url": "http://pinfo3.unige.ch/lists"
     },
-    "profileService": {
-        "url": "http://pinfo3.unige.ch/api/v1/profiles"
+    "profilesService": {
+        "url": "http://pinfo3.unige.ch/profiles"
     },
-    "recipesService": {
-        "url": "http://pinfo3.unige.ch/api/v1/recipes"
+    "recipeService": {
+        "url": "http://pinfo3.unige.ch/recipe"
     }
 }
