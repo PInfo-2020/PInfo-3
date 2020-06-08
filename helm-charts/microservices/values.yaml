@@ -28,6 +28,8 @@ profile-db:
      enabled: false
   postgresDatabase: profile
   postgresqlDatabase: profile
+  postgresUser: "pro"
+  postgresPassword: "pro"
   global:
       persistence:
          enabled: false
@@ -46,6 +48,8 @@ ingredients-db:
      enabled: false
   postgresDatabase: ingredients
   postgresqlDatabase: ingredients
+  postgresUser: "ing"
+  postgresPassword: "ing"
   global:
       persistence:
          enabled: false
@@ -63,6 +67,8 @@ recipes-db:
      enabled: false
   postgresDatabase: recipes
   postgresqlDatabase: recipes
+  postgresUser: "rec"
+  postgresPassword: "rec"
   global:
       persistence:
          enabled: false
@@ -81,6 +87,8 @@ lists-db:
      enabled: false
   postgresDatabase: lists
   postgresqlDatabase: lists
+  postgresUser: "lis"
+  postgresPassword: "lis"
   global:
       persistence:
          enabled: false
