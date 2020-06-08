@@ -57,7 +57,6 @@ ingredients-db:
   readinessProbe:
      initialDelaySeconds: 120
 
-
 recipes-db:
   driver_name: org.postgresql
   persistence:
@@ -103,8 +102,8 @@ keycloak:
     extraVolumeMounts: |
       - name: keycloak-realm-secret
         mountPath: "/realm/"
-        readOnly: true          
-    extraArgs: -Dkeycloak.import=/realm/realms.json
+        readOnly: true
+    extraArgs: -Dkeycloak.import=/realm/realm-export.json
     #   livenessProbe: |
     #  initialDelaySeconds: 120
     #readinessProbe: |
@@ -119,7 +118,7 @@ rbac:
   create: true
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+create: true
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name:
@@ -159,5 +158,4 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
 

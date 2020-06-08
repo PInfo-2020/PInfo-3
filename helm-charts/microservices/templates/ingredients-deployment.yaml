@@ -44,13 +44,13 @@ spec:
               value: "{{ .Release.Name }}-kafka"
             - name: THORNTAIL_KAFKA_DASH_CONFIGURATION_POST
               value: "9092"
-            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_CONNECTION_DASH_URL
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_INGREDIENTS_CONNECTION_DASH_URL
               value: "jdbc:postgresql://{{ .Release.Name }}-ingredients-db:5432/ingredients"
-            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_DRIVER_DASH_NAME
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_INGREDIENTS_DRIVER_DASH_NAME
               value: "postgresql"   
-            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_USER_DASH_NAME
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_INGREDIENTS_USER_DASH_NAME
               value: "ing"
-            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_ING_PASSWORD
+            - name: THORNTAIL_DATASOURCES_DATA_DASH_SOURCES_INGREDIENTS_PASSWORD
               value: "ing"              
           ports:
             - name: http
