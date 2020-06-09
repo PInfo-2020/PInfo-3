@@ -1,4 +1,5 @@
 CREATE USER pro WITH PASSWORD 'pro';
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO pro;
 CREATE TABLE profile(
 	usernameID VARCHAR(50) not null,
 	username VARCHAR(50) not null,
@@ -10,6 +11,7 @@ CREATE TABLE profile(
            usernameID VARCHAR(50) not null,
            recipeID BIGINT not null
   );
+GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA public to pro;
 INSERT INTO plannedrecipe (rowID,usernameID,recipeID) VALUES (1,'1',001);
 INSERT INTO plannedrecipe (rowID,usernameID,recipeID) VALUES (2,'2',001);
 INSERT INTO plannedrecipe (rowID,usernameID,recipeID) VALUES (3,'1',002);
