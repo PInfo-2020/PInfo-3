@@ -43,6 +43,13 @@
 			  <div class="card" style="width: 21rem;margin-bottom:5px;">
 				<div class="card-body">
 					<!--group of checkboxes-->
+					<div class="col-2.5">
+						<input list="recipe-choices" type="text" class="form-control" id="recipe" placeholder="Research recipe">
+						<datalist id="recipe-choices"></datalist>
+						<div class="col-2">
+							<button type="button" class="btn btn-secondary" > Chose</button>
+						</div>
+					  </div>
 					<div class="checkbox">
 						<label>
 						  <input type="checkbox"   (change)="top()" class="sev_check" id="TopRecipesBox" name="TopRecipes" />Top Recipes</label>
@@ -66,7 +73,7 @@
 				<div class="card-body">
 			 	 	<div class="row" style="width:150px;margin:10px">
 						<a class="btn btn-outline-danger" routerLink="/createRecipe/" role="button">Create Recipe</a>
-            <a class="btn btn-outline-danger" [routerLink]="['/recipe/', keycloak.getKeycloakId()]" role="button">Recipe</a>
+            <!-- <a class="btn btn-outline-danger" [routerLink]="['/recipe/', keycloak.getKeycloakId()]" role="button">Recipe</a> -->
 					</div>
 				</div>
 			</div>
@@ -83,8 +90,9 @@
 		</div>
 
 		<!--third column-->
-		<div class="col-1" style="background-color: orange" >
+		<div class="col-2" style="background-color: orange">
 			<div class="panel-heading">Best Cook</div>
+			<div id="bestCook"></div>
 		</div>
 
 

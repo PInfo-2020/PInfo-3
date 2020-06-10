@@ -1,4 +1,7 @@
-
+CREATE USER lis WITH PASSWORD 'lis';
+CREATE USER lis WITH PASSWORD 'lis';
+GRANT ALL PRIVILEGES ON ITEMCART to lis;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO lis;
 CREATE TABLE ITEMCART(
 	userID VARCHAR(50) not null,
 	ingredientID BIGINT not null,
@@ -10,6 +13,7 @@ CREATE TABLE ITEMFRIDGE(
 	ingredientID BIGINT not null,
 	quantity FLOAT(53) not null
 );
+GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA public to lis;
 -- INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('1', 1, 1);
 INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('2', 2, 2);
 INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('3', 3, 3);
@@ -65,6 +69,15 @@ INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('9ada320a-7245-4e6
 INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('9ada320a-7245-4e68-a9bc-03baeec8bbb1', 265, 2);
 INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('9ada320a-7245-4e68-a9bc-03baeec8bbb1', 68, 6);
 
+INSERT INTO ITEMFRIDGE (userID, ingredientID, quantity) VALUES ('d9f96efd-68ca-40e1-8a52-642f9cc482c1', 5, 17);
+INSERT INTO ITEMFRIDGE (userID, ingredientID, quantity) VALUES ('d9f96efd-68ca-40e1-8a52-642f9cc482c1', 54, 3);
+INSERT INTO ITEMFRIDGE (userID, ingredientID, quantity) VALUES ('d9f96efd-68ca-40e1-8a52-642f9cc482c1', 134, 4);
+INSERT INTO ITEMFRIDGE (userID, ingredientID, quantity) VALUES ('d9f96efd-68ca-40e1-8a52-642f9cc482c1', 300, 10);
+INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('d9f96efd-68ca-40e1-8a52-642f9cc482c1', 40, 4);
+INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('d9f96efd-68ca-40e1-8a52-642f9cc482c1', 301, 22);
+INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('d9f96efd-68ca-40e1-8a52-642f9cc482c1', 260, 1);
+INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('d9f96efd-68ca-40e1-8a52-642f9cc482c1', 58, 2);
+
 INSERT INTO ITEMFRIDGE (userID, ingredientID, quantity) VALUES ('1', 98, 2);
 INSERT INTO ITEMFRIDGE (userID, ingredientID, quantity) VALUES ('1', 70, 5);
 INSERT INTO ITEMFRIDGE (userID, ingredientID, quantity) VALUES ('1', 45, 2);
@@ -73,5 +86,3 @@ INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('1', 78, 3);
 INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('1', 278, 7);
 INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('1', 2, 3);
 INSERT INTO ITEMCART (userID, ingredientID, quantity) VALUES ('1', 35, 6);
-
-

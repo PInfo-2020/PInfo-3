@@ -32,6 +32,8 @@ profile-db:
       persistence:
          enabled: false
       postgresqlDatabase: profile
+  initdbScriptsConfigMap:
+    profile-scripts
   livenessProbe:
      initialDelaySeconds: 120
   readinessProbe:
@@ -48,11 +50,12 @@ ingredients-db:
       persistence:
          enabled: false
       postgresqlDatabase: ingredients
+  initdbScriptsConfigMap:
+    ingred-scripts
   livenessProbe:
      initialDelaySeconds: 120
   readinessProbe:
      initialDelaySeconds: 120
-
 
 recipes-db:
   driver_name: org.postgresql
@@ -64,6 +67,8 @@ recipes-db:
       persistence:
          enabled: false
       postgresqlDatabase: recipes
+  initdbScriptsConfigMap:
+    rec-scripts
   livenessProbe:
      initialDelaySeconds: 120
   readinessProbe:
@@ -80,6 +85,8 @@ lists-db:
       persistence:
          enabled: false
       postgresqlDatabase: lists
+  initdbScriptsConfigMap:
+    lists-scripts
   livenessProbe:
      initialDelaySeconds: 120
   readinessProbe:
@@ -87,7 +94,7 @@ lists-db:
 
 keycloak:
   keycloak:
-    password: asdfghjkl
+    password: awesome
     extraVolumes: |
       - name: keycloak-realm-secret
         secret:
@@ -95,8 +102,8 @@ keycloak:
     extraVolumeMounts: |
       - name: keycloak-realm-secret
         mountPath: "/realm/"
-        readOnly: true          
-    extraArgs: -Dkeycloak.import=/realm/realms.json
+        readOnly: true
+    extraArgs: -Dkeycloak.import=/realm/realm-export.json
     #   livenessProbe: |
     #  initialDelaySeconds: 120
     #readinessProbe: |
@@ -151,5 +158,4 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
 

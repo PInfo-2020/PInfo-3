@@ -58,13 +58,13 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /instrument/count
+              path: /recipe/count
               port: http
             initialDelaySeconds: 60
             periodSeconds: 20                            
           readinessProbe:
             httpGet:
-              path: /instrument/count
+              path: /recipe/count
               port: http
             initialDelaySeconds: 60
             periodSeconds: 20                            

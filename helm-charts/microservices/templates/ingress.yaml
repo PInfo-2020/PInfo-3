@@ -23,7 +23,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /recipes/$2
+    nginx.ingress.kubernetes.io/rewrite-target: /recipe/$2
   name: {{ include "microservices.fullname" . }}.ingress-api-recipes
   namespace: {{ .Release.Namespace }} 
   labels:
@@ -33,7 +33,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /api/v1/recipes(/|$)(.*)
+      - path: /api/v1/recipe(/|$)(.*)
         backend:
           serviceName: {{ include "microservices.fullname" . }}-recipes-service
           servicePort: 28080    
@@ -80,7 +80,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /profile/$2
+    nginx.ingress.kubernetes.io/rewrite-target: /profiles/$2
   name: {{ include "microservices.fullname" . }}.ingress-api-profile
   namespace: {{ .Release.Namespace }} 
   labels:
@@ -90,7 +90,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /api/v1/profile(/|$)(.*)
+      - path: /api/v1/profiles(/|$)(.*)
         backend:
           serviceName: {{ include "microservices.fullname" . }}-profile-service
           servicePort: 28080                                                  

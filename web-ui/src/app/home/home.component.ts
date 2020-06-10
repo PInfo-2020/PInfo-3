@@ -1,27 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit} from '@angular/core';
 import { KeycloakService } from '../services/keycloak/keycloak.service';
 import { KeycloakInstance } from 'keycloak-js';
 import { HttpClient } from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import * as $ from 'jquery';
 
+import { RecipeService } from './recipeService';
+import { Recipe } from './recipe';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
+
+  userID: string = this.keycloak.getKeycloakId();
+  recipe: Array<Recipe> = [];
+  recipeName: Array<String> = [];
 
   public keycloakAuth: KeycloakInstance;
   private data:any = []
   private urlTop:string = `${environment.recipeService.url}/top`
   private urlVegan:string = `${environment.recipeService.url}/vegetarien`
   private urlVeg:string = `${environment.recipeService.url}/vegetarien`
-  private urlFrigo:string = `${environment.recipeService.url}/user/1/fridge/recipe`/*fix me! with the right id!*/
+  private urlFrigo:string = `${environment.recipeService.url}/user/${this.userID}/fridge/recipe`
+  private urlBestCooker:string = `${environment.profilesService.url}/getBestCooker`
+  
+  private bestCooker:any = []
 
-  userID: string = this.keycloak.getKeycloakId();
-
-  constructor(public keycloak: KeycloakService, private http: HttpClient) { }
+  constructor(public keycloak: KeycloakService, private http: HttpClient, public recipeService: RecipeService) { }
 
    ngOnInit() {
       this.keycloakAuth = this.keycloak.getKeycloakAuth();
@@ -34,7 +42,23 @@ export class HomeComponent implements OnInit {
       $('.sev_check').click(function() {
         $('.sev_check').not(this).prop('checked', false);
       });
+  }
+  ngAfterViewInit(){
+    this.bestCook()
+    let recipeDataElem = document.getElementById("recipe-choices");
+    let that = this;
+    
+    this.recipeService.getRecipe()
+    .subscribe((data: Recipe[]) => {
+      this.recipe = data;
 
+      this.recipe.forEach(function(item){
+        var option = document.createElement("option");
+        option.value = item.name;
+        that.recipeName.push(item.name);
+        recipeDataElem.appendChild(option);
+      });
+    });
   }
 
   retrieveAndDisplayRecipes(url: string){
@@ -96,6 +120,48 @@ frigo(){
   })
 }
 
+bestCook(){
+  this.http.get(this.urlBestCooker).subscribe((res)=>{
+    this.bestCooker = res
+    this.placeBestCooker(this.bestCooker)
+  })
+}
+
+placeBestCooker(data){
+  var mainContainer = document.getElementById("bestCook");
+  while (mainContainer.firstChild) {
+    mainContainer.firstChild.remove();
+  }
+  for (var i = 0; i < data.length; i++) {
+    //creating the card of one recipe
+    var cardCooker = document.createElement("div");
+    cardCooker.className = "card";
+    //creating card body
+    var cardBody = document.createElement("div");
+    cardBody.className = "card-body";
+    //creating title
+    var cardTitle = document.createElement("h5");
+    cardTitle.className = "card-text";
+    cardTitle.innerHTML = (data[i].username);
+    //creating text
+    var cardText = document.createElement("h6");
+    cardText.className = "card-body";
+    cardText.innerHTML = (data[i].score);
+    //creating card link
+    var cardLink = document.createElement("a");
+    cardLink.className = "card-link";
+    cardLink.innerHTML = "More...";
+    cardLink.href = environment.angular.url + "/profile" + "/" + data[i].usernameID;
+    //this._elem.nativeElement.innerHTML = <a class='ml-auto text-dark mr-5' routerLink="/createRecipe" routerLinkActive="active">Create recipe</a>
+    //put the title and text into the body
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardText);
+    cardBody.appendChild(cardLink);
+    cardCooker.appendChild(cardBody);
+    mainContainer.appendChild(cardCooker);
+  }
+}
+
   placeRecipes(data){
     var mainContainer = document.getElementById("myData");
     while (mainContainer.firstChild) {
@@ -120,7 +186,7 @@ frigo(){
       var cardLink = document.createElement("a");
       cardLink.className = "card-link";
       cardLink.innerHTML = "More...";
-      cardLink.href = environment.angular.url + "/recipe";
+      cardLink.href = environment.angular.url + "/recipe" + "/" + data[i].id;
       //this._elem.nativeElement.innerHTML = <a class='ml-auto text-dark mr-5' routerLink="/createRecipe" routerLinkActive="active">Create recipe</a>
 
       //put the title and text into the body

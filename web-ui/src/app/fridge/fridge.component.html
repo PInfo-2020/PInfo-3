@@ -2,12 +2,12 @@
   <div class="w-25">
     <a class="navbar-brand w-25" routerLink="/home" routerLinkActive="active"><img class="w-100" src="../assets/img/DigeSteve.PNG"/></a>
   </div>
-    <a class='text-dark mr-5 ml-auto' routerLink="/profile" routerLinkActive="active">Profile</a>
+    <a class='text-dark mr-5 ml-auto' [routerLink]="['/profile/', keycloak.getKeycloakId()]" routerLinkActive="active">Profile</a>
 </nav>
 
 <div class="allForm">
   <div class="col-2">
-    <p class="h1 text-center display-4 font-weight-ligh text-black mt-5"> My Fridge </p>
+    <p class="h1 text-center display-4 font-weight-ligh text-white mt-5"> My Fridge </p>
   </div>
 
   <div class="d-flex flex-row">
@@ -43,8 +43,8 @@
   <div>
     <div id="myData"></div>
   </div>
-  <div class="text-center mt-40 pt-40">
+  <!-- <div class="text-center mt-40 pt-40">
     <button type="button" class="btn btn-light" (click)="sendData()">Finish</button>
-  </div>
+  </div> -->
 
 </div>

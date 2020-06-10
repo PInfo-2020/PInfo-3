@@ -1,6 +1,6 @@
 import { HIGH_CONTRAST_MODE_ACTIVE_CSS_CLASS } from '@angular/cdk/a11y/high-contrast-mode/high-contrast-mode-detector';
-// import {KeycloakService} from '../services/keycloak/keycloak.service';
-// import {KeycloakInstance} from 'keycloak-js';
+import {KeycloakService} from '../services/keycloak/keycloak.service';
+import {KeycloakInstance} from 'keycloak-js';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 import * as $ from 'jquery';
@@ -36,10 +36,10 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
   ingredientID: number;
   
 
-  // public keycloakAuth: KeycloakInstance;
+  public keycloakAuth: KeycloakInstance;
 
   // constructor(public keycloak: KeycloakService, public ingredientService: IngredientService){}
-  constructor(public ingredientService: IngredientService, private http: HttpClient, private cartService : CartService, private router: Router, private route: ActivatedRoute){}
+  constructor(public keycloak: KeycloakService, public ingredientService: IngredientService, private http: HttpClient, private cartService : CartService, private router: Router, private route: ActivatedRoute){}
 
 
   ngOnInit(): void {
@@ -47,6 +47,10 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
       this.id = params['id'];        
       console.log(this.id);
     });
+    this.keycloakAuth = this.keycloak.getKeycloakAuth();
+      if (this.keycloak.isLoggedIn() === false) {
+          this.keycloak.login();
+      }
   }
 
   ngAfterViewInit(){
@@ -119,7 +123,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
         <span class="m-auto border bg-white pl-2 pr-2">Name:</span><span class="col-3 border m-auto bg-white" id="ingredient">${ingredientName}</span>
         <span class="m-auto border bg-white pl-2 pr-2">Quantity:</span><span class="col-1 border m-auto bg-white" id="quantity">${this.dataCart[i].quantity}</span>
         <span class="m-auto border bg-white pl-2 pr-2">Unit:</span><span class="col-1 border m-auto bg-white">${unitVal}</span>
-        <button id="${[this.dataCart[i].ingredientID, this.dataCart[i].quantity]}" type="button" class="btn btn-secondary mr-1 button-w">x</button>
+        <button id="${[this.dataCart[i].ingredientID, this.dataCart[i].quantity]}" type="button" class="btn btn-secondary mr-1 button-w" (click)="removeIngredient(this.dataCart[i].ingredientID);">x</button>
       `;
 
       let blockContainer = document.getElementById("div2");
@@ -144,18 +148,13 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
     //   var target = event.target || event.srcElement || event.currentTarget;
     //   var idAttr = (target as Element).id;
     //   var value = idAttr.split(",");
-    //   this.removeIngredient(+value[0], +value[1]);
+    //   this.removeIngredient(+value[0]);
     // });
   }
-  // removeIngredient(ingredientToDeleteID: number, quantityToDelete: number){
-  //   let userId = this.id;
-  //   console.log(ingredientToDeleteID)
-  //   console.log(quantityToDelete)
-  //   console.log(typeof this.id)
-  //   let fridge = new Fridge(userId, ingredientToDeleteID, quantityToDelete);
-  //   this.fridgeService.deleteIngredientFridge(fridge)
-  //     .subscribe();
-  // }
+  removeIngredient(ingredientToDeleteID: number){
+    this.cartService.deleteIngredientCart(this.id, ingredientToDeleteID)
+      .subscribe();
+  }
 
   sendData(){
     let quantityVal = document.getElementById("div1").children;
@@ -200,6 +199,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
         blockContainer.appendChild(blockToAdd);
       }
     }
+    this.sendData()
   }
 
   addUnit(e){
@@ -222,12 +222,10 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
       this.cartService.sendIngredientsFridge(cart)
         .subscribe();
     }
-
-    // for(let i=0; i<this.dataCart.length; i++){
-    //   let cart = new Cart(this.id, this.dataCart[i].ingredientID, this.dataCart[i].quantity);
-    //   this.cartService.deleteIngredientCart(cart)
-    //     .subscribe();
-    // }
+    for(let i=0; i<this.dataCart.length; i++){
+      console.log(this.dataCart[i].ingredientID)
+      this.removeIngredient(this.dataCart[i].ingredientID)
+    }
   }
 
   handleKeyPress(e) {

@@ -436,6 +436,37 @@
     "notBefore" : 0,
     "groups" : [ ]
   }, {
+    "id" : "d9f96efd-68ca-40e1-8a52-642f9cc482c1",
+    "createdTimestamp" : 1591632063094,
+    "username" : "elham",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "elham",
+    "lastName" : "amin",
+    "email" : "elham.aminmansour@gmail.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "YylpM+B2UesoTRXw4Im93vBTuv8qRad1VT3RG6rXunAIv2HR+zHWPY0xWfPTrupjBzVp8tNd8H8A38bleTXCmg==",
+      "salt" : "rm7u/RlMoezkVkehLpP8Yw==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1591632074183,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ "UPDATE_PASSWORD" ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  },
+    {
     "id" : "8e80618c-2572-4651-be91-731527251034",
     "createdTimestamp" : 1589554078595,
     "username" : "penguin",
