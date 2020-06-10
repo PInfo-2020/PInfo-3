@@ -60,21 +60,23 @@ script:
 - docker tag diges/lists-service diges/lists-service:latest
 - docker push diges/lists-service:latest
 
-branches:
-  only:
-    - elham2
-- eval "$(ssh-agent -s)"
-- chmod 600 ./deploy_key
-- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-- ssh-add ./deploy_key
-#- scp -r docker-compose aminman7@129.194.69.134:./
-#- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
-- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
-- ssh -i ./deploy_key aminman7@129.194.69.134 cd ver2
-- ssh -i ./deploy_key aminman7@129.194.69.134 rm -rf PInfo-3
-- ssh -i ./deploy_key aminman7@129.194.69.134 git clone https://github.com/PInfo-2020/PInfo-3.git
-- ssh -i ./deploy_key aminman7@129.194.69.134 cd PInfo-3/helm-charts/microservices/
-- ssh -i ./deploy_key aminman7@129.194.69.134 ./run.sh
+deploy:
+  provider: script
+  on:
+    branch: elham2
+  script: 
+  - eval "$(ssh-agent -s)"
+  - chmod 600 ./deploy_key
+  - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - ssh-add ./deploy_key
+  #- scp -r docker-compose aminman7@129.194.69.134:./
+  #- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
+  - ssh -i ./deploy_key aminman7@129.194.69.134 pwd
+  - ssh -i ./deploy_key aminman7@129.194.69.134 cd ver2
+  - ssh -i ./deploy_key aminman7@129.194.69.134 rm -rf PInfo-3
+  - ssh -i ./deploy_key aminman7@129.194.69.134 git clone https://github.com/PInfo-2020/PInfo-3.git
+  - ssh -i ./deploy_key aminman7@129.194.69.134 cd PInfo-3/helm-charts/microservices/
+  - ssh -i ./deploy_key aminman7@129.194.69.134 ./run.sh
 #- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull diges/recipes-service:latest
 #- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull diges/profile-service:latest
 #- ssh -i ./deploy_key aminman7@129.194.69.134 docker pull diges/ingredients-service:latest
