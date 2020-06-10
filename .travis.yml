@@ -9,6 +9,9 @@ env:
 services:
 - docker
 addons:
+  snaps:
+    - name: microk8s
+      confinement: classic
   sonarcloud:
     organization: pinfo-2020
     token:
