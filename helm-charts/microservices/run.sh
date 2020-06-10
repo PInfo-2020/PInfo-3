@@ -16,3 +16,8 @@ microk8s.kubectl create configmap rec-scripts  --from-file ../../docker-compose/
 
 microk8s enable helm3
 microk8s.helm3 install random .
+microk8s.kubectl patch service random-nginx-ingress-controller    -p '{"spec":{"externalIPs":["129.194.69.134"]}}'
+microk8s.kubectl patch service random-microservices-recipes-service    -p '{"spec":{"externalIPs":["129.194.69.134"], "path":["/api/v1/recipe"]}}'
+microk8s.kubectl patch service random-microservices-lists-service     -p '{"spec":{"externalIPs":["129.194.69.134"], "path":["/api/v1/lists"]}}'
+microk8s.kubectl patch service random-microservices-profile-service    -p '{"spec":{"externalIPs":["129.194.69.134"], "path":["/api/v1/profiles"]}}'
+microk8s.kubectl patch service random-microservices-ingredients-service    -p '{"spec":{"externalIPs":["129.194.69.134"], "path":["/api/v1/ingredients"]}}'
