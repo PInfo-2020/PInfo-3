@@ -3,18 +3,6 @@
 }
 
 .button-w {
-  width: 50%
-}
-
-.row-w {
-  width: 50%;
-}
-
-.border-w {
-  border-width: thick !important;
-}
-
-.button-w {
   width: 40%
 }
 
@@ -32,4 +20,27 @@
 
 .col-marg {
   margin-left: 4.5% !important;
+}
+
+.allForm {
+  background-image: url("foodporn.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.posFinish{
+  position: absolute;
+  top: 25%;
+  right: 12%;
+}
+
+:host{
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("foodporn.jpg");
+  background-size: cover;
+  background-attachment: fixed;
 }

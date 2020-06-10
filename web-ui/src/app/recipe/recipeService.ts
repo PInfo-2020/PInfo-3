@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Recipe } from './recipe';
+import { Grade } from './grade';
+import { Comment } from './comment';
 import { IngredientRecipe } from './ingredientRecipe'
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -28,6 +30,30 @@ export class RecipeService {
 
   getGrade(id: Number): Observable<Number> {
      return this.http.get<Number>(environment.recipeService.url + "/" + id + "/grade")
+       .pipe(
+                 retry(1),
+                 catchError(this.handleError),
+             );
+  }
+
+  getComments(id: Number): Observable<Comment[]> {
+     return this.http.get<Comment[]>(environment.recipeService.url + "/" + id + "/comment")
+       .pipe(
+                 retry(1),
+                 catchError(this.handleError),
+             );
+  }
+
+  addGrade(grade: Grade) {
+     return this.http.post(environment.recipeService.url + "/grade", grade)
+       .pipe(
+                 retry(1),
+                 catchError(this.handleError),
+             );
+  }
+
+  addComment(comment: Comment) {
+     return this.http.post(environment.recipeService.url + "/comment", comment)
        .pipe(
                  retry(1),
                  catchError(this.handleError),
