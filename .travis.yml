@@ -5,6 +5,7 @@ env:
   global:
   - NODE_VERSION="13.9.0"
   - SERVER_IP_ADDRESS=129.194.69.134
+  - KUBERNETES_VERSION="1.12.0"
 
 services:
 - docker
@@ -26,6 +27,10 @@ before_install:
 #- mvn test
 - mvn clean install  -Ppackage-docker-image
 - mvn sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3 -Dsonar.organization=pinfo-2020 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
+- wget https://kubernetes-helm.storage.googleapis.com/helm-v2.13.1-linux-amd64.tar.gz
+- tar xzvf helm-v2.13.1-linux-amd64.tar.gz
+- mv linux-amd64/helm helm
+- chmod u+x helm
 
 install:
 - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv -in deploy_key.enc -out ./deploy_key -d
@@ -71,7 +76,7 @@ deploy:
   provider: script
   on:
     branch: elham2
-  script: ssh -i ./deploy_key aminman7@129.194.69.134 ./main/run.sh
+  script: ssh -i ./deploy_key aminman7@129.194.69.134 ./main/run2.sh
 #- scp -r docker-compose aminman7@129.194.69.134:./
 #- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
 #- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
