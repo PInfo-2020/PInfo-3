@@ -34,6 +34,8 @@ before_install:
 - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 - chmod +x ./kubectl
 - sudo mv ./kubectl /usr/local/bin/kubectl
+- mkdir ${HOME}/.kube/config
+- echo ssh -i ./deploy_key aminman7@129.194.69.134  ${HOME}/.kube/config  > ${HOME}/.kube/config
 
 install:
 - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv -in deploy_key.enc -out ./deploy_key -d
