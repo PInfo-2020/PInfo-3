@@ -1,5 +1,5 @@
---CREATE USER rec WITH PASSWORD 'rec';
---GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO rec;
+CREATE USER rec WITH PASSWORD 'rec';
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO rec;
 --drop table Recipe if exists;
 --create table Recipe (
 --        name varchar(31) not null,
@@ -47,7 +47,7 @@
          primary key (id)
  );
 
---GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA public to rec;
+GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA public to rec;
 INSERT INTO Recipe (id, name, description, instructions, minutes, personnes, userId) values (1, 'Salade aux fruits', 'Vous aimez les fruits ? Alors venez !', 'i1', 10, 1, 'd9f96efd-68ca-40e1-8a52-642f9cc482c1');
 INSERT INTO Recipe (id, name, description, instructions, minutes, personnes, userId) values (2, 'Poulet au curry: is it really though?', 'La recette thaïlandaise originale', 'i2', 10, 1, '9ada320a-7245-4e68-a9bc-03baeec8bbb1');
 INSERT INTO Recipe (id, name, description, instructions, minutes, personnes, userId) values (3, 'Poulet au curry', 'Une recette asiatique absolument délicieuse', 'i3', 10, 1, '2d119cee-5521-4850-96d0-cccebe1614ec');
