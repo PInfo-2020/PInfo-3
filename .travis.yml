@@ -27,13 +27,13 @@ before_install:
 #- mvn test
 #- mvn clean install  -Ppackage-docker-image
 #- mvn sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3 -Dsonar.organization=pinfo-2020 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
-- wget https://kubernetes-helm.storage.googleapis.com/helm-v2.13.1-linux-amd64.tar.gz
-- tar xzvf helm-v2.13.1-linux-amd64.tar.gz
-- mv linux-amd64/helm helm
-- chmod u+x helm
-- curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-- chmod +x ./kubectl
-- sudo mv ./kubectl /usr/local/bin/kubectl
+#- wget https://kubernetes-helm.storage.googleapis.com/helm-v2.13.1-linux-amd64.tar.gz
+#- tar xzvf helm-v2.13.1-linux-amd64.tar.gz
+#- mv linux-amd64/helm helm
+#- chmod u+x helm
+#- curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+#- chmod +x ./kubectl
+#- sudo mv ./kubectl /usr/local/bin/kubectl
 - mkdir -p ${HOME}/.kube
 #- echo ssh -i ./deploy_key aminman7@129.194.69.134  ${HOME}/.kube/config  > ${HOME}/.kube/config
 
