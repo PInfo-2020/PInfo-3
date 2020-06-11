@@ -52,8 +52,10 @@ install:
 - sudo microk8s enable helm3
 - sudo microk8s.kubectl config view
 - sudo microk8s.kubectl get node
-- sudo usermod -a -G microk8s $USER
-- sudo chown -f -R $USER ~/.kube 
+#- sudo usermod -a -G microk8s $USER
+#- sudo chown -f -R $USER ~/.kube 
+- sudo usermod -a -G microk8s travis
+- sudo chown -f -R travis ~/.kube
 #- sudo - $USER
 - microk8s kubectl get nodes
 script:
