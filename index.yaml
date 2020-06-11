@@ -1,0 +1,40 @@
+apiVersion: v1
+entries:
+  microservices:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-06-11T16:14:40.354165845Z"
+    dependencies:
+    - alias: recipes-db
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com
+      version: 7.7.2
+    - alias: profile-db
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com
+      version: 7.7.2
+    - alias: ingredients-db
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com
+      version: 7.7.2
+    - alias: lists-db
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com
+      version: 7.7.2
+    - name: nginx-ingress
+      repository: https://kubernetes-charts.storage.googleapis.com
+      version: 1.27.0
+    - name: keycloak
+      repository: https://codecentric.github.io/helm-charts
+      version: 7.4.0
+    - name: kafka
+      repository: https://charts.bitnami.com/bitnami
+      version: 7.2.9
+    description: A Helm chart for deploying the PINFO microservice architecture
+    digest: 14ad40f7865117b1e4addb4c73988ab925474610db5dd5bac6d3fd2f053e46a4
+    name: microservices
+    type: application
+    urls:
+    - microservices-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-06-11T16:14:40.326611074Z"
