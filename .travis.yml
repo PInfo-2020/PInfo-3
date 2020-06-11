@@ -56,6 +56,7 @@ install:
 #- sudo chown -f -R $USER ~/.kube 
 - sudo usermod -a -G microk8s travis
 - sudo chown -f -R travis ~/.kube
+- newgrp microk8s
 #- sudo - $USER
 - microk8s kubectl get nodes
 script:
