@@ -55,6 +55,7 @@ install:
 - sudo usermod -a -G microk8s $USER
 - sudo chown -f -R $USER ~/.kube 
 - sudo - $USER
+- microk8s kubectl get nodes
 script:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
