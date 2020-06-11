@@ -42,13 +42,13 @@ before_install:
 - ls
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - ssh-add ./deploy_key
-#- scp  aminman7@129.194.69.134:/home/aminman7/.kube/config2 ${HOME}/.kube/config
+- scp  aminman7@129.194.69.134:/home/aminman7/.kube/config ${HOME}/.kube/config
 install:
 #- ls  ${HOME}/.kube/
 #- sudo cat  ${HOME}/.kube/config
 - sudo microk8s kubectl get nodes
 - sudo microk8s kubectl config get-contexts
-- sudo microk8s join 129.194.69.134:16443/bnBZdldZYkxCQXNXeHRRQUdmMlF3cUY2cXlaL0pBTUlvaFFyZ0NZdkhyUT0K
+#- sudo microk8s join 129.194.69.134:16443/bnBZdldZYkxCQXNXeHRRQUdmMlF3cUY2cXlaL0pBTUlvaFFyZ0NZdkhyUT0K
 - sudo microk8s kubectl config get-contexts
 - sudo microk8s kubectl get nodes
 - nvm install $NODE_VERSION
@@ -70,7 +70,7 @@ install:
 - cd ./helm-charts/microservices 
 #- sudo microk8s enable helm3
 #- sudo microk8s kubectl get pods --kubeconfig=$HOME/.kube/config
-#- sudo microk8s kubectl cluster-info --kubeconfig=${HOME}/.kube/config
+- sudo microk8s kubectl cluster-info --kubeconfig=${HOME}/.kube/config
 #- sudo microk8s.helm3 install random . --kubeconfig=${HOME}/.kube/config 
 #- newgrp microk8s
 #- sudo -E su travis -c "microk8s kubectl get nodes;"
