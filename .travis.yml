@@ -66,16 +66,16 @@ install:
 #- sudo microk8s.kubectl create configmap ingred-scripts  --from-file ./docker-compose/test-data/ingredSQL/ingredients.sql --kubeconfig=${HOME}/.kube/config
 - cd ./helm-charts/microservices 
 #- sudo microk8s enable helm3
-- sudo microk8s kubectl get pods --kubeconfig=${HOME}/.kube/config
+- sudo microk8s kubectl get pods --kubeconfig=$HOME/.kube/config
 - sudo microk8s kubectl cluster-info --kubeconfig=${HOME}/.kube/config
 - sudo microk8s.helm3 install random . --kubeconfig=${HOME}/.kube/config 
 #- newgrp microk8s
 #- sudo -E su travis -c "microk8s kubectl get nodes;"
 #- sudo - $USER
-- sudo microk8s kubectl get pods --kubeconfig=${HOME}/.kube/config
+- sudo microk8s kubectl get pods --kubeconfig=$HOME/.kube/config
 - sudo microk8s kubectl cluster-info --kubeconfig=${HOME}/.kube/config
 - 
-- sudo microk8s.kubectl create configmap ingred-scripts  --from-file ../../docker-compose/test-data/ingredSQL/ingredients.sql
+#- sudo microk8s.kubectl create configmap ingred-scripts  --from-file ../../docker-compose/test-data/ingredSQL/ingredients.sql
 script:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
