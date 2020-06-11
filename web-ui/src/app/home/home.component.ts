@@ -204,6 +204,8 @@ goPlacesForRec(id) {
           
           console.log("id before:",s)
           var m = s.attr("id")
+          var x = s.id
+          console.log("id before:",x)
           console.log("id before:",m)
           m = m.substring(3);
           console.log("idafter:",m)
