@@ -65,7 +65,7 @@ install:
 #- sudo -E su travis -c "microk8s kubectl get nodes;"
 #- sudo - $USER
 - sudo microk8s kubectl get pods
-- sudo microk8s kubectl cluster info
+- sudo microk8s kubectl cluster-info
 - 
 - sudo microk8s.kubectl create configmap ingred-scripts  --from-file ./docker-compose/test-data/ingredSQL/ingredients.sql
 script:
