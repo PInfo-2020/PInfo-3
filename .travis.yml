@@ -112,7 +112,7 @@ script:
 #    branch: elham2
 - ls
 - ssh -i ./deploy_key aminman7@129.194.69.134 microk8s kubectl get nodes
-- ssh -i ./deploy_key aminman7@129.194.69.134 /main/run.sh
+- ssh -i ./deploy_key aminman7@129.194.69.134 ./main/run.sh
 #- scp -r docker-compose aminman7@129.194.69.134:./
 #- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
 #- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
