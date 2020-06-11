@@ -51,7 +51,8 @@ install:
 - node -v
 - echo ${KUBECONFIG}
 #- cat /etc/kubernetes/admin.conf
-- export KUBECONFIG=${HOME}/.kube/config
+#- export KUBECONFIG=${HOME}/.kube/config
+- export KUBECONFIG=$KUBECONFIG:$HOME/.kube/config
 #- sudo snap install microk8s --classic
 - sudo microk8s enable helm3
 - sudo microk8s.kubectl config --kubeconfig=${HOME}/.kube/config view
