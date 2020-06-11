@@ -2,77 +2,89 @@
   <div class="w-25">
     <a class="navbar-brand w-25" routerLink="/home" routerLinkActive="active"><img class="w-100" src="../assets/img/DigeSteve.PNG"/></a>
   </div>
-    <a class='text-dark mr-5 ml-auto' routerLink="/profile" routerLinkActive="active">Profile</a>
+    <a class='text-dark mr-5 ml-auto' [routerLink]="['/profile/', keycloak.getKeycloakId()]" routerLinkActive="active">Profile</a>
 </nav>
 
-<form class="h-75">
-  <div class="row mb-5">
-    <div class="col-10">
-      <div class="row">
-        <div class="col-2">
-          <input type="text" class="form-control" id="name" placeholder="Name of the Recipe">
+<div class="allForm">
+  <div>
+      <p class="h1 ml-5 text-white">Recipe</p>
+  </div>
+
+  <div>
+      <p class="h3 ml-auto text-white" id="name"></p>
+  </div>
+
+
+  <div class="d-flex flex-row">
+    <div class="row mt-5 ml-5 mr-2 row-w d-inline-block">
+      <div class="col border border-w" id="ingredients_listing">
+        <div>
+          <button type="button" class="btn btn-primary mr-1" (click)="add_shop_list()">Add Shop List</button>
         </div>
-        <div class="col-2">
+      </div>
+    </div>
+    <div>
+      <p id="description"></p>
+    </div>
+    <div>
+      <p id="people"></p>
+      <p id=""></p>
+    </div>
+
+  </div>
+
+  <div class="row mb-5">
+    <div class="m-auto">
+      <div class="row">
+
+        <div class="col-3">
           <input type="text" class="form-control" id="people" placeholder="Number of people">
         </div>
-        <div class="col-2">
+        <div class="col-3">
           <input type="text" class="form-control" id="time" placeholder="Duration">
         </div>
-        <div class="col-2">
+        <div class="col-3">
           <input type="text" class="form-control" id="grade" placeholder="Grade">
         </div>
       </div>
       <div class="row mt-3">
-        <div class="col-6">
-          <textarea class="form-control" id="description" placeholder="Description" rows="8"></textarea>
+
+      </div>
+      <div class="row mt-5 mr-5 ml-2 row-w d-inline-block">
+        <div class="col border border-w" id="comments_listing">
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="row mt-5 ml-5 mr-2 row-w d-inline-block">
-    <div class="col border border-w">
-      <div class="row mb-5">
-        <div class="col-2">
-          <input type="text" class="form-control" id="ingredient" placeholder="Name of Ingredients">
-        </div>
-        <div class="col-2">
-          <input type="text" class="form-control" id="quantity" placeholder="Quantity">
-        </div>
-        <div>
-  		  <button type="submit" class="btn btn-primary">Add to Shopping List</button>
-		</div>
+      <div>
+        <button type="button" class="btn btn-primary mr-1" (click)="add_comment()">Add Comment</button>
       </div>
-    </div>
-  </div>
-
-  <div class="row mt-5 mr-5 ml-2 row-w d-inline-block">
-    <div class="col border border-w">
-      <div class="row">
-        <div class="col-2">
-          <textarea class="form-control" id="instruction" placeholder="Instructions" rows="2"></textarea>
-        </div>
+      <div class="col-2">
+        <input type="text" class="form-control" id="comment" placeholder="Comment">
       </div>
     </div>
   </div>
 
   <div>
-    <button type="submit" class="btn btn-primary mr-1" (click)="give_grade()">Give grade</button>
+    <button type="button" class="btn btn-primary mr-1" (click)="give_grade()">Give Grade</button>
   </div>
   <div class="col-2">
     <input type="text" class="form-control" id="new_grade" placeholder="Grade">
   </div>
   <div>
-    <button type="submit" class="btn btn-primary mr-1" (click)="add_comment()">Add Comment</button>
-  </div>
-  <div class="col-2">
-    <input type="text" class="form-control" id="comment" placeholder="Comment">
-  </div>
-  <div>
-    <button type="submit" class="btn btn-primary mr-1" (click)="cook()">Cook</button>
+    <button type="button" class="btn btn-primary mr-1" (click)="do_it()">Do It</button>
   </div>
 
-  <div id="div1">
-  </div>
+  <div class="d-flex flex-row">
+    <div class="row mt-5 ml-5 mr-2 row-w d-inline-block">
+      <div class="col border border-w" id="ingredients_listing">
+        <div>
+          <button type="button" class="btn btn-primary mr-1" (click)="add_shop_list()">Add Shop List</button>
+        </div>
+      </div>
+    </div>
 
-</form>
+    <div class="row mt-5 mr-5 ml-2 row-w d-inline-block">
+      <div class="col border border-w" id="instructions_listing">
+      </div>
+    </div>
+  </div>
+</div>

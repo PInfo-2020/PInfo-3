@@ -24,34 +24,13 @@ public class ProfileID implements Serializable {
 		return usernameID;
 	}
 
-	public void setUsernameID(String usernameID) {
-		this.usernameID = usernameID;
-	}
-
-	public Double getScore() {
-		return score;
-	}
-
-	public void setScore(Double score) {
-		this.score = score;
-	}
-
 	public String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 
-	
 	@Override
 	public boolean equals(Object object) {
 		if (object instanceof ProfileID) {

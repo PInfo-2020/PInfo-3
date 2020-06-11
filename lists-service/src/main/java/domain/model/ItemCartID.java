@@ -41,15 +41,8 @@ public class ItemCartID implements Serializable {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
-		this.userID = userID;
-	}
-
 	public int getIngredientID() {
 		return ingredientID;
 	}
 
-	public void setIngredientID(int ingredientID) {
-		this.ingredientID = ingredientID;
-	}
 }

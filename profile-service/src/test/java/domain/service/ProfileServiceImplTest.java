@@ -65,9 +65,11 @@ class ProfileServiceImplTest {
 	@Test
 	void addNewPlannedRecipe() {
 		int size = psi.getAllPlannedRecipes().size();
-		PlannedRecipe pr = new PlannedRecipe(369,"1",255);
+		PlannedRecipe pr = new PlannedRecipe(size+1,"1",255);
+		PlannedRecipe pr2 = new PlannedRecipe(size+2,"8",255);
 		psi.addNewPlannedRecipe(pr);
-		assertEquals(size +1, psi.getAllPlannedRecipes().size());		
+		psi.addNewPlannedRecipe(pr2);
+		assertEquals(size +2, psi.getAllPlannedRecipes().size());		
 	}
 	
 	@Test
@@ -81,13 +83,13 @@ class ProfileServiceImplTest {
 	@Test
 	void getAllPlannedRecipes() {
 		int size = psi.getAllPlannedRecipes().size();
-		PlannedRecipe pr = new PlannedRecipe(25,"RVP",363);
+		PlannedRecipe pr = new PlannedRecipe(size+1,"RVP",363);
 		psi.addNewPlannedRecipe(pr);
 		assertEquals(size +1, psi.getAllPlannedRecipes().size());
 	}
 	
 	@Test
-	void getBestCooker() {
+	void testGetBestCooker() {
 		Profile p1 = new Profile("1","bb",5);
 		Profile p2 = new Profile("2","bwb",4);
 		Profile p3 = new Profile("3","beb",3);
@@ -114,6 +116,26 @@ class ProfileServiceImplTest {
 		psi.addNewUser(p12);
 		int size = psi.getDataUsers().size();
 		assertEquals(10, psi.getBestCooker().size());
+	}
+	
+	@Test
+	void testRemoveOnePlannedRecipe() {
+		int size = psi.getAllPlannedRecipes().size();
+		PlannedRecipe pr1 = new PlannedRecipe(size+1,"RVP3",364);
+		PlannedRecipe pr2 = new PlannedRecipe(size+2,"RVP2",362);
+		psi.addNewPlannedRecipe(pr1);
+		psi.addNewPlannedRecipe(pr2);
+		psi.removeOnePlannedRecipe(pr1.getUsernameID(), pr1.getRecipeID());
+		assertEquals(size+1, psi.getAllPlannedRecipes().size());
+	}
+	
+	@Test
+	void updateScore() {
+		Profile p = new Profile("212","Leila",5);
+		psi.addNewUser(p);
+		Score s = new Score("212", 6.0);
+		psi.updateScore(s);
+		assertEquals(6.0, psi.getDataOneUser("212").getScore());
 	}
 
 }

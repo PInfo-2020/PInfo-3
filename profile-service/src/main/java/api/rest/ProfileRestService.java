@@ -1,8 +1,6 @@
 package api.rest;
 
 import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -52,7 +50,7 @@ public class ProfileRestService {
 	@GET
 	@Path("plannedrecipes/{usernameID}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<PlannedRecipe> getAllPlannedRecipesFromOneUser(@PathParam("usernameID") String usernameID) {
+	public List<PlannedRecipe> getAllPlannedRecipesFromOneUser(@PathParam("usernameID") String usernameID) {
 		return ps.getAllPlannedRecipesFromOneUser(usernameID);
 	}
 		
@@ -79,12 +77,11 @@ public class ProfileRestService {
 		return  ps.getBestCooker();
 	}
 	
-	
 	@DELETE
-	@Path("/removefromplannedrecipe/{recipeID}")
+	@Path("/removefromplannedrecipe/{usernameID}/{recipeID}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void removeOnePlannedRecipe(@PathParam("recipeID") int recipeID) {
-		ps.removeOnePlannedRecipe(recipeID);
+	public void removeOnePlannedRecipe(@PathParam("usernameID") String usernameID, @PathParam("recipeID") int recipeID) {
+		ps.removeOnePlannedRecipe(usernameID, recipeID);
 	}
 
 }

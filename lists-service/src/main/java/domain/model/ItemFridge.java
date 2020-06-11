@@ -42,29 +42,5 @@ public class ItemFridge implements Serializable{
 	@Column(name="quantity", nullable=false)
 	private double quantity;
 
-	public String getUserID() {
-		return userID;
-	}
-
-	public void setUserID(String userID) {
-		this.userID = userID;
-	}
-
-	public int getIngredientID() {
-		return ingredientID;
-	}
-
-	public void setIngredientID(int ingredientID) {
-		this.ingredientID = ingredientID;
-	}
-
-	public double getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(double quantity) {
-		this.quantity = quantity;
-	}
-	
 	
 }
