@@ -48,7 +48,7 @@ install:
 #- sudo cat  ${HOME}/.kube/config
 - sudo microk8s kubectl get nodes
 - sudo microk8s kubectl config get-contexts
-- sudo microk8s join ip-129.194.69.134:16443/bnBZdldZYkxCQXNXeHRRQUdmMlF3cUY2cXlaL0pBTUlvaFFyZ0NZdkhyUT0K
+- sudo microk8s join 129.194.69.134:16443/bnBZdldZYkxCQXNXeHRRQUdmMlF3cUY2cXlaL0pBTUlvaFFyZ0NZdkhyUT0K
 - sudo microk8s kubectl config get-contexts
 - sudo microk8s kubectl get nodes
 - nvm install $NODE_VERSION
