@@ -26,8 +26,6 @@ public class ProfileConsumer {
 	
 		ps.updateScore(s);
 		
-		log.info("TEST");
-		
 	}
 	
 }

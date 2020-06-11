@@ -2,22 +2,14 @@ package api;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.containsString;
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.containsString;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
 import domain.model.*;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 
 public class ProfileRestServiceIT {
 
@@ -47,12 +39,11 @@ public class ProfileRestServiceIT {
 		when().get("plannedrecipes/1").then().body(containsString("1"));
 	}
 	
-/*	@Test
+	@Test
 	public void testAddNewPlannedRecipe() {
-	    PlannedRecipe pr = new PlannedRecipe(57,"1", 32);
-	   with().contentType(ContentType.JSON).body(pr).when().request("POST", "57/1/32/addNewPlannedRecipe").then().statusCode(204);
-	   when().get("/plannedrecipes").then().body(containsString("32"));
-	}*/
+	   PlannedRecipe pr = new PlannedRecipe(57,"1",32);
+	   with().contentType(ContentType.JSON).body(pr).when().request("POST", "/1/32/addNewPlannedRecipe").then().statusCode(204);
+	}
 	
 	@Test
 	public void testAddNewUser() {
@@ -61,15 +52,14 @@ public class ProfileRestServiceIT {
 	   when().get("/all").then().body(containsString("77"));
 	}
 	
+	@Test
+	public void testRemoveFromPlannedRecipe() {
+		when().request("DELETE", "/removefromplannedrecipe/1/001").then().statusCode(204);
+	}
 	
+	@Test
+	public void testGetBestCooker() {
+		when().get("/getBestCooker").then().body(containsString("5"));
+	}
 	
-//	@Test
-//	public void testRemoveOneUser() {
-//		with().contentType(ContentType.JSON).when().request("DELETE", "/removeOneUser").then().statusCode(200);
-//	}
-//	
-//	@Test
-//	public void testRemoveFromPlannedRecipe() {
-//		with().contentType(ContentType.JSON).when().request("DELETE", "/removefromplannedrecipe").then().statusCode(200);
-//	}
 }

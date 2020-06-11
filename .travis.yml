@@ -5,7 +5,7 @@ env:
   global:
   - NODE_VERSION="13.9.0"
   - SERVER_IP_ADDRESS=129.194.69.134
-  - KUBERNETES_VERSION="1.12.0"
+  - KUBERNETES_VERSION="1.18.0"
 
 services:
 - docker
@@ -34,20 +34,57 @@ before_install:
 #- curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 #- chmod +x ./kubectl
 #- sudo mv ./kubectl /usr/local/bin/kubectl
-#- mkdir -p ${HOME}/.kube
+- mkdir -p ${HOME}/.kube
 #- echo ssh -i ./deploy_key aminman7@129.194.69.134  ${HOME}/.kube/config  > ${HOME}/.kube/config
-
-install:
 - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv -in deploy_key.enc -out ./deploy_key -d
 - eval "$(ssh-agent -s)"
 - chmod 600 ./deploy_key
+- ls
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - ssh-add ./deploy_key
-#- scp -r aminman7@129.194.69.134:/home/aminman7/.kube/config2 ${HOME}/.kube/
+- scp  aminman7@129.194.69.134:/home/aminman7/.kube/config ${HOME}/.kube/config
+install:
 #- ls  ${HOME}/.kube/
+#- sudo cat  ${HOME}/.kube/config
+- sudo microk8s kubectl cluster-info --kubeconfig=${HOME}/.kube/config
+- sudo microk8s enable helm3 
+- mkdir files-to-gh-pages
+- echo $(pwd)
+- sudo microk8s helm3 package ./helm-charts/microservices -d ./files-to-gh-pages
+- cd files-to-gh-pages 
+- sudo microk8s helm3 repo index .
+- ls -ltr
+- cd ..
+################################
+#- sudo microk8s join 129.194.69.134:16443/bnBZdldZYkxCQXNXeHRRQUdmMlF3cUY2cXlaL0pBTUlvaFFyZ0NZdkhyUT0K
 - nvm install $NODE_VERSION
 - node -v
-
+- echo ${KUBECONFIG}
+#- cat /etc/kubernetes/admin.conf
+#- export KUBECONFIG=${HOME}/.kube/config
+- export KUBECONFIG=$KUBECONFIG:$HOME/.kube/config
+#- sudo snap install microk8s --classic
+- sudo microk8s enable helm3
+- sudo microk8s.kubectl config --kubeconfig=${HOME}/.kube/config view
+- sudo cat  ${HOME}/.kube/config
+#- sudo microk8s.kubectl get node
+#- sudo usermod -a -G microk8s $USER
+#- sudo chown -f -R $USER ~/.kube 
+- sudo usermod -a -G microk8s travis
+- sudo chown -f -R travis ~/.kube
+#- sudo microk8s.kubectl create configmap ingred-scripts  --from-file ./docker-compose/test-data/ingredSQL/ingredients.sql --kubeconfig=${HOME}/.kube/config
+#- cd ./helm-charts/microservices 
+#- sudo microk8s enable helm3
+#- sudo microk8s kubectl get pods --kubeconfig=$HOME/.kube/config
+- sudo microk8s kubectl cluster-info --kubeconfig=${HOME}/.kube/config
+#- sudo microk8s.helm3 install random . --kubeconfig=${HOME}/.kube/config 
+#- newgrp microk8s
+#- sudo -E su travis -c "microk8s kubectl get nodes;"
+#- sudo - $USER
+#- sudo microk8s kubectl get pods --kubeconfig=$HOME/.kube/config
+#- sudo microk8s kubectl cluster-info --kubeconfig=${HOME}/.kube/config
+#- 
+#- sudo microk8s.kubectl create configmap ingred-scripts  --from-file ../../docker-compose/test-data/ingredSQL/ingredients.sql
 script:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
@@ -78,12 +115,29 @@ script:
 
 - docker tag diges/lists-service diges/lists-service:latest
 - docker push diges/lists-service:latest
-
+#deploy:
+#  provider: script
+#  on:
+#    branch: elham2
+#- ls
 deploy:
-  provider: script
-  on:
-    branch: elham2
-  script: ssh -i ./deploy_key aminman7@129.194.69.134 ./main/run2.sh
+  - provider: pages
+    github_token: $HELM_TOKEN
+    local_dir: files-to-gh-pages
+    target-branch: gh-pages
+    verbose: true
+    skip_cleanup: true
+    keep_history: true
+    on:
+      branch: elham2 
+##########################
+  - provider: script
+    on:
+      branch: elham2
+    script: ./run.sh
+#- ls
+#- ssh -i ./deploy_key aminman7@129.194.69.134 microk8s kubectl get nodes
+#- ssh -i ./deploy_key aminman7@129.194.69.134 ./main/run.sh
 #- scp -r docker-compose aminman7@129.194.69.134:./
 #- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
 #- ssh -i ./deploy_key aminman7@129.194.69.134 pwd

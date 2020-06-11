@@ -29,7 +29,7 @@ public class IngredientServiceImpl implements IngredientService {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Ingredient> criteria = builder.createQuery(Ingredient.class);
 		criteria.from(Ingredient.class);
-		return (List<Ingredient>) em.createQuery(criteria).getResultList();
+		return em.createQuery(criteria).getResultList();
 	}
 	
 	@Override

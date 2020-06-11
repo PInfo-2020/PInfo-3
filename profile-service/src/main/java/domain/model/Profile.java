@@ -32,32 +32,5 @@ public class Profile implements Serializable {
 	
 	@Column(name="score")
 	private double score;
-
-	public String getUsernameID() {
-		return usernameID;
-	}
-
-	public void setUsernameID(String usernameID) {
-		this.usernameID = usernameID;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public double getScore() {
-		return score;
-	}
-
-	public void setScore(double score) {
-		this.score = score;
-	}
 	
-	
-	
-
 }
