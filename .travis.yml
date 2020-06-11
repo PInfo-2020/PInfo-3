@@ -48,9 +48,9 @@ install:
 #- sudo cat  ${HOME}/.kube/config
 - mkdir files-to-gh-pages
 - echo $(pwd)
-- helm package ./helm-charts/microservices -d ./files-to-gh-pages
+- sudo microk8 helm3 package ./helm-charts/microservices -d ./files-to-gh-pages
 - cd files-to-gh-pages 
-- helm repo index .
+- sudo microk8 helm3 repo index .
 - ls -ltr
 - cd ..
 ################################
