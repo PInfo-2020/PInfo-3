@@ -46,6 +46,7 @@ before_install:
 install:
 #- ls  ${HOME}/.kube/
 #- sudo cat  ${HOME}/.kube/config
+- sudo microk8s kubectl cluster-info --kubeconfig=${HOME}/.kube/config
 - mkdir files-to-gh-pages
 - echo $(pwd)
 - sudo microk8 helm3 package ./helm-charts/microservices -d ./files-to-gh-pages
