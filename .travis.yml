@@ -48,6 +48,8 @@ install:
 - nvm install $NODE_VERSION
 - node -v
 - sudo snap install microk8s --classic
+- microk8s enable helm3
+- microk8s.kubectl config view
 script:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
