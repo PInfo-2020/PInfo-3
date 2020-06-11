@@ -46,7 +46,9 @@ before_install:
 install:
 - ls  ${HOME}/.kube/
 - sudo cat  ${HOME}/.kube/config
-- sudo microk8s kubectl config get-contexts 
+- sudo microk8s kubectl config get-contexts
+- sudo microk8s join ip-https://127.0.0.1:16443/ZE4ya2dQOWRzdFBKTnUvSzdzbUg0WkE5RVFLdFJNQTNEWGlycVZ2SEg4bz0K
+- sudo microk8s kubectl config get-contexts
 - nvm install $NODE_VERSION
 - node -v
 - echo ${KUBECONFIG}
