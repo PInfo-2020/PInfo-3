@@ -51,7 +51,10 @@ install:
 - sudo snap install microk8s --classic
 - sudo microk8s enable helm3
 - sudo microk8s.kubectl config view
-- sudo microk8s.kubectl get node 
+- sudo microk8s.kubectl get node
+- sudo usermod -a -G microk8s $USER
+- sudo chown -f -R $USER ~/.kube 
+- su - $USER
 script:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
@@ -87,7 +90,7 @@ script:
 #  on:
 #    branch: elham2
 - ls
-- ssh -i ./deploy_key aminman7@129.194.69.134 sudo -t /main/run.sh
+- ssh -i ./deploy_key aminman7@129.194.69.134 /main/run.sh
 #- scp -r docker-compose aminman7@129.194.69.134:./
 #- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
 #- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
