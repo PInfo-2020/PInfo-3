@@ -78,12 +78,12 @@ script:
 
 - docker tag diges/lists-service diges/lists-service:latest
 - docker push diges/lists-service:latest
-
+- sudo snap install microk8s --classic
 #deploy:
 #  provider: script
 #  on:
 #    branch: elham2
-script: ssh -i ./deploy_key aminman7@129.194.69.134 ./main/run2.sh
+script: ssh -i ./deploy_key aminman7@129.194.69.134 ./main/run.sh
 #- scp -r docker-compose aminman7@129.194.69.134:./
 #- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
 #- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
