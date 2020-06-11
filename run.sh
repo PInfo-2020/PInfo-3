@@ -24,7 +24,7 @@ sudo microk8s.helm3 delete random --kubeconfig=${HOME}/.kube/config
 sudo microk8s.helm3 init --kubeconfig=${HOME}/.kube/config 
 sudo microk8s.helm3 repo add penguin https://pinfo-2020.github.io/PInfo-3/ --kubeconfig=${HOME}/.kube/config 
 sudo microk8s.helm3 repo update --kubeconfig=${HOME}/.kube/config 
-sudo microk8s.helm3 install penguin/microservices --name random --kubeconfig=${HOME}/.kube/config
+sudo microk8s.helm3 install random penguin/microservices  --kubeconfig=${HOME}/.kube/config
 
  
 #sudo microk8s enable helm3 --kubeconfig=${HOME}/.kube/config 
