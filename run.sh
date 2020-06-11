@@ -1,5 +1,5 @@
 #sudo microk8s.helm3 status random --kubeconfig=${HOME}/.kube/config 
-
+sudo  microk8s enable dns storage --kubeconfig=${HOME}/.kube/config
 
 sudo microk8s.kubectl create secret generic keycloak-realm-secret --from-file=./docker-compose/realm-export.json --kubeconfig=${HOME}/.kube/config
 
