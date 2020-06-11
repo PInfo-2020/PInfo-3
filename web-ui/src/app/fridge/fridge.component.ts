@@ -122,7 +122,7 @@ export class FridgeComponent implements OnInit, AfterViewInit {
         <span class="m-auto border bg-white pl-2 pr-2">Name:</span><span class="col-3 border m-auto bg-white" id="ingredient">${ingredientName}</span>
         <span class="m-auto border bg-white pl-2 pr-2">Quantity:</span><span class="col-1 border m-auto bg-white" id="quantity">${this.dataFridge[i].quantity}</span>
         <span class="m-auto border bg-white pl-2 pr-2">Unit:</span><span class="col-1 border m-auto bg-white">${unitVal}</span>
-        <button id="${[this.dataFridge[i].ingredientID, this.dataFridge[i].quantity]}" type="button" class="btn btn-secondary mr-1 button-w" (click)="this.removeIngrdient(this.dataFridge[i].ingredientID);">x</button>
+        <button id="${[this.dataFridge[i].ingredientID, this.dataFridge[i].quantity]}" type="button" class="btn btn-secondary mr-1 button-w">x</button>
       `;
 
       let blockContainer = document.getElementById("div2");
@@ -171,7 +171,6 @@ export class FridgeComponent implements OnInit, AfterViewInit {
           this.fridgeService.sendIngredientsFridge(fridge)
             .subscribe();
         }
-
       }
     }
   }

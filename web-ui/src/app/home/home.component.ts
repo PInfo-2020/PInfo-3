@@ -7,6 +7,8 @@ import * as $ from 'jquery';
 
 import { RecipeService } from './recipeService';
 import { Recipe } from './recipe';
+// import { readSync } from 'fs';
+// import { AnyARecord } from 'dns';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +20,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   userID: string = this.keycloak.getKeycloakId();
   recipe: Array<Recipe> = [];
   recipeName: Array<String> = [];
-
+  recipeChose: any;
+  dataRecipe: any = [];
   public keycloakAuth: KeycloakInstance;
   private data:any = []
   private urlTop:string = `${environment.recipeService.url}/top`
@@ -26,7 +29,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private urlVeg:string = `${environment.recipeService.url}/vegetarien`
   private urlFrigo:string = `${environment.recipeService.url}/user/${this.userID}/fridge/recipe`
   private urlBestCooker:string = `${environment.profilesService.url}/getBestCooker`
-  
+  private urlRecipe:string = `${environment.recipeService.url}`
+
   private bestCooker:any = []
 
   constructor(public keycloak: KeycloakService, private http: HttpClient, public recipeService: RecipeService) { }
@@ -42,6 +46,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       $('.sev_check').click(function() {
         $('.sev_check').not(this).prop('checked', false);
       });
+      this.getRecipe()
   }
   ngAfterViewInit(){
     this.bestCook()
@@ -61,11 +66,30 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getRecipe(){
+    this.http.get(this.urlRecipe).subscribe((res)=>{
+      this.dataRecipe = res
+    })
+  }
+
+
+  chooseRecipe(){
+    this.recipeChose = document.getElementById("recipe");
+    this.recipeChose = this.recipeChose.value;
+    let res = []
+
+    for(let i=0; i<this.dataRecipe.length; i++){
+      if(this.dataRecipe[i].name == this.recipeChose)
+        res = this.dataRecipe[i]
+    }
+    this.placeRecipes([res])
+  }
+
+
   retrieveAndDisplayRecipes(url: string){
     console.log("in here")
     this.http.get(url).subscribe((res)=>{
       this.data = res
-      console.log(this.data)
       this.placeRecipes(this.data)
     })
   }
@@ -167,7 +191,10 @@ placeBestCooker(data){
     while (mainContainer.firstChild) {
       mainContainer.firstChild.remove();
     }
+    console.log(data.length)
+
     for (var i = 0; i < data.length; i++) {
+
       //creating the card of one recipe
       var cardRecipe = document.createElement("div");
       cardRecipe.className = "card";

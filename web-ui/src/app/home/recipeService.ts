@@ -20,10 +20,18 @@ export class RecipeService {
 getRecipe(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(environment.recipeService.url)
       .pipe(
-                retry(1),
-                catchError(this.handleError),
-            );
+            retry(1),
+            catchError(this.handleError),
+      );
   }
+
+getRecipeName(name: any){
+  return this.http.get(environment.recipeService.url + "/name/" + name)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+}
 
   handleError(error) {
         let errorMessage = '';
