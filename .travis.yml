@@ -46,7 +46,8 @@ install:
 - ssh-add ./deploy_key
 - scp  aminman7@129.194.69.134:/home/aminman7/.kube/config2 ${HOME}/.kube/config
 - ls  ${HOME}/.kube/
-- sudo cat  ${HOME}/.kube/config 
+- sudo cat  ${HOME}/.kube/config
+- sudo microk8s kubectl config get-contexts 
 - nvm install $NODE_VERSION
 - node -v
 - echo ${KUBECONFIG}
