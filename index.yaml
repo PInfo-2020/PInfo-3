@@ -3,7 +3,7 @@ entries:
   microservices:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-11T16:26:37.164137569Z"
+    created: "2020-06-11T16:36:34.876901341Z"
     dependencies:
     - alias: recipes-db
       name: postgresql
@@ -37,4 +37,4 @@ entries:
     urls:
     - microservices-0.1.0.tgz
     version: 0.1.0
-generated: "2020-06-11T16:26:37.124496312Z"
+generated: "2020-06-11T16:36:34.859191475Z"
