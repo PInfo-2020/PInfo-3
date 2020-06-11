@@ -3,6 +3,9 @@ package api.rest;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -49,6 +52,16 @@ public class ListsRestServiceIT {
 	@Test
 	public void testRemoveIngredientFridge() {
 		when().request("DELETE", "/removefromfridge/3/3").then().statusCode(204);
+	}
+	
+	@Test
+	public void testModIngredientCartForRecipe() {
+		ItemCart itemCart1 = new ItemCart("3",3,4);
+		ItemCart itemCart2 = new ItemCart("3",4,4);
+		List<ItemCart> itemCarts = new ArrayList<ItemCart>();
+		itemCarts.add(itemCart1);
+		itemCarts.add(itemCart2);
+		with().contentType(ContentType.JSON).body(itemCarts).when().request("POST", "/addcartfromrecipe").then().statusCode(204);
 	}
 	
 }

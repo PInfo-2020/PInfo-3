@@ -12,11 +12,9 @@ public class PlannedRecipeID implements Serializable {
 	}
 
 	private static final long serialVersionUID = 1L;
-	
-	private int rowID;
-	
+		
 	private String usernameID;
-	
+
 	private int recipeID;
 	
 	@Override
@@ -38,16 +36,8 @@ public class PlannedRecipeID implements Serializable {
 	public String getUsernameID() {
 		return usernameID;
 	}
-
-	public void setUsernameID(String usernameID) {
-		this.usernameID = usernameID;
-	}
-
 	public int getRecipeID() {
 		return recipeID;
 	}
 
-	public void setRecipeID(int recipeID) {
-		this.recipeID = recipeID;
-	}
 }

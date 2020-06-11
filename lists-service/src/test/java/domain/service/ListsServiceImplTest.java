@@ -2,6 +2,10 @@ package domain.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -80,20 +84,54 @@ class ListsServiceImplTest {
 		assertEquals(1, listsServiceImpl.getAllFridge("2").size());
 	}
 	
+	@Test
+	void testGetAllFridgeRecipe() {
+		ItemFridge i1 = new ItemFridge("2",2,2);
+		ItemFridge i2 = new ItemFridge("2",1,1);
+		listsServiceImpl.createItemFridge(i1);
+		listsServiceImpl.createItemFridge(i2);
+		
+		HashMap<Integer, Double> hash = listsServiceImpl.getAllFridgeRecipe("2");
+		assertEquals(2, hash.get(2));
+	}
 	
-//	@Test
-//	void testGetAllCartTEST() {
-//		listsServiceImpl.createItemCart(new ItemCart(1,1,1));
-//		listsServiceImpl.createItemCart(new ItemCart(1,2,2));
-//		listsServiceImpl.createItemCart(new ItemCart(2,1,1));
-//		listsServiceImpl.createItemCart(new ItemCart(2,2,2));
-//		listsServiceImpl.modIngredientCart(new ItemCart(3, 1, 4));
-//		listsServiceImpl.removeIngredientCart(1, 1);
-//		ArrayList<ItemCart> listItem = listsServiceImpl.getAllCartTEST();
-//		for (ItemCart i : listItem) {
-//			System.out.println("userID: " + i.getUserID() + " ingredientID: " + i.getIngredientID() + " quantity: " + i.getQuantity());
-//		}
-//		
-//		assertEquals(4, listItem.size());
-//	}
+	@Test
+	public void testModCartForRecipeToMake() {
+		ItemFridge i1 = new ItemFridge("2",2,2);
+		ItemFridge i3 = new ItemFridge("2",8,6);
+		listsServiceImpl.createItemFridge(i1);
+		listsServiceImpl.createItemFridge(i3);
+		ItemCart i2 = new ItemCart("2",2,2);
+		listsServiceImpl.createItemCart(i2);
+		
+		ItemCart m1 = new ItemCart("2",2,4);
+		ItemCart m2 = new ItemCart("2",3,4);
+		ItemCart m3 = new ItemCart("2",8,8);
+		List<ItemCart> carts = new ArrayList<ItemCart>();
+		carts.add(m1);
+		carts.add(m2);
+		carts.add(m3);
+		listsServiceImpl.modCartForRecipeToMake(carts);
+		
+		double quantity1 = 0;
+		double quantity2 = 0;
+		double quantity3 = 0;
+		for (ItemCart i : listsServiceImpl.getAllCart("2")) {
+			if (2 == i.getIngredientID()) {
+				quantity1 = i.getQuantity();
+			}
+			if (3 == i.getIngredientID()) {
+				quantity2 = i.getQuantity();
+			}
+			if (8 == i.getIngredientID()) {
+				quantity3 = i.getQuantity();
+			}
+		}
+		
+		assertEquals(4, quantity2);
+		assertEquals(6, quantity1);
+		assertEquals(2, quantity3);
+		
+	}
+	
 }

@@ -70,7 +70,7 @@ public class ListsServiceRestService {
 	@POST // Add ingredients of Recipe that a user wants to do in the Cart
 	@Path("/addcartfromrecipe")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void modIngredientCart(List<ItemCart> itemCarts) {
+	public void modIngredientCartForRecipe(List<ItemCart> itemCarts) {
 		listsService.modCartForRecipeToMake(itemCarts);
 	}
 	

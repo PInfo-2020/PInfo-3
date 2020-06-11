@@ -26,14 +26,13 @@ public class ProfileServiceImpl implements ProfileService {
     @PersistenceContext(unitName = "ProfilesPU")
     private EntityManager em;
     // making the following var public was a reason for thorntail crash : amazing
-    private ProfileService ps;
+
 	@Override
 	public List<Profile> getDataUsers() {
-		// TODO Auto-generated method stub
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Profile> criteria = builder.createQuery( Profile.class );
 		criteria.from(Profile.class);
-		return (List<Profile>)em.createQuery( criteria ).getResultList();
+		return em.createQuery( criteria ).getResultList();
 	}
 	
 	@Override
@@ -72,7 +71,6 @@ public class ProfileServiceImpl implements ProfileService {
 			//if already in db do nothing
 		} else {
 			//otherwise add it
-			pr.setRowID(32);
 			em.persist(pr);
 		}
 	}
@@ -90,7 +88,6 @@ public class ProfileServiceImpl implements ProfileService {
 			return 0;
 		} else {
 			//otherwise add it
-			p.setScore(0);
 			em.persist(p);
 			return 1;
 		}
@@ -99,27 +96,16 @@ public class ProfileServiceImpl implements ProfileService {
 	@Override
 	public List<PlannedRecipe> getAllPlannedRecipes() {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<PlannedRecipe> criteria = builder.createQuery( PlannedRecipe.class );
+		CriteriaQuery<PlannedRecipe> criteria = builder.createQuery(PlannedRecipe.class);
 		criteria.from(PlannedRecipe.class);
-		return (List<PlannedRecipe>)em.createQuery( criteria ).getResultList();
-	}
-
-
-
-	@Override
-	public void removeOneUser(Profile p) {
-		ProfileID pk = new ProfileID(p.getUsernameID(), p.getUsername(), p.getScore());
-		p = em.find(Profile.class, pk);
-		em.remove(p);
-		
+		return em.createQuery(criteria).getResultList();
 	}
 
 	@Override
-	public void removeOnePlannedRecipe(PlannedRecipe pr) {
-		PlannedRecipeID pk = new PlannedRecipeID(pr.getUsernameID(), pr.getRecipeID());
-		pr = em.find(PlannedRecipe.class, pk);
+	public void removeOnePlannedRecipe(String usernameID, int recipeID) {
+		PlannedRecipeID pk = new PlannedRecipeID(usernameID, recipeID);
+		PlannedRecipe pr = em.find(PlannedRecipe.class, pk);
 		em.remove(pr);
-		
 	}
 
 	@Override
@@ -139,12 +125,6 @@ public class ProfileServiceImpl implements ProfileService {
 			p.setScore(s.getScore());
 			em.merge(p);
 		}
-	}
-
-	@Override
-	public void removeOnePlannedRecipe(int recipeID) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -185,9 +165,5 @@ public class ProfileServiceImpl implements ProfileService {
 		return results;
 	}
 
-	
-
-		
-	
 
 }

@@ -17,16 +17,12 @@ public interface ProfileService {
 	public int addNewUser(Profile p);
 
 	public List<PlannedRecipe> getAllPlannedRecipes();
-
-	public void removeOneUser(Profile p);
 	
 	public void updateScore(Score s);
 
-	public void removeOnePlannedRecipe(int recipeID);
+	public void removeOnePlannedRecipe(String usernameID, int recipeID);
 
 	public List<Profile> getBestCooker();
-
-	void removeOnePlannedRecipe(PlannedRecipe pr);
 
 	double getGrade(String usernameID);
 

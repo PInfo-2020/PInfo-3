@@ -43,7 +43,7 @@ public class ListsServiceImpl implements ListsService {
 	}
     
     @Override
-    public HashMap<Integer, Double> getAllFridgeRecipe(String userID){
+    public HashMap<Integer, Double> getAllFridgeRecipe(String userID){ // Used with Kafka
     	ArrayList<ItemFridge> itemFridgeList = getAllFridge(userID);
     	HashMap<Integer, Double> myHash = new HashMap<Integer, Double>();
     	for (ItemFridge i: itemFridgeList) {
@@ -101,18 +101,40 @@ public class ListsServiceImpl implements ListsService {
 		log.info("Modifie le Cart de l'utilisateur pour ajouter les ingrédients d'une recette en fonction du frigo");
 		TypedQuery<ItemFridge> query = em.createQuery("SELECT i FROM ItemFridge i WHERE i.userID = :userID ", ItemFridge.class);
 		query.setParameter("userID", itemCarts.get(0).getUserID());
+		
 		List<ItemFridge> fridge = query.getResultList();
 		
+		TypedQuery<ItemCart> query2 = em.createQuery("SELECT i FROM ItemCart i WHERE i.userID = :userID ", ItemCart.class);
+		query2.setParameter("userID", itemCarts.get(0).getUserID());
+		
+		List<ItemCart> cart = query2.getResultList();
+		
+		
 		List<ItemCart> finalItems = new ArrayList<ItemCart>();
+		double tmpQuantity;
 		
 		for(ItemCart i : itemCarts) {
 			for(ItemFridge f : fridge) {
 				if (i.getIngredientID() == f.getIngredientID()) {
 					if (i.getQuantity() > f.getQuantity()) {
+						tmpQuantity = i.getQuantity();
 						i.setQuantity((i.getQuantity() - f.getQuantity()));
+						
+						for(ItemCart j : cart) {
+							if (i.getIngredientID() == j.getIngredientID()) {
+								i.setQuantity(tmpQuantity + j.getQuantity());
+							}
+						}
 					}
 					else {
+						tmpQuantity = i.getQuantity();
 						i.setQuantity(0);
+						
+						for(ItemCart j : cart) {
+							if (i.getIngredientID() == j.getIngredientID()) {
+								i.setQuantity(tmpQuantity + j.getQuantity());
+							}
+						}
 					}
 				}
 			}
