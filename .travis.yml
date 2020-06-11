@@ -49,6 +49,7 @@ install:
 - sudo cat  ${HOME}/.kube/config 
 - nvm install $NODE_VERSION
 - node -v
+- ls ${KUBECONFIG}
 #- sudo snap install microk8s --classic
 - sudo microk8s enable helm3
 - sudo microk8s.kubectl config view
