@@ -41,6 +41,7 @@ install:
 - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv -in deploy_key.enc -out ./deploy_key -d
 - eval "$(ssh-agent -s)"
 - chmod 600 ./deploy_key
+- ls
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - ssh-add ./deploy_key
 - scp -r aminman7@129.194.69.134:/home/aminman7/.kube/config2 ${HOME}/.kube/config
@@ -85,6 +86,7 @@ script:
 #  provider: script
 #  on:
 #    branch: elham2
+- ls
 - ssh -i ./deploy_key aminman7@129.194.69.134 sudo /main/run.sh
 #- scp -r docker-compose aminman7@129.194.69.134:./
 #- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
