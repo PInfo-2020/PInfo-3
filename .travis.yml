@@ -48,17 +48,13 @@ install:
 #- sudo cat  ${HOME}/.kube/config
 - mkdir files-to-gh-pages
 - echo $(pwd)
-- helm package ./helm-charts/microservices -d files-to-gh-pages
+- helm package ./helm-charts/microservices -d ./files-to-gh-pages
 - cd files-to-gh-pages 
 - helm repo index .
 - ls -ltr
 - cd ..
 ################################
-- sudo microk8s kubectl get nodes
-- sudo microk8s kubectl config get-contexts
 #- sudo microk8s join 129.194.69.134:16443/bnBZdldZYkxCQXNXeHRRQUdmMlF3cUY2cXlaL0pBTUlvaFFyZ0NZdkhyUT0K
-- sudo microk8s kubectl config get-contexts
-- sudo microk8s kubectl get nodes
 - nvm install $NODE_VERSION
 - node -v
 - echo ${KUBECONFIG}
@@ -69,13 +65,13 @@ install:
 - sudo microk8s enable helm3
 - sudo microk8s.kubectl config --kubeconfig=${HOME}/.kube/config view
 - sudo cat  ${HOME}/.kube/config
-- sudo microk8s.kubectl get node
+#- sudo microk8s.kubectl get node
 #- sudo usermod -a -G microk8s $USER
 #- sudo chown -f -R $USER ~/.kube 
 - sudo usermod -a -G microk8s travis
 - sudo chown -f -R travis ~/.kube
 #- sudo microk8s.kubectl create configmap ingred-scripts  --from-file ./docker-compose/test-data/ingredSQL/ingredients.sql --kubeconfig=${HOME}/.kube/config
-- cd ./helm-charts/microservices 
+#- cd ./helm-charts/microservices 
 #- sudo microk8s enable helm3
 #- sudo microk8s kubectl get pods --kubeconfig=$HOME/.kube/config
 - sudo microk8s kubectl cluster-info --kubeconfig=${HOME}/.kube/config
@@ -132,6 +128,7 @@ deploy:
   keep_history: true
   on:
    branch: elham2  
+##########################
   provider: script
   on:
     branch: elham2
