@@ -46,6 +46,14 @@ before_install:
 install:
 #- ls  ${HOME}/.kube/
 #- sudo cat  ${HOME}/.kube/config
+- mkdir files-to-gh-pages
+- echo $(pwd)
+- helm package ./helm-charts/microservices -d files-to-gh-pages
+- cd files-to-gh-pages 
+- helm repo index .
+- ls -ltr
+- cd ..
+################################
 - sudo microk8s kubectl get nodes
 - sudo microk8s kubectl config get-contexts
 #- sudo microk8s join 129.194.69.134:16443/bnBZdldZYkxCQXNXeHRRQUdmMlF3cUY2cXlaL0pBTUlvaFFyZ0NZdkhyUT0K
@@ -113,9 +121,24 @@ script:
 #  provider: script
 #  on:
 #    branch: elham2
-- ls
-- ssh -i ./deploy_key aminman7@129.194.69.134 microk8s kubectl get nodes
-- ssh -i ./deploy_key aminman7@129.194.69.134 ./main/run.sh
+#- ls
+deploy:
+  provider: pages
+  github_token: $HELM_TOKEN
+  local_dir: files-to-gh-pages
+  target-branch: gh-pages
+  verbose: true
+  skip_cleanup: true
+  keep_history: true
+  on:
+   branch: elham2  
+  provider: script
+  on:
+    branch: elham2
+  script: ./run.sh
+#- ls
+#- ssh -i ./deploy_key aminman7@129.194.69.134 microk8s kubectl get nodes
+#- ssh -i ./deploy_key aminman7@129.194.69.134 ./main/run.sh
 #- scp -r docker-compose aminman7@129.194.69.134:./
 #- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
 #- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
