@@ -43,7 +43,7 @@ install:
 - chmod 600 ./deploy_key
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - ssh-add ./deploy_key
-- scp -r aminman7@129.194.69.134:/home/aminman7/.kube/config2 ${HOME}/.kube/
+- scp -r aminman7@129.194.69.134:/home/aminman7/.kube/config2 ${HOME}/.kube/config
 - ls  ${HOME}/.kube/
 - nvm install $NODE_VERSION
 - node -v
