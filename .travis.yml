@@ -129,11 +129,11 @@ deploy:
     skip_cleanup: true
     keep_history: true
     on:
-      branch: master 
+      branch: elham2 
 ##########################
   - provider: script
     on:
-      branch: master
+      branch: elham2
     script: ./run.sh
 #- ls
 #- ssh -i ./deploy_key aminman7@129.194.69.134 microk8s kubectl get nodes
