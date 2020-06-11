@@ -50,7 +50,7 @@ install:
 - nvm install $NODE_VERSION
 - node -v
 - echo ${KUBECONFIG}
-- echo /etc/kubernetes/admin.conf
+- cat /etc/kubernetes/admin.conf
 - export KUBECONFIG=${HOME}/.kube/config
 #- sudo snap install microk8s --classic
 - sudo microk8s enable helm3
