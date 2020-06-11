@@ -4,6 +4,7 @@ import { KeycloakInstance } from 'keycloak-js';
 import { HttpClient } from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import * as $ from 'jquery';
+import { Router } from '@angular/router';
 
 import { RecipeService } from './recipeService';
 import { Recipe } from './recipe';
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   
   private bestCooker:any = []
 
-  constructor(public keycloak: KeycloakService, private http: HttpClient, public recipeService: RecipeService) { }
+  constructor(public keycloak: KeycloakService, private http: HttpClient, public recipeService: RecipeService, private router: Router) { }
 
    ngOnInit() {
       this.keycloakAuth = this.keycloak.getKeycloakAuth();
@@ -161,6 +162,14 @@ placeBestCooker(data){
     mainContainer.appendChild(cardCooker);
   }
 }
+goPlacesForRec(id) {
+  id = id.substring(3);
+  this.router.navigate(['/recipe', id]).then(nav => {
+    console.log(nav); // true if navigation is successful
+  }, err => {
+    console.log(err) // when there's an error
+  });
+}
 
   placeRecipes(data){
     var mainContainer = document.getElementById("myData");
@@ -183,10 +192,25 @@ placeBestCooker(data){
       cardText.className = "card-body";
       cardText.innerHTML = (data[i].description);
       //creating card link
-      var cardLink = document.createElement("a");
-      cardLink.className = "card-link";
-      cardLink.innerHTML = "More...";
-      cardLink.href = environment.angular.url + "/recipe" + "/" + data[i].id;
+      var cardLink = document.createElement("button");
+      cardLink.className = "btn btn-primary";
+      //cardLink.innerHTML = "More...";
+      var t = document.createTextNode("More...");
+      cardLink.appendChild(t);
+      var s = "rec".concat(data[i].id);
+      cardLink.id = s
+      $(document).ready(function(){
+        $(cardLink.id).click(function(s){
+          s = s.substring(3);
+          this.router.navigate(['/recipe', s]).then(nav => {
+            console.log(nav); // true if navigation is successful
+          }, err => {
+            console.log(err) // when there's an error
+          });
+
+        });
+      });
+      //cardLink.href = environment.angular.url + "/recipe" + "/" + data[i].id;
       //this._elem.nativeElement.innerHTML = <a class='ml-auto text-dark mr-5' routerLink="/createRecipe" routerLinkActive="active">Create recipe</a>
 
       //put the title and text into the body
