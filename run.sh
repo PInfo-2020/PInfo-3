@@ -1,4 +1,4 @@
-sudo microk8s enable helm3 --kubeconfig=${HOME}/.kube/config 
+sudo microk8s enable helm3 
 sudo microk8s kubectl cluster-info --kubeconfig=${HOME}/.kube/config
 sudo microk8s.helm3 delete random --kubeconfig=${HOME}/.kube/config
 sudo microk8s.helm3 init --kubeconfig=${HOME}/.kube/config 
