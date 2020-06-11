@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   plannedRecipeDB: Array<PlannedRecipe> = [];
   recipeDB: Array<Recipe> = [];
 
-  userID: string = this.keycloak.getKeycloakId();
+  userID: string;
 
   usernameElem: any;
   emailElem: any;
@@ -44,6 +44,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.emailElem = document.getElementById("email");
     this.passwordElem = document.getElementById("password");
     this.ratingElem = document.getElementById("rating");
+
+    this.userID = this.router.url.split("profile/")[1]
 
     let ingredientDataElem = document.getElementById("ingredients-choices");
 
