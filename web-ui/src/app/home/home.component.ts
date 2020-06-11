@@ -203,9 +203,11 @@ goPlacesForRec(id) {
         $(s).click(function(s){
           
           console.log("id before:",s)
-          s = s.substring(3);
-          console.log("idafter:",s)
-          this.router.navigate(['/recipe', s]).then(nav => {
+          var m = s.attr("id")
+          console.log("id before:",m)
+          m = m.substring(3);
+          console.log("idafter:",m)
+          this.router.navigate(['/recipe', m]).then(nav => {
             console.log(nav); // true if navigation is successful
             console.log("good")
           }, err => {
