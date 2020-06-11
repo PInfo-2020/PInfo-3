@@ -5,7 +5,7 @@ sudo microk8s.helm3 init --kubeconfig=${HOME}/.kube/config
 sudo microk8s.helm3 repo add penguin https://pinfo-2020.github.io/PInfo-3/ --kubeconfig=${HOME}/.kube/config 
 sudo microk8s.helm3 repo update --kubeconfig=${HOME}/.kube/config 
 sudo microk8s.helm3 install penguin/microservices --name random --kubeconfig=${HOME}/.kube/config 
-sudo microk8s.helm status random --kubeconfig=${HOME}/.kube/config 
+sudo microk8s.helm3 status random --kubeconfig=${HOME}/.kube/config 
 
 
 sudo microk8s.kubectl create secret generic keycloak-realm-secret --from-file=./docker-compose/realm-export.json --kubeconfig=${HOME}/.kube/config
