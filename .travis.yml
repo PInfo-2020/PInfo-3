@@ -36,8 +36,6 @@ before_install:
 #- sudo mv ./kubectl /usr/local/bin/kubectl
 - mkdir -p ${HOME}/.kube
 #- echo ssh -i ./deploy_key aminman7@129.194.69.134  ${HOME}/.kube/config  > ${HOME}/.kube/config
-
-install:
 - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv -in deploy_key.enc -out ./deploy_key -d
 - eval "$(ssh-agent -s)"
 - chmod 600 ./deploy_key
@@ -45,6 +43,7 @@ install:
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - ssh-add ./deploy_key
 - scp  aminman7@129.194.69.134:/home/aminman7/.kube/config2 ${HOME}/.kube/config
+install:
 - ls  ${HOME}/.kube/
 - sudo cat  ${HOME}/.kube/config
 - sudo microk8s kubectl config get-contexts 
