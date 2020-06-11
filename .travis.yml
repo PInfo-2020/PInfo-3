@@ -56,12 +56,12 @@ install:
 #- sudo chown -f -R $USER ~/.kube 
 - sudo usermod -a -G microk8s travis
 - sudo chown -f -R travis ~/.kube
-- sudo microk8s.kubectl create configmap ingred-scripts  --from-file ./docker-compose/test-data/ingredSQL/ingredients.sql --kubeconfig=${HOME}/.kube/config
-- cd ./helm-charts/microservices 
-- sudo microk8s enable helm3
-- sudo microk8s.helm3 install random . --kubeconfig=${HOME}/.kube/config
+#- sudo microk8s.kubectl create configmap ingred-scripts  --from-file ./docker-compose/test-data/ingredSQL/ingredients.sql --kubeconfig=${HOME}/.kube/config
+#- cd ./helm-charts/microservices 
+#- sudo microk8s enable helm3
+#- sudo microk8s.helm3 install random . --kubeconfig=${HOME}/.kube/config
 #- newgrp microk8s
-- sudo -E su travis -c ls
+- sudo -E su travis -c microk8s kubectl get nodes
 #- sudo - $USER
 - microk8s kubectl get nodes
 script:
