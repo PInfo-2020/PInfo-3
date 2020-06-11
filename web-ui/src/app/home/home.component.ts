@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   
   private bestCooker:any = []
 
-  constructor(public keycloak: KeycloakService, private http: HttpClient, public recipeService: RecipeService, private router: Router) { }
+  constructor(public keycloak: KeycloakService, private http: HttpClient, public recipeService: RecipeService, public router: Router) { }
 
    ngOnInit() {
       this.keycloakAuth = this.keycloak.getKeycloakAuth();
@@ -149,10 +149,15 @@ placeBestCooker(data){
     cardText.className = "card-body";
     cardText.innerHTML = (data[i].score);
     //creating card link
-    var cardLink = document.createElement("a");
-    cardLink.className = "card-link";
-    cardLink.innerHTML = "More...";
-    cardLink.href = environment.angular.url + "/profile" + "/" + data[i].usernameID;
+  //creating card link
+  var cardLink = document.createElement("button");
+  cardLink.className = "btn btn-primary";
+  //cardLink.innerHTML = "More...";
+  var t = document.createTextNode("More...");
+  cardLink.appendChild(t);
+  var s = "coo".concat(data[i].usernameID);
+  cardLink.id = "coo".concat(data[i].usernameID)
+    //cardLink.href = environment.angular.url + "/profile" + "/" + data[i].usernameID;
     //this._elem.nativeElement.innerHTML = <a class='ml-auto text-dark mr-5' routerLink="/createRecipe" routerLinkActive="active">Create recipe</a>
     //put the title and text into the body
     cardBody.appendChild(cardTitle);
@@ -160,6 +165,26 @@ placeBestCooker(data){
     cardBody.appendChild(cardLink);
     cardCooker.appendChild(cardBody);
     mainContainer.appendChild(cardCooker);
+
+    const that = this
+    const m = "#".concat(s)
+    console.log("s: ", m)
+    
+      $(m).click(function(){
+        
+        console.log("id before:",m)
+        const q = m.substring(4);
+        //console.log("idafter:",x)
+        
+        that.router.navigate(['/profile', q]).then(nav => {
+          console.log(nav); // true if navigation is successful
+          console.log("good")
+        }, err => {
+          console.log("error")
+          console.log(err) // when there's an error
+        });
+
+      });
   }
 }
 goPlacesForRec(id) {
@@ -198,27 +223,9 @@ goPlacesForRec(id) {
       var t = document.createTextNode("More...");
       cardLink.appendChild(t);
       var s = "rec".concat(data[i].id);
-      cardLink.id = s
-      $(document).ready(function(s){
-        $(s).click(function(s){
-          
-          console.log("id before:",s)
-          var m = s.attr("id")
-          var x = s.id
-          console.log("id before:",x)
-          console.log("id before:",m)
-          m = m.substring(3);
-          console.log("idafter:",m)
-          this.router.navigate(['/recipe', m]).then(nav => {
-            console.log(nav); // true if navigation is successful
-            console.log("good")
-          }, err => {
-            console.log("error")
-            console.log(err) // when there's an error
-          });
-
-        });
-      });
+      cardLink.id = "rec".concat(data[i].id)
+      
+     // });
       //cardLink.href = environment.angular.url + "/recipe" + "/" + data[i].id;
       //this._elem.nativeElement.innerHTML = <a class='ml-auto text-dark mr-5' routerLink="/createRecipe" routerLinkActive="active">Create recipe</a>
 
@@ -230,6 +237,26 @@ goPlacesForRec(id) {
 
       cardRecipe.appendChild(cardBody);
       mainContainer.appendChild(cardRecipe);
+
+      const that = this
+      const m = "#".concat(s)
+      console.log("s: ", m)
+      
+        $(m).click(function(){
+          
+          console.log("id before:",m)
+          const q = m.substring(4);
+          //console.log("idafter:",x)
+          
+          that.router.navigate(['/recipe', q]).then(nav => {
+            console.log(nav); // true if navigation is successful
+            console.log("good")
+          }, err => {
+            console.log("error")
+            console.log(err) // when there's an error
+          });
+
+        });
 
     }
   }
