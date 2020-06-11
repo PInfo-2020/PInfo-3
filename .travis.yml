@@ -25,8 +25,8 @@ cache:
 
 before_install:
 #- mvn test
-- mvn clean install  -Ppackage-docker-image
-- mvn sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3 -Dsonar.organization=pinfo-2020 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
+#- mvn clean install  -Ppackage-docker-image
+#- mvn sonar:sonar -Dsonar.projectKey=PInfo-2020_PInfo-3 -Dsonar.organization=pinfo-2020 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f719087dabb0280c1176fb6cc0be6d6b061709e6
 - wget https://kubernetes-helm.storage.googleapis.com/helm-v2.13.1-linux-amd64.tar.gz
 - tar xzvf helm-v2.13.1-linux-amd64.tar.gz
 - mv linux-amd64/helm helm
@@ -47,43 +47,42 @@ install:
 - ls  ${HOME}/.kube/
 - nvm install $NODE_VERSION
 - node -v
-
+- sudo snap install microk8s --classic
 script:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 - cd web-ui
 #- sed 's/localhost:4200/129.194.69.134/' e2e/protractor.conf.js
-- pwd
-- npm -v
-- npm install
-- npm update
-- npm run-script build --prod
-- npm run build -- --output-path=./web-ui/dist
-- ls ./web-ui/dist
-- docker build -t diges/web-ui .
-- docker tag diges/web-ui diges/web-ui:latest
-- docker push diges/web-ui:latest
-- cd ..
+#- pwd
+#- npm -v
+#- npm install
+#- npm update
+#- npm run-script build --prod
+#- npm run build -- --output-path=./web-ui/dist
+#- ls ./web-ui/dist
+#- docker build -t diges/web-ui .
+#- docker tag diges/web-ui diges/web-ui:latest
+#- docker push diges/web-ui:latest
+#- cd ..
 
-- docker image ls
+#- docker image ls
 
-- docker tag diges/recipes-service diges/recipes-service:latest
-- docker push diges/recipes-service:latest
+#- docker tag diges/recipes-service diges/recipes-service:latest
+#- docker push diges/recipes-service:latest
 
-- docker tag diges/profile-service diges/profile-service:latest
-- docker push diges/profile-service:latest
+#- docker tag diges/profile-service diges/profile-service:latest
+#- docker push diges/profile-service:latest
 
-- docker tag diges/ingredients-service diges/ingredients-service:latest
-- docker push diges/ingredients-service:latest
+#- docker tag diges/ingredients-service diges/ingredients-service:latest
+#- docker push diges/ingredients-service:latest
 
-- docker tag diges/lists-service diges/lists-service:latest
-- docker push diges/lists-service:latest
-- sudo snap install microk8s --classic
+#- docker tag diges/lists-service diges/lists-service:latest
+#- docker push diges/lists-service:latest
 #deploy:
 #  provider: script
 #  on:
 #    branch: elham2
-script: ssh -i ./deploy_key aminman7@129.194.69.134 ./main/run.sh
+ssh -i ./deploy_key aminman7@129.194.69.134 ./main/run.sh
 #- scp -r docker-compose aminman7@129.194.69.134:./
 #- scp -r web-ui/dist/* aminman7@129.194.69.134:./web-ui/dist
 #- ssh -i ./deploy_key aminman7@129.194.69.134 pwd
