@@ -200,7 +200,8 @@ goPlacesForRec(id) {
       var s = "rec".concat(data[i].id);
       cardLink.id = s
       $(document).ready(function(){
-        $(cardLink.id).click(function(s){
+        $(cardLink).click(function(){
+          var s = $(this).id
           s = s.substring(3);
           this.router.navigate(['/recipe', s]).then(nav => {
             console.log(nav); // true if navigation is successful
