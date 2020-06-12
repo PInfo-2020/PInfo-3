@@ -1,13 +1,56 @@
-.logo {
-    height: 200px;
-    width: auto;
-    padding: 10px;
-    display: block;
-    margin: 0 auto;
-}
-
 .text {
   text-align: justify;
   text-align-last: center;
   }
   
+.box {
+  text-align: center;
+  margin: 20%;
+}
+
+.border-w {
+  border-width: thick !important;
+}
+
+.button-w {
+  width: 40%
+}
+
+.row-w {
+  width: 45%;
+}
+
+.row-marg {
+  margin-bottom: 13.5% !important;
+}
+
+.row-marg2 {
+  margin-bottom: 6% !important;
+}
+
+.col-marg {
+  margin-left: 4.5% !important;
+}
+
+.allForm {
+  background-image: url("im2.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+
+.posFinish{
+  position: absolute;
+  top: 25%;
+  right: 12%;
+}
+:host{
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("im2.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+}

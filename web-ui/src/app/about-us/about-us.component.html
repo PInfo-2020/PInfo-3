@@ -1,12 +1,25 @@
-<img class="logo" src="../assets/img/DigeSteve.PNG"/>
-<p class="text">
-	You can register your fridge. <br>
-</p>
-<p class="text">
-	Large choice of recipe according to your tastes.<br>
-</p>
-<p class="text">
-	Find recipes with only food from your fridge, <br> or according to our food choices. <br>
-	If you don't have all the ingredients for a recipe <br> no worries, our site will privide you a 
-	shopping list. 
-</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="w-25">
+      <a class="navbar-brand w-25" routerLink="/home" routerLinkActive="active"><img class="w-100" src="../assets/img/DigeSteve.PNG"/></a>
+    </div>
+      <a class='text-dark mr-5 ml-auto' [routerLink]="['/profile/', keycloak.getKeycloakId()]" routerLinkActive="active">Profile</a>
+  </nav>
+
+<div class="allForm"> 
+<div class="row mt-5 row-w d-inline-block box">
+	<div class="col border border-w box bg-white">
+	<p class="text">
+		You can register your fridge. <br>
+	</p>
+	<p class="text">
+		Large choice of recipe according to your tastes.<br>
+	</p>
+	<p class="text">
+		Find recipes with only food from your fridge, <br> or according to our food choices. <br>
+		If you don't have all the ingredients for a recipe <br> no worries, our site will privide you a 
+		shopping list. 
+	</p>
+	</div>
+</div>
+
+</div> 

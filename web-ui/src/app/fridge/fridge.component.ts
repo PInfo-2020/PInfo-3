@@ -144,20 +144,23 @@ export class FridgeComponent implements OnInit, AfterViewInit {
       // mainContainer.appendChild(contrain);
     }
 
-    // document.addEventListener('click', event => {
-    //   var target = event.target || event.srcElement || event.currentTarget;
-    //   var idAttr = (target as Element).id;
-    //   var value = idAttr.split(",");
-    //   for(let j=0; j<this.dataIngredient.length; j++){
-    //     if(this.dataIngredient[j].id == +value[0]){
-    //       this.removeIngredient(+value[0]);
-    //     }
-    //   }
-    // });
+    document.addEventListener('click', event => {
+      var target = event.target || event.srcElement || event.currentTarget;
+      var idAttr = (target as Element).id;
+      var value = idAttr.split(",");
+      for(let j=0; j<this.dataIngredient.length; j++){
+        if(this.dataIngredient[j].id == +value[0]){
+          console.log(+value[0])
+          this.removeIngredient(+value[0]);
+          break
+        }
+      }
+    });
   }
   removeIngredient(ingredientToDeleteID: number){
     this.fridgeService.deleteIngredientFridge(this.id, ingredientToDeleteID)
       .subscribe();
+    this.router.navigate(['/shoppingList/' + this.id])
   }
 
   sendData(){
