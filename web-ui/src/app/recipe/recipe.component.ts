@@ -103,16 +103,16 @@ export class RecipeComponent implements OnInit, AfterViewInit {
     let that = this;
     this.recipeService.getGrade(id)
       .subscribe((data: Number) => {
-        that.gradeElem.value = data;
+        that.gradeElem.innerHTML = data;
       });
   }
 
   call4() {
     let that = this;
-    this.nameElem.value = that.recipeDB.name;
-    this.peopleElem.value = that.recipeDB.personnes;
-    this.timeElem.value = that.recipeDB.minutes;
-    this.descriptionElem.value = that.recipeDB.description;
+    this.nameElem.innerHTML = that.recipeDB.name;
+    this.peopleElem.innerHTML = that.recipeDB.personnes;
+    this.timeElem.innerHTML = that.recipeDB.minutes;
+    this.descriptionElem.innerHTML = that.recipeDB.description;
     let instructions = that.recipeDB.instructions.split("///");
     for (var i = 1; i <= instructions.length; i++) {
       let blockToAdd = document.createElement("div");
@@ -176,10 +176,16 @@ export class RecipeComponent implements OnInit, AfterViewInit {
       listItemCart.push(itemCart);
     }
     this.listService.addToCart(listItemCart).subscribe();
+    let link = "list/" + recipeID;
+    this.router.navigate([link]);
   }
 
   give_grade() {
-    if(this.newGradeElem.value !== null) {
+    if(this.newGradeElem.value !== "") {
+      if (this.newGradeElem.value > 5){
+        alert("Please enter a number between 0-5");
+        return;
+      }
       let url = this.router.url;
       let split = url.split("recipe/");
       let recipeID = Number(split[1]);
@@ -187,7 +193,8 @@ export class RecipeComponent implements OnInit, AfterViewInit {
       let that = this;
       let grade = new Grade(recipeID, userID, this.newGradeElem.value);
       this.recipeService.addGrade(grade).subscribe();
-      window.location.reload();
+      let link = "recipe/" + recipeID;
+      this.router.navigate([link]);
     }
   }
 
@@ -200,7 +207,8 @@ export class RecipeComponent implements OnInit, AfterViewInit {
       let that = this;
       let comment = new Comment(recipeID, string);
       this.recipeService.addComment(comment).subscribe();
-      window.location.reload();
+      let link = "recipe/" + recipeID;
+      this.router.navigate([link]);
     }
   }
 
@@ -212,6 +220,18 @@ export class RecipeComponent implements OnInit, AfterViewInit {
     this.profileService.addNewPlannedRecipe(userID, recipeID).subscribe();
     let link = "profile/" + userID;
     this.router.navigate([link]);
+  }
+
+  handleKeyPress(e) {
+    var code = (e.which) ? e.which : e.keyCode;
+    let val = e.target.value.split('');
+    let countDot = val.filter((v) => (v === '.')).length;
+    if (code == 46 && countDot == 0){
+      return true;
+    }
+    if (code > 31 && (code < 48 || code > 57)) {
+        e.preventDefault();
+    }
   }
 
 }
