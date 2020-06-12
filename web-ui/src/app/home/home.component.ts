@@ -5,9 +5,12 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import * as $ from 'jquery';
 import { Router } from '@angular/router';
-
+import { Observable, throwError } from 'rxjs';
 import { RecipeService } from './recipeService';
 import { Recipe } from './recipe';
+import { catchError, retry } from 'rxjs/operators';
+
+
 
 @Component({
   selector: 'app-home',
@@ -31,13 +34,31 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private bestCooker:any = []
 
   constructor(public keycloak: KeycloakService, private http: HttpClient, public recipeService: RecipeService, public router: Router) { }
+  newuser(username, idUser) {
+    console.log(environment.profilesService.url + "/"+idUser+"/" + username + "/addNewUser")
+    let url = environment.profilesService.url + "/"+idUser+"/" + username + "/addNewUser"
+    //this.http.post(environment.profilesService.url + "/"+idUser+"/" + username + "/addNewUser", {})
 
+   
+    this.http.post(url,  []).
+    subscribe(
+      data => {
+        console.log('ok user added if not there already');
+      },
+      error => {
+        console.log("error");
+      }
+    )
+      
+  }
    ngOnInit() {
       this.keycloakAuth = this.keycloak.getKeycloakAuth();
       if (this.keycloak.isLoggedIn() === false) {
           this.keycloak.login();
       }
-
+      console.log(this.keycloak.getUsername())
+      console.log(this.keycloak.getKeycloakId())
+      this.newuser(this.keycloak.getUsername(),this.keycloak.getKeycloakId() );
 
       //only have one checkbox picked
       $('.sev_check').click(function() {
@@ -62,6 +83,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
+ 
+
+  handleError(error) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+        // Get client-side error
+        errorMessage = error.error.message;
+    } else {
+        // Get server-side error
+        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.error(errorMessage);
+    console.log("error")
+    return throwError(errorMessage);
+}
+
   retrieveAndDisplayRecipes(url: string){
     console.log("in here")
     this.http.get(url).subscribe((res)=>{
@@ -70,6 +107,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.placeRecipes(this.data)
     })
   }
+
 
   check1(){
     const url = `${environment.recipeService.url}/top`
