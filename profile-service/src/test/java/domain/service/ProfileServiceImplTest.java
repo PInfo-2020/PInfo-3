@@ -114,8 +114,13 @@ class ProfileServiceImplTest {
 		psi.addNewUser(p10);
 		psi.addNewUser(p11);
 		psi.addNewUser(p12);
-		int size = psi.getDataUsers().size();
-		assertEquals(10, psi.getBestCooker().size());
+		assertEquals(6, psi.getBestCooker().size());
+		assertEquals(5, psi.getBestCooker().get(0).getScore());
+		assertEquals(5, psi.getBestCooker().get(1).getScore());
+		assertEquals(5, psi.getBestCooker().get(2).getScore());
+		assertEquals(4, psi.getBestCooker().get(3).getScore());
+		assertEquals(4, psi.getBestCooker().get(4).getScore());
+		assertEquals(4, psi.getBestCooker().get(5).getScore());
 	}
 	
 	@Test

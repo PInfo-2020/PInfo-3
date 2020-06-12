@@ -59,7 +59,7 @@ public class ProfileRestServiceIT {
 	
 	@Test
 	public void testGetBestCooker() {
-		when().get("/getBestCooker").then().body(containsString("5"));
+		when().get("/getBestCooker").then().body(containsString("4"));
 	}
 	
 }

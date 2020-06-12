@@ -21,7 +21,7 @@ public interface RecipeService {
 	public Long countGrade();
 	public void addComment(Comment comment, Long size, Long nbRecipes);
 	public List<Comment> getAllComments(Long recipeId);
-	public void addGrade(Grade grade, Long size, Long nbRecipes, List<Grade> grades);
+	public void addGrade(Grade grade, Long size, List<Grade> grades);
 	public List<Grade> getAllGrades(String userId);
 	public double getGrade(Long recipeId);
 	public List<Ingredient> getAllIngredients(Long recipeId);
