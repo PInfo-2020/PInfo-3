@@ -32,10 +32,8 @@ export class RecipeComponent implements OnInit, AfterViewInit {
   gradeElem: any;
   newGradeElem: any;
   descriptionElem: any;
-  ingredientElem: any;
-  quantityElem: any;
-  instructionElem: any;
   commentElem: any;
+  buttonRatingElem: any;
 
   public keycloakAuth: KeycloakInstance;
   constructor(public keycloak: KeycloakService, private recipeService: RecipeService, private ingredientService: IngredientService,
@@ -56,10 +54,8 @@ export class RecipeComponent implements OnInit, AfterViewInit {
     this.gradeElem = document.getElementById("grade");
     this.newGradeElem = document.getElementById("new_grade");
     this.descriptionElem = document.getElementById("description");
-    this.ingredientElem = document.getElementById("ingredient");
-    this.quantityElem = document.getElementById("quantity");
-    this.instructionElem = document.getElementById("instruction");
-    this.commentElem = document.getElementById("comment")
+    this.commentElem = document.getElementById("comment");
+    this.buttonRatingElem = document.getElementById("buttonRating");
 
     let url = this.router.url;
     let split = url.split("recipe/");
@@ -138,8 +134,11 @@ export class RecipeComponent implements OnInit, AfterViewInit {
     let blockToAdd = document.createElement("div");
     blockToAdd.className = "row mb-1 text-center";
     blockToAdd.innerHTML = `
-      <span class="col-8 border m-auto border bg-white">${ingredient.name}</span>
-      <span class="col-8 border m-auto border bg-white">${quantite}</span>`;
+      <span class="col-4 border m-auto border bg-white">${ingredient.name}</span>
+      <div class="col-3 border m-auto border bg-white">
+        <span>${quantite}</span>
+        <span>${ingredient.unit}</span>
+      </div>`;
     let blockContainer = document.getElementById("ingredients_listing");
     blockContainer.appendChild(blockToAdd);
   }
@@ -176,8 +175,7 @@ export class RecipeComponent implements OnInit, AfterViewInit {
       listItemCart.push(itemCart);
     }
     this.listService.addToCart(listItemCart).subscribe();
-    let link = "list/" + recipeID;
-    this.router.navigate([link]);
+    this.router.navigate(["shoppingList", userID]);
   }
 
   give_grade() {
@@ -190,25 +188,30 @@ export class RecipeComponent implements OnInit, AfterViewInit {
       let split = url.split("recipe/");
       let recipeID = Number(split[1]);
       let userID = this.userID;
-      let that = this;
-      let grade = new Grade(recipeID, userID, this.newGradeElem.value);
+      let grade = new Grade(recipeID, userID, Number(this.newGradeElem.value));
       this.recipeService.addGrade(grade).subscribe();
-      let link = "recipe/" + recipeID;
-      this.router.navigate([link]);
+      this.buttonRatingElem.disabled = true;
+      this.newGradeElem.disabled = true;
+    }
+    else {
+      alert("Please enter a number between 0-5");
+      return;
     }
   }
 
   add_comment() {
-    if(this.commentElem.value !== null) {
+    if(this.commentElem.value != "") {
       let url = this.router.url;
       let split = url.split("recipe/");
       let recipeID = Number(split[1]);
       let string = this.commentElem.value;
-      let that = this;
       let comment = new Comment(recipeID, string);
       this.recipeService.addComment(comment).subscribe();
-      let link = "recipe/" + recipeID;
-      this.router.navigate([link]);
+      let blockToAdd = document.createElement("div");
+      blockToAdd.className = "row mb-1 text-center";
+      blockToAdd.innerHTML = `<span class="col-8 border m-auto border bg-white">${string}</span>`;
+      let blockContainer = document.getElementById("comments_listing");
+      blockContainer.appendChild(blockToAdd);
     }
   }
 
@@ -225,10 +228,6 @@ export class RecipeComponent implements OnInit, AfterViewInit {
   handleKeyPress(e) {
     var code = (e.which) ? e.which : e.keyCode;
     let val = e.target.value.split('');
-    let countDot = val.filter((v) => (v === '.')).length;
-    if (code == 46 && countDot == 0){
-      return true;
-    }
     if (code > 31 && (code < 48 || code > 57)) {
         e.preventDefault();
     }

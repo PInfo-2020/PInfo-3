@@ -71,6 +71,12 @@ export class KeycloakService {
         } else return 'guest';
     }
 
+    getEmail(): string {
+        if (this.isLoggedIn()) {
+            return KeycloakService.auth.authz.tokenParsed.email;
+        } else return 'guest';
+    }
+
     getKeycloakAuth() {
         return KeycloakService.auth.authz;
     }
