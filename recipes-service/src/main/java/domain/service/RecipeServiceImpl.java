@@ -131,7 +131,7 @@ public class RecipeServiceImpl implements RecipeService {
 		grade.setId(size);
 		int tmp = 1;
 		for (Grade g : grades) {
-			if (g.getRecipeId() == grade.getRecipeId()) {
+			if ( (int) ((long) g.getRecipeId()) == (int) ((long) grade.getRecipeId())) {
 				g.setGradeRecipe(grade.getGradeRecipe());
 				em.merge(g);
 				tmp = 0;

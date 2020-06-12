@@ -25,10 +25,6 @@ public class ItemFridge implements Serializable{
 		this.quantity = quantity;
 	}
 	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	@Id

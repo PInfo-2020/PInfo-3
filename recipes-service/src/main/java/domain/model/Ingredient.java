@@ -22,7 +22,6 @@ public class Ingredient implements Serializable {
 	private Long id;
 	
 	@Column(name="recipeId")
-	@NotNull
 	private Long recipeId;
 	
 	@Column(name="ingredientId")
