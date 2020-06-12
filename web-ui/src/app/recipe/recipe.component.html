@@ -14,13 +14,16 @@
       <p class="h2 mx-auto text-white text-center mb-5 font-italic" id="name"></p>
   </div>
 
+  <div class="text-white h5 ml-5">Ingredient list</div>
   <div class="d-flex flex-row justify-content-between mb-5">
-    <div class="col-3 border border-w mr-2 ml-5" id="ingredients_listing">
+    <div class="col-3 mr-2 ml-5">
+      <div id="ingredients_listing">
+      </div>
       <div>
-        <button type="button" class="btn btn-primary mr-1" (click)="add_shop_list()">Add Shop List</button>
+        <button type="button" class="btn btn-primary mr-1 mt-5" (click)="add_shop_list()">Add Shop List</button>
       </div>
     </div>
-    <div class="border border-w text-white col-5 mr-2">
+    <div class="text-white col-5 mr-2">
       <p id="description"></p>
     </div>
     <div class="col-1 text-white mr-5 h5">
@@ -35,18 +38,20 @@
       </div>
       <div class="row mb-2">
         <input type="text" class="form-control" id="new_grade" placeholder="Grade" (keypress)="handleKeyPress($event)">
-        <button type="button" class="btn btn-primary" (click)="give_grade()">Give Grade</button>
+        <button type="button" class="btn btn-primary" (click)="give_grade()" id="buttonRating">Rate</button>
       </div>
     </div>
   </div>
 
-  <div clas="d-flex justify-content-center mt-5">
-    <div class="col border border-w w-50 mx-auto" id="instructions_listing">
+  <div class="text-white h5 text-center">Instructions</div>
+  <div class="d-flex justify-content-center">
+    <div class="col-5 mx-auto" id="instructions_listing">
     </div>
   </div>
 
-  <div clas="d-flex justify-content-center mt-5">
-    <div class="col border border-w w-50 mx-auto" id="comments_listing">
+  <div class="text-white h5 text-center mt-5">Comments</div>
+  <div class="d-flex justify-content-center">
+    <div class="col-5 mx-auto" id="comments_listing">
     </div>
   </div>
 
@@ -56,67 +61,8 @@
       <button type="button" class="btn btn-primary" (click)="add_comment()">Add Comment</button>
     </div>
 
-    <div class="col-1 mb-2">
+    <div class="col-1 mt-5 mr-4">
       <button type="button" class="btn btn-primary btn-block" (click)="do_it()">Do It</button>
     </div>
   </div>
-
-  <!-- <div class="ml-auto wi-10 mr-5">
-    <button type="button" class="btn btn-primary btn-block" (click)="do_it()">Do It</button>
-  </div> -->
-
-  <!-- <div class="row mb-5">
-    <div class="m-auto">
-      <div class="row">
-
-        <div class="col-3">
-          <input type="text" class="form-control" id="people" placeholder="Number of people">
-        </div>
-        <div class="col-3">
-          <input type="text" class="form-control" id="time" placeholder="Duration">
-        </div>
-        <div class="col-3">
-          <input type="text" class="form-control" id="grade" placeholder="Grade">
-        </div>
-      </div>
-      <div class="row mt-3">
-
-      </div>
-      <div class="row mt-5 mr-5 ml-2 row-w d-inline-block">
-        <div class="col border border-w" id="comments_listing">
-        </div>
-      </div>
-      <div>
-        <button type="button" class="btn btn-primary mr-1" (click)="add_comment()">Add Comment</button>
-      </div>
-      <div class="col-2">
-        <input type="text" class="form-control" id="comment" placeholder="Comment">
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <button type="button" class="btn btn-primary mr-1" (click)="give_grade()">Give Grade</button>
-  </div>
-  <div class="col-2">
-    <input type="text" class="form-control" id="new_grade" placeholder="Grade">
-  </div>
-  <div>
-    <button type="button" class="btn btn-primary mr-1" (click)="do_it()">Do It</button>
-  </div>
-
-  <div class="d-flex flex-row">
-    <div class="row mt-5 ml-5 mr-2 row-w d-inline-block">
-      <div class="col border border-w" id="ingredients_listing">
-        <div>
-          <button type="button" class="btn btn-primary mr-1" (click)="add_shop_list()">Add Shop List</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="row mt-5 mr-5 ml-2 row-w d-inline-block">
-      <div class="col border border-w" id="instructions_listing">
-      </div>
-    </div>
-  </div> -->
 </div>

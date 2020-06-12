@@ -1,5 +1,4 @@
 export class Grade {
-  id: number;
 	recipeId: number;
 	userId: string;
 	gradeRecipe: number;

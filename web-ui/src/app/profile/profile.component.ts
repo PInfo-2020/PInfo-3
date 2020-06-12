@@ -23,7 +23,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   usernameElem: any;
   emailElem: any;
-  passwordElem: any;
   ratingElem: any;
 
 
@@ -42,7 +41,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.usernameElem = document.getElementById("username");
     this.emailElem = document.getElementById("email");
-    this.passwordElem = document.getElementById("password");
     this.ratingElem = document.getElementById("rating");
 
     this.userID = this.router.url.split("profile/")[1]
@@ -61,6 +59,12 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   setUser(){
     this.usernameElem.innerHTML = this.userDB.username;
     this.ratingElem.innerHTML = this.userDB.score;
+    if (this.keycloak.getUsername() == this.userDB.username){
+      this.emailElem.innerHTML = this.keycloak.getEmail();
+    }
+    else {
+      this.emailElem.innerHTML = "***********";
+    }
   }
 
   callPlannedRecipe(){

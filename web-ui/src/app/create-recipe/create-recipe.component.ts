@@ -172,6 +172,10 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
 
       let instructionChilds = document.getElementById("div2").children;
       for (let i = 1; i < instructionChilds.length; i++){
+        if (i == instructionChilds.length-1){
+          instructionVal = instructionVal.concat(instructionChilds[i].children[1].innerHTML);
+          break;
+        }
         instructionVal = instructionVal.concat(instructionChilds[i].children[1].innerHTML, "///");
       }
 
