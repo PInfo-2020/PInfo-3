@@ -9,6 +9,9 @@ import { RecipeService } from './recipeService';
 import { Recipe } from './recipe';
 // import { readSync } from 'fs';
 // import { AnyARecord } from 'dns';
+import { catchError, retry } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -33,14 +36,32 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   private bestCooker:any = []
 
-  constructor(public keycloak: KeycloakService, private http: HttpClient, public recipeService: RecipeService) { }
+  constructor(public keycloak: KeycloakService, private http: HttpClient, public recipeService: RecipeService, public router: Router) { }
+  
+  newuser(username, idUser) {
+    console.log(environment.profilesService.url + "/"+idUser+"/" + username + "/addNewUser")
+    let url = environment.profilesService.url + "/"+idUser+"/" + username + "/addNewUser"
+    //this.http.post(environment.profilesService.url + "/"+idUser+"/" + username + "/addNewUser", {})
+
+   
+    this.http.post(url,  []).
+    subscribe(
+      data => {
+        console.log('ok user added if not there already');
+      },
+      error => {
+        console.log("error");
+      }
+    )
+      
+  }
 
    ngOnInit() {
       this.keycloakAuth = this.keycloak.getKeycloakAuth();
       if (this.keycloak.isLoggedIn() === false) {
           this.keycloak.login();
       }
-
+      this.newuser(this.keycloak.getUsername(),this.keycloak.getKeycloakId() );
 
       //only have one checkbox picked
       $('.sev_check').click(function() {
@@ -87,7 +108,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
 
   retrieveAndDisplayRecipes(url: string){
-    console.log("in here")
     this.http.get(url).subscribe((res)=>{
       this.data = res
       this.placeRecipes(this.data)
@@ -172,10 +192,15 @@ placeBestCooker(data){
     cardText.className = "card-body";
     cardText.innerHTML = (data[i].score);
     //creating card link
-    var cardLink = document.createElement("a");
-    cardLink.className = "card-link";
-    cardLink.innerHTML = "More...";
-    cardLink.href = environment.angular.url + "/profile" + "/" + data[i].usernameID;
+  //creating card link
+  var cardLink = document.createElement("button");
+  cardLink.className = "btn btn-primary";
+  //cardLink.innerHTML = "More...";
+  var t = document.createTextNode("More...");
+  cardLink.appendChild(t);
+  var s = "coo".concat(data[i].usernameID);
+  cardLink.id = "coo".concat(data[i].usernameID)
+    //cardLink.href = environment.angular.url + "/profile" + "/" + data[i].usernameID;
     //this._elem.nativeElement.innerHTML = <a class='ml-auto text-dark mr-5' routerLink="/createRecipe" routerLinkActive="active">Create recipe</a>
     //put the title and text into the body
     cardBody.appendChild(cardTitle);
@@ -183,49 +208,92 @@ placeBestCooker(data){
     cardBody.appendChild(cardLink);
     cardCooker.appendChild(cardBody);
     mainContainer.appendChild(cardCooker);
+
+    const that = this
+    const m = "#".concat(s)
+    console.log("s: ", m)
+    
+      $(m).click(function(){
+        
+        console.log("id before:",m)
+        const q = m.substring(4);
+        //console.log("idafter:",x)
+        
+        that.router.navigate(['/profile', q]).then(nav => {
+          console.log(nav); // true if navigation is successful
+          console.log("good")
+        }, err => {
+          console.log("error")
+          console.log(err) // when there's an error
+        });
+
+      });
   }
 }
 
-  placeRecipes(data){
-    var mainContainer = document.getElementById("myData");
-    while (mainContainer.firstChild) {
-      mainContainer.firstChild.remove();
-    }
-    console.log(data.length)
-
-    for (var i = 0; i < data.length; i++) {
-
-      //creating the card of one recipe
-      var cardRecipe = document.createElement("div");
-      cardRecipe.className = "card";
-      //creating card body
-      var cardBody = document.createElement("div");
-      cardBody.className = "card-body";
-      //creating title
-      var cardTitle = document.createElement("h5");
-      cardTitle.className = "card-text";
-      cardTitle.innerHTML = (data[i].name);
-      //creating text
-      var cardText = document.createElement("h6");
-      cardText.className = "card-body";
-      cardText.innerHTML = (data[i].description);
-      //creating card link
-      var cardLink = document.createElement("a");
-      cardLink.className = "card-link";
-      cardLink.innerHTML = "More...";
-      cardLink.href = environment.angular.url + "/recipe" + "/" + data[i].id;
-      //this._elem.nativeElement.innerHTML = <a class='ml-auto text-dark mr-5' routerLink="/createRecipe" routerLinkActive="active">Create recipe</a>
-
-      //put the title and text into the body
-      cardBody.appendChild(cardTitle);
-      cardBody.appendChild(cardText);
-      cardBody.appendChild(cardLink);
-
-
-      cardRecipe.appendChild(cardBody);
-      mainContainer.appendChild(cardRecipe);
-
-    }
+placeRecipes(data){
+  var mainContainer = document.getElementById("myData");
+  while (mainContainer.firstChild) {
+    mainContainer.firstChild.remove();
   }
+  for (var i = 0; i < data.length; i++) {
+    //creating the card of one recipe
+    var cardRecipe = document.createElement("div");
+    cardRecipe.className = "card";
+    //creating card body
+    var cardBody = document.createElement("div");
+    cardBody.className = "card-body";
+    //creating title
+    var cardTitle = document.createElement("h5");
+    cardTitle.className = "card-text";
+    cardTitle.innerHTML = (data[i].name);
+    //creating text
+    var cardText = document.createElement("h6");
+    cardText.className = "card-body";
+    cardText.innerHTML = (data[i].description);
+    //creating card link
+    var cardLink = document.createElement("button");
+    cardLink.className = "btn btn-primary";
+    //cardLink.innerHTML = "More...";
+    var t = document.createTextNode("More...");
+    cardLink.appendChild(t);
+    var s = "rec".concat(data[i].id);
+    cardLink.id = "rec".concat(data[i].id)
+    
+   // });
+    //cardLink.href = environment.angular.url + "/recipe" + "/" + data[i].id;
+    //this._elem.nativeElement.innerHTML = <a class='ml-auto text-dark mr-5' routerLink="/createRecipe" routerLinkActive="active">Create recipe</a>
+
+    //put the title and text into the body
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardText);
+    cardBody.appendChild(cardLink);
+
+
+    cardRecipe.appendChild(cardBody);
+    mainContainer.appendChild(cardRecipe);
+
+    const that = this
+    const m = "#".concat(s)
+    console.log("s: ", m)
+    
+      $(m).click(function(){
+        
+        console.log("id before:",m)
+        const q = m.substring(4);
+        //console.log("idafter:",x)
+        
+        that.router.navigate(['/recipe', q]).then(nav => {
+          console.log(nav); // true if navigation is successful
+          console.log("good")
+        }, err => {
+          console.log("error")
+          console.log(err) // when there's an error
+        });
+
+      });
+
+  }
+}
 
  }

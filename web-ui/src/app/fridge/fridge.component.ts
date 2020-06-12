@@ -128,6 +128,7 @@ export class FridgeComponent implements OnInit, AfterViewInit {
       let blockContainer = document.getElementById("div2");
       blockContainer.appendChild(blockToAdd);
 
+
       // var contrain = document.createElement("div");
       // var contrainFridge = document.createElement("div");
       // contrainFridge.className = "frigo";
@@ -147,7 +148,11 @@ export class FridgeComponent implements OnInit, AfterViewInit {
     //   var target = event.target || event.srcElement || event.currentTarget;
     //   var idAttr = (target as Element).id;
     //   var value = idAttr.split(",");
-    //   this.removeIngredient(+value[0]);
+    //   for(let j=0; j<this.dataIngredient.length; j++){
+    //     if(this.dataIngredient[j].id == +value[0]){
+    //       this.removeIngredient(+value[0]);
+    //     }
+    //   }
     // });
   }
   removeIngredient(ingredientToDeleteID: number){
