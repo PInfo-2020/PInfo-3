@@ -3,7 +3,7 @@ entries:
   microservices:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-06-12T00:01:45.591898629Z"
+    created: "2020-06-12T08:47:00.877143129Z"
     dependencies:
     - alias: recipes-db
       name: postgresql
@@ -31,10 +31,10 @@ entries:
       repository: https://charts.bitnami.com/bitnami
       version: 7.2.9
     description: A Helm chart for deploying the PINFO microservice architecture
-    digest: c1ac3b5867c269279023c79688281be4e5d45559f79ae15310a29da09b5fd1b3
+    digest: 8344e4a1da40035e03674974ce7b637b9d0516479bce3816ae5e0542a170426a
     name: microservices
     type: application
     urls:
     - microservices-0.1.0.tgz
     version: 0.1.0
-generated: "2020-06-12T00:01:45.572575058Z"
+generated: "2020-06-12T08:47:00.860533266Z"
