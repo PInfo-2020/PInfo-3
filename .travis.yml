@@ -124,16 +124,15 @@ deploy:
   - provider: pages
     github_token: $HELM_TOKEN
     local_dir: files-to-gh-pages
-    target-branch: gh-pages
+    target_branch: gh-pages
     verbose: true
-    skip_cleanup: true
     keep_history: true
     on:
-      branch: developer 
+      branch: master 
 ##########################
   - provider: script
     on:
-      branch: developer
+      branch: master
     script: ./run.sh
 #- ls
 #- ssh -i ./deploy_key aminman7@129.194.69.134 microk8s kubectl get nodes
