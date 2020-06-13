@@ -1,7 +1,7 @@
 --drop table ingredients if exists;
 CREATE USER ing WITH PASSWORD 'ing';
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ing;
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO ing;
+--GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ing;
+--GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO ing;
 create table ingredients (
 		id bigint not null,
 		name varchar(50) not null,
@@ -13,7 +13,7 @@ create table ingredients (
 GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA public to ing;
 drop sequence if exists seq_id;
 CREATE SEQUENCE seq_id START WITH 1 INCREMENT BY 1;
-GRANT SELECT, INSERT ON ALL SEQUENCES IN SCHEMA public to ing;
+GRANT SELECT, DELETE, UPDATE, INSERT ON ALL SEQUENCES IN SCHEMA public to ing;
 
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (nextval('seq_id'), 'Acai', 'kg', 1, 1);
 INSERT INTO ingredients (id, name, unit, vegetarian, vegan) VALUES (nextval('seq_id'), 'Ackee', 'kg', 1, 1);
