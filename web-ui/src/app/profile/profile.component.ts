@@ -8,6 +8,7 @@ import { Recipe } from './recipe';
 import { PlannedRecipe } from './plannedRecipe';
 import { RecipeService } from './recipeService';
 import { Observable, forkJoin } from 'rxjs';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-profile',
@@ -86,36 +87,52 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   setPlannedRecipe(recipe, rating){
     let blockContainer = document.getElementById("div1");
+    let buttonId = "plannedRecipe".concat(recipe.id);
 
     let div = document.createElement("div");
     div.className = "row mb-1 text-center border";
     div.style.cssText = "border-width: thick !important;";
     div.innerHTML = `
       <div class="row w-100 mb-2">
-        <div class="col m-auto font-weight-bold">${recipe.name}</div><div class="col-2 m-auto text-right">${rating}</div><img src="../assets/img/star.png" />
+        <div class="col m-auto font-weight-bold">${recipe.name}</div>
+        <div class="col-2 m-auto text-right">${rating}</div>
+        <img src="../assets/img/star.png" />
       </div>
       <div class="row w-100">
         <span class="col m-auto">${recipe.description}</span>
+        <button class="col-2 btn btn-primary" id=${buttonId}>Go to</button>
       </div>
     `;
     blockContainer.appendChild(div);
+    let that = this;
+    $("#".concat(buttonId)).click(function(){
+      that.router.navigate(["/recipe", recipe.id])
+    });
   }
 
   setMyRecipe(recipe, rating){
     let blockContainer = document.getElementById("div2");
+    let buttonId = "myRecipe".concat(recipe.id);
 
     let div = document.createElement("div");
     div.className = "row mb-1 text-center border";
     div.style.cssText = "border-width: thick !important;";
     div.innerHTML = `
       <div class="row w-100 mb-2">
-        <div class="col m-auto font-weight-bold">${recipe.name}</div><div class="col-2 m-auto text-right">${rating}</div><img src="../assets/img/star.png" />
+        <div class="col m-auto font-weight-bold">${recipe.name}</div>
+        <div class="col-2 m-auto text-right">${rating}</div>
+        <img src="../assets/img/star.png" />
       </div>
       <div class="row w-100">
         <span class="col m-auto">${recipe.description}</span>
+        <button class="col-2 btn btn-primary" id=${buttonId}>Go to</button>
       </div>
     `;
     blockContainer.appendChild(div);
+    let that = this;
+    $("#".concat(buttonId)).click(function(){
+      that.router.navigate(["/recipe", recipe.id])
+    });
   }
 
   callPlannedRecipeScore(){

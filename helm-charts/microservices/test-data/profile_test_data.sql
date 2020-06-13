@@ -1,5 +1,4 @@
 CREATE USER pro WITH PASSWORD 'pro';
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO pro;
 CREATE TABLE profile(
 	usernameID VARCHAR(50) not null,
 	username VARCHAR(50) not null,
@@ -11,7 +10,9 @@ CREATE TABLE profile(
            usernameID VARCHAR(50) not null,
            recipeID BIGINT not null
   );
-GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA public to pro;
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO pro;
+GRANT DELETE, UPDATE, SELECT, INSERT ON ALL TABLES IN SCHEMA public to pro;
 INSERT INTO plannedrecipe (rowID,usernameID,recipeID) VALUES (1,'b23e572e-d167-456d-9d31-05f505f4d1c9',1);
 INSERT INTO plannedrecipe (rowID,usernameID,recipeID) VALUES (2,'ad7dfd1d-de79-418a-a63f-c91b562f70ee',1);
 INSERT INTO plannedrecipe (rowID,usernameID,recipeID) VALUES (3,'c2b98917-4057-4486-943c-f25a315a6e2d',2);
