@@ -69,7 +69,7 @@ install:
 #- sudo snap install microk8s --classic
 - sudo microk8s enable helm3
 - sudo microk8s.kubectl config --kubeconfig=${HOME}/.kube/config view
-- sudo cat  ${HOME}/.kube/config
+#- sudo cat  ${HOME}/.kube/config
 #- sudo microk8s.kubectl get node
 #- sudo usermod -a -G microk8s $USER
 #- sudo chown -f -R $USER ~/.kube 
