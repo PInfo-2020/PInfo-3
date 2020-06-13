@@ -1,6 +1,14 @@
 #sudo microk8s.helm3 status random --kubeconfig=${HOME}/.kube/config 
 sudo  microk8s enable dns storage --kubeconfig=${HOME}/.kube/config
 
+sudo microk8s.kubectl delete secret random-keycloak-db
+sudo microk8s.kubectl delete secret keycloak-realm-secret
+sudo microk8s.kubectl delete secret random-keycloak-http
+sudo microk8s.kubectl delete secret random-ingredients-db 
+sudo microk8s.kubectl delete secret random-lists-db  
+sudo microk8s.kubectl delete secret random-profile-db
+sudo microk8s.kubectl delete secret random-recipes-db
+
 sudo microk8s.kubectl create secret generic keycloak-realm-secret --from-file=./docker-compose/realm-export.json --kubeconfig=${HOME}/.kube/config
 
 sudo microk8s.kubectl delete configmap lists-scripts --kubeconfig=${HOME}/.kube/config
