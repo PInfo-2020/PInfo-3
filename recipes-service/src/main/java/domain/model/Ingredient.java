@@ -15,14 +15,13 @@ import lombok.Data;
 @Data
 public class Ingredient implements Serializable {
 
-	private static final long serialVersionUID = 1L;;
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name="id")
 	private Long id;
 	
 	@Column(name="recipeId")
-	@NotNull
 	private Long recipeId;
 	
 	@Column(name="ingredientId")

@@ -116,6 +116,21 @@ public class RecipeRestServiceIT {
 	public void testGetUserGrade() {
 		when().get("/user/1/grade").then().body(containsString("0"));
 	}
+		
+	@Test
+	public void testGetByVegetarien() {
+		when().get("/vegetarien").then().body(containsString(""));
+	}
+	
+	@Test
+	public void testGetByVegan() {
+		when().get("/vegan").then().body(containsString(""));
+	}
+	
+	@Test
+	public void testGetCreatedRecipes() {
+		when().get("/user/3/recipes").then().body(containsString("Poulet au curry"));
+	}
 	
 
 }

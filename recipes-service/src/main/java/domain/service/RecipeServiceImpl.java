@@ -2,6 +2,7 @@ package domain.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -103,9 +104,6 @@ public class RecipeServiceImpl implements RecipeService {
 	public void addComment(Comment comment, Long size, Long nbRecipes) {
 		log.info("create a comment for a recipe");
 		comment.setId(size);
-		if (comment.getRecipeId() > nbRecipes) {
-			throw new IllegalArgumentException("The recipe id of your comment doesn't exist : " + comment.getRecipeId());
-		}
 		em.persist(comment);
 	}
 	
@@ -128,18 +126,21 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 	
 	@Override
-	public void addGrade(Grade grade, Long size, Long nbRecipes, List<Grade> grades) {
+	public void addGrade(Grade grade, Long size, List<Grade> grades) {
 		log.info("create a grade for a recipe");
 		grade.setId(size);
-		if ((grade.getRecipeId() > nbRecipes) || (grade.getRecipeId() <= 0))  {
-			throw new IllegalArgumentException("The recipe id of your grade doesn't exist : " + grade.getRecipeId());
-		}
+		int tmp = 1;
 		for (Grade g : grades) {
-			if (g.getRecipeId() == grade.getRecipeId()) {
-				throw new IllegalArgumentException("You already give a grade to that recipe : " + grade.getRecipeId());
+			if ( (int) ((long) g.getRecipeId()) == (int) ((long) grade.getRecipeId())) {
+				g.setGradeRecipe(grade.getGradeRecipe());
+				em.merge(g);
+				tmp = 0;
+				break;
 			}
 		}
-		em.persist(grade);
+		if (tmp == 1) {
+			em.persist(grade);
+		}
 	}
 	
 	@Override
@@ -208,6 +209,16 @@ public class RecipeServiceImpl implements RecipeService {
 		for(Recipe r : bestRecipes.keySet()) {
 			results.add(r);
 		}
+		
+		Comparator<Recipe> compareById = new Comparator<Recipe>() {
+		    @Override
+		    public int compare(Recipe r1, Recipe r2) {
+		    	return Double.compare(getGrade(r1.getId()), getGrade(r2.getId()));
+		    }
+		};
+		
+		Collections.sort(results, compareById.reversed());
+		
 		return results;
 	}
 	
@@ -285,14 +296,14 @@ public class RecipeServiceImpl implements RecipeService {
 			TypedQuery<Ingredient> query = em.createQuery("SELECT i FROM Ingredient i WHERE i.recipeId = :recipeId ", Ingredient.class);
 			query.setParameter("recipeId", r.getId());
 			List<Ingredient> results = query.getResultList();
-			boolean veg = true;
+			int veg = 1;
 			for (Ingredient i : results) {
 				if (i.getVegetarien() == 0) {
-					veg = false;
+					veg = 0;
 				}
 			}
 			
-			if (veg == true) {
+			if (veg == 1) {
 				newRecipes.add(r);
 			}
 		
@@ -314,14 +325,14 @@ public class RecipeServiceImpl implements RecipeService {
 			TypedQuery<Ingredient> query = em.createQuery("SELECT i FROM Ingredient i WHERE i.recipeId = :recipeId ", Ingredient.class);
 			query.setParameter("recipeId", r.getId());
 			List<Ingredient> results = query.getResultList();
-			boolean veg = true;
+			int veg = 1;
 			for (Ingredient i : results) {
 				if (i.getVegan() == 0) {
-					veg = false;
+					veg = 0;
 				}
 			}
 			
-			if (veg == true) {
+			if (veg == 1) {
 				newRecipes.add(r);
 			}
 		

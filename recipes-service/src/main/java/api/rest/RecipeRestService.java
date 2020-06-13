@@ -109,7 +109,7 @@ public class RecipeRestService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addGrade(Grade grade) {
 		List<Grade> grades = recipeService.getAllGrades(grade.getUserId());
-		recipeService.addGrade(grade, recipeService.countGrade()+1, recipeService.count(), grades);
+		recipeService.addGrade(grade, recipeService.countGrade()+1, grades);
 		Recipe recipe = recipeService.get(grade.getRecipeId());
 		double score = recipeService.getUserGrade(recipe.getUserId());
 		Score s = new Score(recipe.getUserId(), score);
@@ -166,20 +166,13 @@ public class RecipeRestService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Recipe> getRecipesByFridge(@PathParam("id") String userId) {
 		recipeProducer.send(userId);
-		
 		while(!test) {
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			continue;
 		}
 		test = false;
 		List<Recipe> vide = new ArrayList<Recipe>();
 		List<Recipe> r = recipes;
 		recipes =  vide;
-		
 		return r;
 	}
 	

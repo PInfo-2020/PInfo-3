@@ -23,7 +23,6 @@ public class Ingredient implements Serializable {
 	@SequenceGenerator(name = "seq_id", sequenceName = "seq_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")	
 	@Column(name = "id")
-	@NotNull
 	private int id;
 	
 	@Column(name = "name")

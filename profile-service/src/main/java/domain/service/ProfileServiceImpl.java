@@ -143,7 +143,7 @@ public class ProfileServiceImpl implements ProfileService {
 		List<Profile> profiles = em.createQuery(criteria).getResultList();
 		HashMap<Profile, Double> bestProfiles = new HashMap<Profile, Double>();
 		for(Profile profile : profiles) {
-			if (bestProfiles.size() < 10) {	// return the 3 best Profiles
+			if (bestProfiles.size() < 6) {	// return the 6 best Profiles
 				bestProfiles.put(profile, this.getGrade(profile.getUsernameID()));
 			}
 			else {
@@ -162,6 +162,16 @@ public class ProfileServiceImpl implements ProfileService {
 		for(Profile r : bestProfiles.keySet()) {
 			results.add(r);
 		}
+		
+		Comparator<Profile> compareById = new Comparator<Profile>() {
+		    @Override
+		    public int compare(Profile p1, Profile p2) {
+		    	return Double.compare(p1.getScore(), p2.getScore());
+		    }
+		};
+		
+		Collections.sort(results, compareById.reversed());
+		
 		return results;
 	}
 
