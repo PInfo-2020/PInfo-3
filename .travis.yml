@@ -132,6 +132,7 @@ deploy:
     target_branch: gh-pages
     verbose: true
     keep_history: true
+    skip_cleanup: true
     on:
       branch: master 
 ##########################
