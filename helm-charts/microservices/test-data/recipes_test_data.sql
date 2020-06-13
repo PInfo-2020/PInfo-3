@@ -1,5 +1,5 @@
 CREATE USER rec WITH PASSWORD 'rec';
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO rec;
+--GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO rec;
 --drop table Recipe if exists;
 --create table Recipe (
 --        name varchar(31) not null,

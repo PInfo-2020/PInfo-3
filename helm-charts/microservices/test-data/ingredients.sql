@@ -1,7 +1,7 @@
 --drop table ingredients if exists;
 CREATE USER ing WITH PASSWORD 'ing';
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ing;
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO ing;
+--GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ing;
+--GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO ing;
 create table ingredients (
 		id bigint not null,
 		name varchar(50) not null,

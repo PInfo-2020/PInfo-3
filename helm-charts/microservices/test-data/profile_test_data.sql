@@ -11,7 +11,7 @@ CREATE TABLE profile(
            recipeID BIGINT not null
   );
 
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO pro;
+--GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO pro;
 GRANT DELETE, UPDATE, SELECT, INSERT ON ALL TABLES IN SCHEMA public to pro;
 INSERT INTO plannedrecipe (rowID,usernameID,recipeID) VALUES (1,'b23e572e-d167-456d-9d31-05f505f4d1c9',1);
 INSERT INTO plannedrecipe (rowID,usernameID,recipeID) VALUES (2,'ad7dfd1d-de79-418a-a63f-c91b562f70ee',1);
