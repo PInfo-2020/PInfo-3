@@ -90,7 +90,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     let buttonId = "plannedRecipe".concat(recipe.id);
 
     let div = document.createElement("div");
-    div.className = "row mb-1 text-center border";
+    div.className = "row mb-1 text-center border rounded border-white";
     div.style.cssText = "border-width: thick !important;";
     div.innerHTML = `
       <div class="row w-100 mb-2">
@@ -115,7 +115,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     let buttonId = "myRecipe".concat(recipe.id);
 
     let div = document.createElement("div");
-    div.className = "row mb-1 text-center border";
+    div.className = "row mb-1 text-center border rounded border-white";
     div.style.cssText = "border-width: thick !important;";
     div.innerHTML = `
       <div class="row w-100 mb-2">

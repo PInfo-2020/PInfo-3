@@ -110,7 +110,7 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
       let blockToAdd = document.createElement("div");
       blockToAdd.className = "row mb-1 text-center";
       blockToAdd.innerHTML = `
-        <span class="m-auto font-weight-bold bg-white pl-2 pr-2 border">${this.counterInstruction}.</span><span class="col-8 border m-auto border bg-white">${instructionVal}</span>
+        <span class="m-auto font-weight-bold bg-white pl-2 pr-2 border rounded border-white">${this.counterInstruction}.</span><span class="col-8 border m-auto border bg-white">${instructionVal}</span>
         <button type="button" class="btn btn-secondary mr-1 button-w" onclick="this.parentNode.remove();">x</button>
       `;
 
