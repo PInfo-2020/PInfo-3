@@ -160,7 +160,7 @@ export class FridgeComponent implements OnInit, AfterViewInit {
   removeIngredient(ingredientToDeleteID: number){
     this.fridgeService.deleteIngredientFridge(this.id, ingredientToDeleteID)
       .subscribe();
-    this.router.navigate(['/shoppingList/' + this.id])
+    this.router.navigate(['/fridge/' + this.id])
   }
 
   sendData(){
