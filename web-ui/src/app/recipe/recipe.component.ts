@@ -114,8 +114,8 @@ export class RecipeComponent implements OnInit, AfterViewInit {
       let blockToAdd = document.createElement("div");
       blockToAdd.className = "row mb-1 text-center";
       blockToAdd.innerHTML = `
-        <span class="m-auto font-weight-bold bg-white pl-2 pr-2 border">${i}.</span>
-        <span class="col-8 border m-auto border bg-white">${instructions[i-1]}</span>`;
+        <span class="m-auto font-weight-bold pl-2 pr-2">${i}.</span>
+        <span class="col-8 m-auto">${instructions[i-1]}</span>`;
       let blockContainer = document.getElementById("instructions_listing");
       blockContainer.appendChild(blockToAdd);
     }
@@ -132,10 +132,10 @@ export class RecipeComponent implements OnInit, AfterViewInit {
 
   call5(ingredient, quantite) {
     let blockToAdd = document.createElement("div");
-    blockToAdd.className = "row mb-1 text-center";
+    blockToAdd.className = "row mb-1 text-center text-white";
     blockToAdd.innerHTML = `
-      <span class="col-4 border m-auto border bg-white">${ingredient.name}</span>
-      <div class="col-3 border m-auto border bg-white">
+      <span class="col-4 m-auto">${ingredient.name}</span>
+      <div class="col-3 m-auto">
         <span>${quantite}</span>
         <span>${ingredient.unit}</span>
       </div>`;
@@ -156,9 +156,12 @@ export class RecipeComponent implements OnInit, AfterViewInit {
     for (var i = 0; i < this.commentsDB.length; i++) {
       let blockToAdd = document.createElement("div");
       blockToAdd.className = "row mb-1 text-center";
-      blockToAdd.innerHTML = `<span class="col-8 border m-auto border bg-white">${this.commentsDB[i].commentRecipe}</span>`;
+      blockToAdd.innerHTML = `<span class="col-8 m-auto">${this.commentsDB[i].commentRecipe}</span>`;
       let blockContainer = document.getElementById("comments_listing");
       blockContainer.appendChild(blockToAdd);
+      let blockToAdd2 = document.createElement("hr");
+      blockToAdd2.style.cssText = "border-color: white; width: 80%;"
+      blockContainer.appendChild(blockToAdd2);
     }
   }
 
@@ -209,9 +212,12 @@ export class RecipeComponent implements OnInit, AfterViewInit {
       this.recipeService.addComment(comment).subscribe();
       let blockToAdd = document.createElement("div");
       blockToAdd.className = "row mb-1 text-center";
-      blockToAdd.innerHTML = `<span class="col-8 border m-auto border bg-white">${string}</span>`;
+      blockToAdd.innerHTML = `<span class="col-8 m-auto">${string}</span>`;
       let blockContainer = document.getElementById("comments_listing");
       blockContainer.appendChild(blockToAdd);
+      let blockToAdd2 = document.createElement("hr");
+      blockToAdd2.style.cssText = "border-color: white; width: 80%;"
+      blockContainer.appendChild(blockToAdd2);
     }
   }
 
@@ -222,7 +228,10 @@ export class RecipeComponent implements OnInit, AfterViewInit {
     let userID = this.userID;
     this.profileService.addNewPlannedRecipe(userID, recipeID).subscribe();
     let link = "profile/" + userID;
-    this.router.navigate([link]);
+    setTimeout(() => {
+        this.router.navigate([link]);
+    }, 2000);
+    alert("Recipe added to profile ! \n You will be redirected to your profile...");
   }
 
   handleKeyPress(e) {

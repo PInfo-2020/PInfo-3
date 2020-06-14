@@ -188,7 +188,7 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
 
       setTimeout(() => {
           this.router.navigate(['home']);
-      }, 3000);
+      }, 2000);
       alert("Recipe created ! \n You will be redirected to the home page...");
     }
     else {
@@ -209,6 +209,7 @@ export class CreateRecipeComponent implements OnInit, AfterViewInit {
 
       ingredientsRecipe.push(new IngredientRecipe(ingredientRecipeId, ingredientRecipeQuantity, ingredientRecipeVegetarian, ingredientRecipeVegan))
     }
+    console.log(ingredientsRecipe)
     this.recipeService.sendIngredientsRecipe(ingredientsRecipe, recipeID)
       .subscribe();
   }
