@@ -33,7 +33,7 @@ public class RecipeRestService {
 	
 	
 	static volatile int test = 0;
-	static volatile List<Recipe> recipes = new ArrayList<Recipe>();
+	static List<Recipe> recipes = new ArrayList<Recipe>();
 	
 	
 	@GET // Return all of the recipes
