@@ -5,96 +5,71 @@
     <a class='text-dark mr-5 ml-auto' [routerLink]="['/profile/', keycloak.getKeycloakId()]" routerLinkActive="active">Profile</a>
 </nav>
 
-<div style="text-align:center" >
-	<h1>
-	  Welcome!
-	</h1>
-</div>
+<div class="allForm">
+  <div class="text-center text-white h1 bg-dark" >
+  	  Follow a recipe or Create your own !
+  </div>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
-				<a class='ml-auto text-dark mr-5' routerLink="/aboutUs" routerLinkActive="active">About us</a>
-			</li>
-		</ul>
-	</div>
-</nav>
+  <div class="d-flex flex-row justify-content-between">
 
+  		<!--first column-->
+  		<div class="col-3 ml-5 mt-5">
+  			<!--first card in first column-->
+  			<div class="bg-white border rounded mb-1 d-flex justify-content-around pt-2 pb-2">
+					<a class="btn btn-dark" [routerLink]="['/fridge/', keycloak.getKeycloakId()]" role="button">My Fridge</a>
+					<a class="btn btn-dark" [routerLink]="['/shoppingList/', keycloak.getKeycloakId()]" role="button">My Shopping Cart</a>
+  			</div>
+  			<!--second card in first column-->
+  			  <div class="bg-white border rounded mb-1">
+            <div class="row ml-2 mt-2">
+    					<div class="col-8">
+    						<input list="recipe-choices" type="text" class="form-control" id="recipe" placeholder="Research recipe">
+    						<datalist id="recipe-choices"></datalist>
+              </div>
+  						<div class="col-2">
+  							<button type="button" class="btn btn-dark" (click)="chooseRecipe()">Choose</button>
+  						</div>
+            </div>
+  					<div class="checkbox ml-2 mt-2">
+  						<label>
+  						  <input type="checkbox" (change)="top()" class="sev_check" id="TopRecipesBox" name="TopRecipes" checked/>Top Recipes</label>
+  					  </div>
+  					  <div class="checkbox ml-2">
+  						<label>
+  						  <input type="checkbox" (change)="vegan()" class="sev_check" id="VeganBox" name="Vegan" />Vegan</label>
+  					  </div>
+  					  <div class="checkbox ml-2">
+  						<label>
+  						  <input type="checkbox" (change)="vege()" class="sev_check" id="VegetarienBox" name="Vegetarien" />Vegetarien</label>
+  					  </div>
+  					  <div class="checkbox ml-2 mb-2">
+  						<label>
+  						  <input type="checkbox" (change)="frigo()" class="sev_check" id="FrigoBox" name="Frigo" />Only ingredients in my fridge</label>
+  					  </div>
+  			  </div>
 
-<div class="container-fluid">
-	<div class="row">
+  			<div class="bg-white border rounded">
+  			 	 	<div class="pt-2 pb-2 m-auto text-center">
+  						<a class="btn btn-dark" routerLink="/createRecipe/" role="button">Create Recipe</a>
+  					</div>
+  			</div>
+  		</div>
 
-		<!--first column-->
-		<div class="col-3" style="background-color: orange">
-			<!--first card in first column-->
-			<div class="card" style="width: 21rem;margin-bottom:5px;margin-top:5px;">
-				<div class="card-body">
-					<div class="row" style="width:150px;margin:10px">
-						<a class="btn btn-outline-danger" [routerLink]="['/fridge/', keycloak.getKeycloakId()]" role="button">My Fridge</a>
-					</div>
-					<div class="row" style="width:150px;margin:10px">
-						<a class="btn btn-outline-danger" [routerLink]="['/shoppingList/', keycloak.getKeycloakId()]" role="button">My Shopping Cart</a>
-					</div>
+  		<!--second column-->
+  		<div class="col-5 mt-5" >
+  			<div id="myData"></div>
+  		</div>
 
-				</div>
-			</div>
-			<!--second card in first column-->
-			  <div class="card" style="width: 21rem;margin-bottom:5px;">
-				<div class="card-body">
-					<!--group of checkboxes-->
-					<div class="col-2.5">
-						<input list="recipe-choices" type="text" class="form-control" id="recipe" placeholder="Research recipe">
-						<datalist id="recipe-choices"></datalist>
-						<div class="col-2">
-							<button type="button" class="btn btn-secondary" (click)="chooseRecipe()"> Chose</button>
-						</div>
-					  </div>
-					<div class="checkbox">
-						<label>
-						  <input type="checkbox"   (change)="top()" class="sev_check" id="TopRecipesBox" name="TopRecipes" />Top Recipes</label>
-					  </div>
-					  <div class="checkbox">
-						<label>
-						  <input type="checkbox" (change)="vegan()" class="sev_check" id="VeganBox" name="Vegan" />Vegan</label>
-					  </div>
-					  <div class="checkbox">
-						<label>
-						  <input type="checkbox" (change)="vege()" class="sev_check" id="VegetarienBox" name="Vegetarien" />Vegetarien</label>
-					  </div>
-					  <div class="checkbox">
-						<label>
-						  <input type="checkbox" (change)="frigo()" class="sev_check" id="FrigoBox" name="Frigo" />Only ingredients in my fridge</label>
-					  </div>
-				</div>
-			  </div>
+  		<!--third column-->
+  		<div class="col-2 mr-5 mt-3">
+  			<div class="text-white text-center h5 font-weight-bold bg-dark">Best Cook</div>
+  			<div id="bestCook"></div>
+  		</div>
+    </div>
 
-			<div class="card" style="height: 10rem;width: 21rem;margin-bottom:5px;">
-				<div class="card-body">
-			 	 	<div class="row" style="width:150px;margin:10px">
-						<a class="btn btn-outline-danger" routerLink="/createRecipe/" role="button">Create Recipe</a>
-            <!-- <a class="btn btn-outline-danger" [routerLink]="['/recipe/', keycloak.getKeycloakId()]" role="button">Recipe</a> -->
-					</div>
-				</div>
-			</div>
-
-
-
-
-
-		</div>
-
-		<!--second column-->
-		<div class="col-7" >
-			<div id="myData"></div>
-		</div>
-
-		<!--third column-->
-		<div class="col-2" style="background-color: orange">
-			<div class="panel-heading">Best Cook</div>
-			<div id="bestCook"></div>
-		</div>
-
-
-	</div>
+    <div class="text-center mt-5">
+      <a class="text-black h5" routerLink="/aboutUs" routerLinkActive="active">
+        <button class="button" class="btn btn-dark">About us</button>
+      </a>
+    </div>
 </div>

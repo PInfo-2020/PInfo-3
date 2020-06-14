@@ -18,8 +18,7 @@ export class ProfileService {
    };
 
   addNewPlannedRecipe(userID: string, recipeID: Number) {
-    let body = "";
-    return this.http.post(environment.profilesService.url + userID + "/" + recipeID + "/addNewPlannedRecipe", body)
+    return this.http.post(environment.profilesService.url + "/" + userID + "/" + recipeID + "/addNewPlannedRecipe", null)
       .pipe(
                 retry(1),
                 catchError(this.handleError),

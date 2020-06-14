@@ -32,8 +32,8 @@ public class RecipeRestService {
 	private RecipeProducer recipeProducer;
 	
 	
-	static private boolean test = false;
-	static private List<Recipe> recipes = new ArrayList<Recipe>();
+	static volatile int test = 0;
+	static volatile List<Recipe> recipes = new ArrayList<Recipe>();
 	
 	
 	@GET // Return all of the recipes
@@ -166,14 +166,11 @@ public class RecipeRestService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Recipe> getRecipesByFridge(@PathParam("id") String userId) {
 		recipeProducer.send(userId);
-		while(!test) {
+		while(test == 0) {
 			continue;
 		}
-		test = false;
-		List<Recipe> vide = new ArrayList<Recipe>();
-		List<Recipe> r = recipes;
-		recipes =  vide;
-		return r;
+		test = 0;
+		return recipes;
 	}
 	
 	@GET // Find all recipes that are vegetarian
@@ -198,11 +195,11 @@ public class RecipeRestService {
 	}
 	
 	
-	public void setRecipes(List<Recipe> recipes) {
+	public static synchronized void setRecipes(List<Recipe> recipes) {
 		RecipeRestService.recipes = recipes;
 	}
 	
-	public void setTest(boolean test) {
+	public static synchronized void setTest(int test) {
 		RecipeRestService.test = test;
 	}
 	

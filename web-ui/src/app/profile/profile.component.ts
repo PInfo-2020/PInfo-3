@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { KeycloakService } from '../services/keycloak/keycloak.service';
 import { KeycloakInstance } from 'keycloak-js';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProfileService } from './profileService';
 import { User } from './user';
 import { Recipe } from './recipe';
@@ -30,13 +30,23 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   public keycloakAuth: KeycloakInstance;
 
-  constructor(public keycloak: KeycloakService, private profileService: ProfileService, private recipeService: RecipeService, private router: Router){}
+  constructor(public keycloak: KeycloakService, private profileService: ProfileService, private recipeService: RecipeService, private router: Router, private route: ActivatedRoute){}
 
   ngOnInit(): void {
     this.keycloakAuth = this.keycloak.getKeycloakAuth();
     if (this.keycloak.isLoggedIn() === false) {
         this.keycloak.login();
     }
+    let skip = true;
+    this.route.params.subscribe(
+     params => {
+       if (!skip) {
+         skip = true;
+         this.ngAfterViewInit();
+         skip = false
+       }
+    });
+    skip = false;
   }
 
   ngAfterViewInit() {
@@ -69,6 +79,10 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   callPlannedRecipe(){
+    var mainContainer = document.getElementById("div1");
+    while (mainContainer.firstChild) {
+      mainContainer.firstChild.remove();
+    }
     this.profileService.getPlannedRecipe(this.userID)
       .subscribe((data: PlannedRecipe[]) => {
         this.plannedRecipeDB = data;
@@ -77,6 +91,10 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   callMyRecipe(){
+    var mainContainer = document.getElementById("div2");
+    while (mainContainer.firstChild) {
+      mainContainer.firstChild.remove();
+    }
     this.recipeService.getMyRecipe(this.userID)
       .subscribe((data: Recipe[]) => {
         this.recipeDB = data;
@@ -90,7 +108,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     let buttonId = "plannedRecipe".concat(recipe.id);
 
     let div = document.createElement("div");
-    div.className = "row mb-1 text-center border";
+    div.className = "row mb-1 text-center border rounded border-white";
     div.style.cssText = "border-width: thick !important;";
     div.innerHTML = `
       <div class="row w-100 mb-2">
@@ -115,7 +133,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     let buttonId = "myRecipe".concat(recipe.id);
 
     let div = document.createElement("div");
-    div.className = "row mb-1 text-center border";
+    div.className = "row mb-1 text-center border rounded border-white";
     div.style.cssText = "border-width: thick !important;";
     div.innerHTML = `
       <div class="row w-100 mb-2">
