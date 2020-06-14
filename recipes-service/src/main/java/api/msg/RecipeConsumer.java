@@ -26,16 +26,15 @@ public class RecipeConsumer {
 	@Inject
 	RecipeServiceImpl impl;
 	
-	
 	@Consumer(topics = "itemReq", groupId = "ch.unige")
 	public void consumeIngredients(Fridge fridge) {
-		log.info("Consumer got the fridge");
+		log.info("Consumer got the fridge : "+ fridge.getIngredients().size());
 		
 		List<Recipe> recipes = impl.getRecipesByFridge(fridge);
 		
-		rest.setRecipes(recipes);
-		rest.setTest(true);
-		
+		RecipeRestService.setRecipes(recipes);
+		RecipeRestService.setTest(1);
+			
 	}
 	
 

@@ -14,7 +14,7 @@ import lombok.extern.java.Log;
 @KafkaConfig(bootstrapServers = "#{thorntail.kafka-configuration.host}:#{thorntail.kafka-configuration.port}")
 @Log
 public class RecipeProducer {
-	
+		
 	@Producer
 	private SimpleKafkaProducer<String, String> producer;
 	
