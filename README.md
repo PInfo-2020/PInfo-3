@@ -14,7 +14,7 @@ Repository for PInfo-2020's team 3
 
 ## How to set up your project:
 
-Yoou have two choices to set up your project:
+Yoooou have two choices to set up your project:
 
 - If you want to start from the project at [hostettler/microservices](https://github.com/hostettler/microservices), simply copy and paste the contents of the repository into your project (except for the `.git` folder and the `README.md`) and push everything to your repository. You will then modify the project as you advance in your work and replace the services in it.
 
