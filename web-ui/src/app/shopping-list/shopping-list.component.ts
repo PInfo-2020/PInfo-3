@@ -34,7 +34,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
   dataCart:any = [];
   dataIngredient:any = [];
   ingredientID: number;
-  
+
 
   public keycloakAuth: KeycloakInstance;
 
@@ -44,7 +44,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.id = params['id'];        
+      this.id = params['id'];
       console.log(this.id);
     });
     this.keycloakAuth = this.keycloak.getKeycloakAuth();
@@ -57,7 +57,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
     //this.getFridge();
     this.urlShopping = `${environment.listsService.url}/cart/${this.id}`;
     this.getIngredientsList();
-    
+
     this.quantityElem = document.getElementById("quantity");
     this.ingredientElem = document.getElementById("ingredient");
     this.unitElem = document.getElementById("unit");
@@ -117,50 +117,28 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
         }
       }
 
+      let divID = this.dataCart[i].ingredientID
       let blockToAdd = document.createElement("div");
       blockToAdd.className = "row mb-1 text-center";
       blockToAdd.innerHTML = `
         <span class="m-auto border bg-white pl-2 pr-2">Name:</span><span class="col-3 border m-auto bg-white" id="ingredient">${ingredientName}</span>
         <span class="m-auto border bg-white pl-2 pr-2">Quantity:</span><span class="col-1 border m-auto bg-white" id="quantity">${this.dataCart[i].quantity}</span>
         <span class="m-auto border bg-white pl-2 pr-2">Unit:</span><span class="col-1 border m-auto bg-white">${unitVal}</span>
-        <button id="${[this.dataCart[i].ingredientID, this.dataCart[i].quantity]}" type="button" class="btn btn-secondary mr-1 button-w" (click)="removeIngredient(this.dataCart[i].ingredientID);">x</button>
+        <button id="${divID}" type="button" class="btn btn-secondary mr-1 button-w" onclick="this.parentNode.remove();">x</button>
       `;
 
       let blockContainer = document.getElementById("div2");
       blockContainer.appendChild(blockToAdd);
 
-      // var contrain = document.createElement("div");
-      // var contrainFridge = document.createElement("div");
-      // contrainFridge.className = "frigo";
-      // var ingre = document.createElement("h5");
-      // ingre.innerHTML = "Ingredient :" + (ingredientName) + " Quantity :" + (this.dataCart[i].quantity) + `<button type="button" class="btn btn-secondary mr-1 button-w" onclick="this.removeIngredient(this.dataCart[i].ingredientID, this.dataCart[i].quantity)">x</button>`;
-
-      // // var quan = document.createElement("h5");
-      // // ingre.innerHTML = "Quantity " + (dataCart[i].quantity);
-
-      // contrainFridge.appendChild(ingre);
-      // // contrainFridge.appendChild(quan);
-      // contrain.appendChild(contrainFridge)
-      // mainContainer.appendChild(contrain);
+      let that = this
+      $("#".concat(divID)).click(function(){
+          that.removeIngredient(divID);
+      });
     }
-
-    document.addEventListener('click', event => {
-      var target = event.target || event.srcElement || event.currentTarget;
-      var idAttr = (target as Element).id;
-      var value = idAttr.split(",");
-      for(let j=0; j<this.dataIngredient.length; j++){
-        if(this.dataIngredient[j].id == +value[0]){
-          console.log(+value[0])
-          this.removeIngredient(+value[0]);
-          break
-        } 
-      }
-    });
   }
   removeIngredient(ingredientToDeleteID: number){
     this.cartService.deleteIngredientCart(this.id, ingredientToDeleteID)
       .subscribe();
-    this.router.navigate(['/shoppingList/' + this.id])
   }
 
   sendData(){
@@ -168,7 +146,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
     let userId = this.id;
     let ingredient = document.getElementById("div1").children;
     for(let i=0; i<ingredient.length; i++){
-      let ingredientName = ingredient[i].children[1].innerHTML; 
+      let ingredientName = ingredient[i].children[1].innerHTML;
       let ingredientQuantity = quantityVal[i].children[3].innerHTML;
       for(let j=0; j<this.dataIngredient.length; j++){
         if(ingredientName == this.dataIngredient[j].name){
@@ -176,6 +154,8 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
           let cart = new Cart(userId, idIngredient, ingredientQuantity);
           this.cartService.sendIngredientsCart(cart)
             .subscribe();
+          console.log("DATA SENT")
+          break;
         }
 
       }
@@ -191,6 +171,14 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
       let index = this.ingredientsName.indexOf(ingredientVal);
       let ingredientValID = (this.ingredientsDB[index].id).toString();
 
+      let divID;
+      for(let j=0; j<this.dataIngredient.length; j++){
+        if(ingredientVal == this.dataIngredient[j].name){
+          divID = this.dataIngredient[j].id;
+          break;
+        }
+      }
+
       let idIng = "ingredient-".concat(ingredientValID);
       if (!document.getElementById(idIng)) {
         let blockToAdd = document.createElement("div");
@@ -199,11 +187,16 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
           <span class="m-auto border bg-white pl-2 pr-2">Name:</span><span class="col-3 border m-auto bg-white" id=${idIng}>${ingredientVal}</span>
           <span class="m-auto border bg-white pl-2 pr-2">Quantity:</span><span class="col-1 border m-auto bg-white">${quantityVal}</span>
           <span class="m-auto border bg-white pl-2 pr-2">Unit:</span><span class="col-1 border m-auto bg-white">${unitVal}</span>
-          <button type="button" class="btn btn-secondary mr-1 button-w" onclick="this.parentNode.remove();">x</button>
+          <button id="${divID}" type="button" class="btn btn-secondary mr-1 button-w" onclick="this.parentNode.remove();">x</button>
           `;
 
         let blockContainer = document.getElementById("div1");
         blockContainer.appendChild(blockToAdd);
+
+        let that = this
+        $("#".concat(divID)).click(function(){
+            that.removeIngredient(divID);
+        });
       }
     }
     this.sendData()
@@ -221,18 +214,21 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
   addCartToFridge(){
     this.http.get(this.urlShopping).subscribe((res)=>{
       this.dataCart = res
-    })
-    console.log(this.dataCart)
 
-    for(let i=0; i<this.dataCart.length; i++){
-      let cart = new Cart(this.id, this.dataCart[i].ingredientID, this.dataCart[i].quantity);
-      this.cartService.sendIngredientsFridge(cart)
-        .subscribe();
-    }
-    for(let i=0; i<this.dataCart.length; i++){
-      console.log(this.dataCart[i].ingredientID)
-      this.removeIngredient(this.dataCart[i].ingredientID)
-    }
+      for(let i=0; i<this.dataCart.length; i++){
+        let cart = new Cart(this.id, this.dataCart[i].ingredientID, this.dataCart[i].quantity);
+        this.cartService.sendIngredientsFridge(cart)
+          .subscribe();
+      }
+      for(let i=0; i<this.dataCart.length; i++){
+        console.log(this.dataCart[i].ingredientID)
+        this.removeIngredient(this.dataCart[i].ingredientID)
+      }
+    })
+    setTimeout(() => {
+        this.router.navigate(['fridge/'+this.id]);
+    }, 2000);
+    alert("Ingredients added to you fridge! \n You will be redirected to your fridge page...");
   }
 
   handleKeyPress(e) {
@@ -248,5 +244,3 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
   }
 
 }
-
-

@@ -43,7 +43,7 @@ export class FridgeComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.id = params['id'];        
+      this.id = params['id'];
       console.log(this.id);
     });
     this.keycloakAuth = this.keycloak.getKeycloakAuth();
@@ -116,51 +116,28 @@ export class FridgeComponent implements OnInit, AfterViewInit {
         }
       }
 
+      let divID = this.dataFridge[i].ingredientID
       let blockToAdd = document.createElement("div");
       blockToAdd.className = "row mb-1 text-center";
       blockToAdd.innerHTML = `
         <span class="m-auto border bg-white pl-2 pr-2">Name:</span><span class="col-3 border m-auto bg-white" id="ingredient">${ingredientName}</span>
         <span class="m-auto border bg-white pl-2 pr-2">Quantity:</span><span class="col-1 border m-auto bg-white" id="quantity">${this.dataFridge[i].quantity}</span>
         <span class="m-auto border bg-white pl-2 pr-2">Unit:</span><span class="col-1 border m-auto bg-white">${unitVal}</span>
-        <button id="${[this.dataFridge[i].ingredientID, this.dataFridge[i].quantity]}" type="button" class="btn btn-secondary mr-1 button-w">x</button>
+        <button id="${divID}" type="button" class="btn btn-secondary mr-1 button-w" onclick="this.parentNode.remove();">x</button>
       `;
 
       let blockContainer = document.getElementById("div2");
       blockContainer.appendChild(blockToAdd);
 
-
-      // var contrain = document.createElement("div");
-      // var contrainFridge = document.createElement("div");
-      // contrainFridge.className = "frigo";
-      // var ingre = document.createElement("h5");
-      // ingre.innerHTML = "Ingredient :" + (ingredientName) + " Quantity :" + (this.dataFridge[i].quantity) + `<button type="button" class="btn btn-secondary mr-1 button-w" onclick="this.removeIngredient(this.dataFridge[i].ingredientID, this.dataFridge[i].quantity)">x</button>`;
-
-      // // var quan = document.createElement("h5");
-      // // ingre.innerHTML = "Quantity " + (dataFridge[i].quantity);
-
-      // contrainFridge.appendChild(ingre);
-      // // contrainFridge.appendChild(quan);
-      // contrain.appendChild(contrainFridge)
-      // mainContainer.appendChild(contrain);
+      let that = this
+      $("#".concat(divID)).click(function(){
+          that.removeIngredient(divID);
+      });
     }
-
-    document.addEventListener('click', event => {
-      var target = event.target || event.srcElement || event.currentTarget;
-      var idAttr = (target as Element).id;
-      var value = idAttr.split(",");
-      for(let j=0; j<this.dataIngredient.length; j++){
-        if(this.dataIngredient[j].id == +value[0]){
-          console.log(+value[0])
-          this.removeIngredient(+value[0]);
-          break
-        }
-      }
-    });
   }
   removeIngredient(ingredientToDeleteID: number){
     this.fridgeService.deleteIngredientFridge(this.id, ingredientToDeleteID)
       .subscribe();
-    this.router.navigate(['/fridge/' + this.id])
   }
 
   sendData(){
@@ -169,7 +146,7 @@ export class FridgeComponent implements OnInit, AfterViewInit {
     let ingredient = document.getElementById("div1").children;
 
     for(let i=0; i<ingredient.length; i++){
-      let ingredientName = ingredient[i].children[1].innerHTML; 
+      let ingredientName = ingredient[i].children[1].innerHTML;
       let ingredientQuantity = quantityVal[i].children[3].innerHTML;
 
       for(let j=0; j<this.dataIngredient.length; j++){
@@ -192,6 +169,13 @@ export class FridgeComponent implements OnInit, AfterViewInit {
       let index = this.ingredientsName.indexOf(ingredientVal);
       let ingredientValID = (this.ingredientsDB[index].id).toString();
 
+      let divID;
+      for(let j=0; j<this.dataIngredient.length; j++){
+        if(ingredientVal == this.dataIngredient[j].name){
+          divID = this.dataIngredient[j].id;
+          break;
+        }
+      }
       let idIng = "ingredient-".concat(ingredientValID);
       if (!document.getElementById(idIng)) {
         let blockToAdd = document.createElement("div");
@@ -200,11 +184,16 @@ export class FridgeComponent implements OnInit, AfterViewInit {
           <span class="m-auto border bg-white pl-2 pr-2">Name:</span><span class="col-3 border m-auto bg-white" id=${idIng}>${ingredientVal}</span>
           <span class="m-auto border bg-white pl-2 pr-2">Quantity:</span><span class="col-1 border m-auto bg-white">${quantityVal}</span>
           <span class="m-auto border bg-white pl-2 pr-2">Unit:</span><span class="col-1 border m-auto bg-white">${unitVal}</span>
-          <button type="button" class="btn btn-secondary mr-1 button-w" onclick="this.parentNode.remove();">x</button>
+          <button id="${divID}" type="button" class="btn btn-secondary mr-1 button-w" onclick="this.parentNode.remove();">x</button>
           `;
 
         let blockContainer = document.getElementById("div1");
         blockContainer.appendChild(blockToAdd);
+
+        let that = this
+        $("#".concat(divID)).click(function(){
+            that.removeIngredient(divID);
+        });
       }
     }
     this.sendData()
@@ -232,4 +221,3 @@ export class FridgeComponent implements OnInit, AfterViewInit {
   }
 
 }
-

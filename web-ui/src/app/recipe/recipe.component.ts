@@ -178,7 +178,10 @@ export class RecipeComponent implements OnInit, AfterViewInit {
       listItemCart.push(itemCart);
     }
     this.listService.addToCart(listItemCart).subscribe();
-    this.router.navigate(["shoppingList", userID]);
+    setTimeout(() => {
+        this.router.navigate(["shoppingList", userID]);
+    }, 2000);
+    alert("Ingredients added to you fridge! \n You will be redirected to your fridge page...");
   }
 
   give_grade() {
