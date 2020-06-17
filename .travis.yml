@@ -51,10 +51,13 @@ install:
 - mkdir files-to-gh-pages
 - echo $(pwd)
 - sudo microk8s helm3 package ./helm-charts/microservices -d ./files-to-gh-pages
+- ls
 - cd files-to-gh-pages 
+- pwd
 - sudo microk8s helm3 repo index .
 - ls -ltr
 - cd ..
+- ls
 ################################
 #- sudo microk8s join 129.194.69.134:16443/bnBZdldZYkxCQXNXeHRRQUdmMlF3cUY2cXlaL0pBTUlvaFFyZ0NZdkhyUT0K
 - nvm install $NODE_VERSION
@@ -115,6 +118,8 @@ script:
 
 - docker tag diges/lists-service diges/lists-service:latest
 - docker push diges/lists-service:latest
+- pwd
+- ls
 #deploy:
 #  provider: script
 #  on:
@@ -127,6 +132,7 @@ deploy:
     target_branch: gh-pages
     verbose: true
     keep_history: true
+    skip_cleanup: true
     on:
       branch: master 
 ##########################
