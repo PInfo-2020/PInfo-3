@@ -43,5 +43,5 @@ sudo microk8s.kubectl patch service random-microservices-lists-service     -p '{
 sudo microk8s.kubectl patch service random-microservices-profile-service    -p '{"spec":{"externalIPs":["129.194.69.134"], "path":["/api/v1/profiles"]}}' --kubeconfig=${HOME}/.kube/config
 sudo microk8s.kubectl patch service random-microservices-ingredients-service    -p '{"spec":{"externalIPs":["129.194.69.134"], "path":["/api/v1/ingredients"]}}' --kubeconfig=${HOME}/.kube/config
 
-microk8s kubectl cp ./docker-compose/login.css random-keycloak-0:/opt/jboss/keycloak/themes/keycloak/login/resources/css/login.css --kubeconfig=${HOME}/.kube/config
-microk8s kubectl cp ./docker-compose/image.png random-keycloak-0:/opt/jboss/keycloak/themes/keycloak/login --kubeconfig=${HOME}/.kube/config
+#microk8s kubectl cp ./docker-compose/login.css random-keycloak-0:/opt/jboss/keycloak/themes/keycloak/login/resources/css/login.css --kubeconfig=${HOME}/.kube/config
+#microk8s kubectl cp ./docker-compose/image.png random-keycloak-0:/opt/jboss/keycloak/themes/keycloak/login --kubeconfig=${HOME}/.kube/config
